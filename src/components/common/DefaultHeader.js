@@ -50,7 +50,7 @@ const DefaultHeader = () => {
                           href={pageRoutes.home}
                         >
                         <img
-                        height={50}
+                        className="h-20"
                         src="/images/logoBlack.png"
                         alt="Header Logo"
                       />
@@ -60,7 +60,7 @@ const DefaultHeader = () => {
                           href={pageRoutes.home}
                         >
                        <img
-                        height={50}
+                       className="h-20"
                         src="/images/logoBlack.png"
                         alt="Header Logo"
                       />

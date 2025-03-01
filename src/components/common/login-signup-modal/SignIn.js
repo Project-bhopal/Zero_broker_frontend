@@ -1,34 +1,57 @@
 "use client";
 import { usePost } from "@/hooks/usePost";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { use, useState } from "react";
+import GoogleAuth from "../google-oauth/GoogleOauth";
 
 const SignIn = () => {
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
+  const [validationError, setValidationError] = useState("")
+  const [error, setError] = useState("")
   const [data, setData] = useState({
     email: "",
+    mobile: "",
     password: "",
   });
-  const mutation = usePost("url");
+  const router = useRouter();
+  const mutation = usePost("/auth/login");
 
   const inputHandler = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setData((prev) => ({ ...prev, [name]: value }));
+    const { name, value } = e.target;
+
+    // Special validation for the email/mobile field
+    if (name === "userInput") {
+      if (/^\d{10}$/.test(value)) {
+        setData((prev) => ({ ...prev, email: "", mobile: value }));
+        setValidationError(""); // Clear error if valid
+      } else if (/^\S+@\S+\.\S+$/.test(value)) {
+        setData((prev) => ({ ...prev, email: value, mobile: "" }));
+        setValidationError(""); // Clear error if valid
+      } else {
+        setData((prev) => ({ ...prev, email: "", mobile: "" }));
+        setValidationError("Please enter a valid email or 10-digit mobile number.");
+      }
+    } else {
+      // Handle password normally
+      setData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // mutation.mutate({data},
-    //   {
-    //     onSuccess : (details)=>{
-    //       console.log("Sign up successfull", details)
-    //     },
-    //     onError: (error)=>{
-    //       console.error("Error creating user", error)
-    //     }
-    //   }
-    // )/
+    mutation.mutate(
+      data ,
+      {
+        onSuccess: (details) => {
+          router.push("/")
+        },
+        onError: (error) => {
+          console.error("Error creating user", error);
+          // setError(error.)
+        },
+      }
+    );
     console.log(data);
   };
 
@@ -37,16 +60,15 @@ const SignIn = () => {
       <div className="mb25">
         <label className="form-label fw600 dark-color">Email</label>
         <input
-          type="email"
-          name="email"
+          type="text"
+          name="userInput"
           className="form-control"
-          placeholder="Enter Email"
+          placeholder="Enter Email or Mobile Number"
           onChange={inputHandler}
           required
         />
+      {validationError && <p style={{ color: "red", fontSize: "14px" }}>{validationError}</p>}
       </div>
-
-      
 
       <div className="mb15">
         <label className="form-label fw600 dark-color">Password</label>
@@ -55,7 +77,7 @@ const SignIn = () => {
           style={{ display: "flex", alignItems: "center" }}
         >
           <input
-            type={`${show ? 'text' : 'password'}`}
+            type={`${show ? "text" : "password"}`}
             name="password"
             placeholder="Enter Password"
             className="w-100"
@@ -63,7 +85,14 @@ const SignIn = () => {
             required
             style={{ border: "none", outline: "none" }}
           />
-          <p className="border-none pointer mt-3" onClick={()=>{setShow(!show)}}>{show? "Hide" : "Show"}</p>
+          <p
+            className="border-none pointer mt-3"
+            onClick={() => {
+              setShow(!show);
+            }}
+          >
+            {show ? "Hide" : "Show"}
+          </p>
         </div>
       </div>
 
@@ -78,7 +107,8 @@ const SignIn = () => {
         </a>
       </div>
       {/* End  Lost your password? */}
-
+      
+      {error && <p style={{ color: "red", fontSize: "14px" }}>{error}</p>}
       <div className="d-grid mb20">
         <button className="ud-btn btn-thm" type="submit">
           Sign in <i className="fal fa-arrow-right-long" />
@@ -92,9 +122,7 @@ const SignIn = () => {
       </div>
 
       <div className="d-grid mb10">
-        <button className="ud-btn btn-white" type="button">
-          <i className="fab fa-google" /> Continue Google
-        </button>
+        <GoogleAuth/>
       </div>
       {/* <div className="d-grid mb10">
         <button className="ud-btn btn-fb" type="button">

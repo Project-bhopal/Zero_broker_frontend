@@ -29,26 +29,26 @@ const Header = () => {
     <>
       <header
         className={`header-nav nav-homepage-style main-menu  ${navbar ? "sticky slideInDown animated" : ""
-          }`}
+          } z-50`}
       >
         <nav className="posr">
           <div className="container posr menu_bdrt1">
-            <div className="row align-items-center justify-content-between">
+            <div className="flex items-center justify-between">
               <div className="col-auto">
                 <div className="d-flex align-items-center justify-conmtent-between">
                   <div className="logos mr40">
                     <Link className="header-logo logo1" href={pageRoutes.home}>
                       <img
-                        height={50}
                         src="/images/logoBlack.png"
                         alt="Header Logo"
+                        className="h-20 w-auto"
                       />  
                     </Link>
                     <Link className="header-logo logo2" href={pageRoutes.home}>
                       <img
-                        height={50}
                         src="/images/logoBlack.png"
                         alt="Header Logo"
+                        className="h-20"
                       />
                     </Link>
                   </div>
