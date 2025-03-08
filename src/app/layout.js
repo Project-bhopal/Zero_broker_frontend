@@ -41,7 +41,7 @@ export default function RootLayout({ children }) {
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-  const publicRoutes = ["/", "/about", "/contactus", "/faq", "/login", "/register"];
+  const publicRoutes = ["/", "/about", "/contactus", "/faq", "/login", "/register", "/buy/properties", "/rent/properties", "/commercial/properties", "/verification/verify-email", "/verification/verify-otp", "/create-new-password"];
 
   useEffect(() => {
     Aos.init({
@@ -106,7 +106,7 @@ export default function RootLayout({ children }) {
               </>
             {/* )} */}
 
-            <WelcomeModal showModal={showModal} setShowModal={setShowModal} />
+            
           </body>
         </html>
       </QueryClientProvider>

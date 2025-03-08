@@ -113,7 +113,7 @@ const Header = () => {
                     href="/login"
                     className="login-info d-flex align-items-center"
                     role="button"
-                    onClick={()=>{Cookies.remove("accessToken", "refreshToken")}}
+                    onClick={()=>{Cookies.remove("accessToken"); Cookies.remove("refreshToken")}}
                     style={{
                       textShadow: !navbar
                         ? "2px 2px 6px rgba(0, 0, 0, 0.9)" // Shadow when navbar is not sticky
