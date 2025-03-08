@@ -8,6 +8,7 @@ export const metadata = {
 };
 
 const Register = () => {
+
   return (
     <>
       {/* Our Compare Area */}
@@ -46,6 +47,7 @@ const Register = () => {
           </div>
         </div>
       </section>
+      
     </>
   );
 };

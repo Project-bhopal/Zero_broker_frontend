@@ -35,7 +35,10 @@ body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
 }
-
+a {
+    text-decoration: none !important;
+    color: #000;
+}
 a,
 .btn {
     color: var(--headings-color);

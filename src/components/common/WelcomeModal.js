@@ -39,7 +39,7 @@ const WelcomeModal = ({ showModal, setShowModal }) => {
 
 
   return (
-    <div className="modal fade" id="welcomeModal" ref={modalRef} tabIndex={-1} aria-hidden="true"  data-bs-backdrop="static">
+    <div className="modal fade" id="welcomeModal" ref={modalRef} tabIndex={-1} aria-hidden="true"  data-bs-backdrop="static" >
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
 

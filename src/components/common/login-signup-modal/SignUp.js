@@ -2,12 +2,14 @@
 import { usePost } from "@/hooks/usePost";
 import { Box, Snackbar } from "@mui/material";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import GoogleAuth from "../google-oauth/GoogleOauth";
-
+import Cookies from "js-cookie";
+import WelcomeModal from "../WelcomeModal";
 
 const SignUp = () => {
+  const [showModal, setShowModal] = useState(false);
   const [state, setState] = useState({
     open: false,
     vertical: "top",
@@ -21,14 +23,31 @@ const SignUp = () => {
     password: "",
   });
   const [validationErrors, setvalidationErrors] = useState({
-    fullname : "",
-    email : "",
-    password : ""
-  })
-  const [errors, setErrors] = useState([])
+    fullname: "",
+    email: "",
+    password: "",
+  });
+  const [errors, setErrors] = useState([]);
   const router = useRouter();
+  const pathname = usePathname();
   const mutation = usePost("/auth/signup");
   const mutation1 = usePost("/auth/generate-otp");
+
+  useEffect(() => {
+    if (pathname === "/register") {
+      const token = Cookies.get("accessToken");
+      const firstVisit = localStorage.getItem("firstVisit");
+      const role = localStorage.getItem("role");
+
+      if (!token && !firstVisit && !role) {
+        setTimeout(() => {
+          setShowModal(true);
+        }, 2000);
+      } else {
+        setShowModal(false);
+      }
+    }
+  }, []);
 
   const validateInput = (name, value) => {
     let error = "";
@@ -60,9 +79,9 @@ const SignUp = () => {
   };
 
   const inputHandler = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
-    validateInput(name, value)
+    validateInput(name, value);
   };
 
   const handleSubmit = (e) => {
@@ -95,10 +114,10 @@ const SignUp = () => {
         },
         onError: (error) => {
           console.error("Error creating user", error);
-          setErrors(error.response.data.errors)
-          error.response.data.errors.map((err)=>{
-            console.log(err.msg)
-          })
+          setErrors(error.response.data.errors);
+          error.response.data.errors.map((err) => {
+            console.log(err.msg);
+          });
         },
       }
     );
@@ -108,10 +127,6 @@ const SignUp = () => {
   const handleClose = () => {
     setState({ ...state, open: false });
   };
-
-
-  
-
 
   return (
     <>
@@ -126,7 +141,9 @@ const SignUp = () => {
             onChange={inputHandler}
             required
           />
-          {validationErrors.fullname && <p style={{ color: "red" }}>{validationErrors.fullname}</p>}
+          {validationErrors.fullname && (
+            <p style={{ color: "red" }}>{validationErrors.fullname}</p>
+          )}
         </div>
         <div className="mb25">
           <label className="form-label fw600 dark-color">Email</label>
@@ -138,7 +155,9 @@ const SignUp = () => {
             onChange={inputHandler}
             required
           />
-          {validationErrors.email && <p style={{ color: "red" }}>{validationErrors.email}</p>}
+          {validationErrors.email && (
+            <p style={{ color: "red" }}>{validationErrors.email}</p>
+          )}
         </div>
         {/* End Email */}
 
@@ -155,7 +174,6 @@ const SignUp = () => {
             pattern="[0-9]*"
             required
           />
-          
         </div>
 
         <div className="mb20">
@@ -182,16 +200,22 @@ const SignUp = () => {
               {show ? "Hide" : "Show"}
             </p>
           </div>
-          {validationErrors.password && <p style={{ color: "red" }}>{validationErrors.password}</p>}
+          {validationErrors.password && (
+            <p style={{ color: "red" }}>{validationErrors.password}</p>
+          )}
         </div>
         {/* End Password */}
-        {errors&&errors.map((err)=>(
-          <p style={{ color: "red" }}>{err.msg}</p>
-        ))}
-
+        {errors &&
+          errors.map((err) => <p style={{ color: "red" }}>{err.msg}</p>)}
 
         <div className="d-grid mb20">
-          <button className="ud-btn btn-thm" type="submit" disabled={Object.values(validationErrors).some((error) => error !== "")}>
+          <button
+            className="ud-btn btn-thm"
+            type="submit"
+            disabled={Object.values(validationErrors).some(
+              (error) => error !== ""
+            )}
+          >
             Create account <i className="fal fa-arrow-right-long" />
           </button>
         </div>
@@ -201,9 +225,9 @@ const SignUp = () => {
         </div>
 
         <div className="d-grid mb10 ">
-            <GoogleAuth/>
+          <GoogleAuth />
         </div>
-        
+
         {/* <div className="d-grid mb10">
         <button className="ud-btn btn-fb" type="button">
           <i className="fab fa-facebook-f" /> Continue Facebook
@@ -247,6 +271,7 @@ const SignUp = () => {
           }}
         />
       </Box>
+      <WelcomeModal showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 };
