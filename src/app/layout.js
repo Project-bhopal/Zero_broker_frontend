@@ -12,16 +12,20 @@ import "rc-slider/assets/index.css";
 import { useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min";
-import WelcomeModal from "@/components/common/WelcomeModal";
-
+// import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/js/bootstrap.bundle.min";
 if (typeof window !== "undefined") {
-  import("bootstrap");
+  require("bootstrap/dist/css/bootstrap.min.css");
+  require("bootstrap/dist/js/bootstrap.bundle.min");
 }
+import WelcomeModal from "@/components/common/WelcomeModal";
+import ProtectedRoute from "@/components/hoc/ProtectedRoute";
 
+// if (typeof window !== "undefined") {
+//   import("bootstrap");
+// }
 // DM_Sans font
 // const dmSans = DM_Sans({
 //   subsets: ["latin"],
@@ -33,20 +37,22 @@ const queryClient = new QueryClient();
 
 export default function RootLayout({ children }) {
   const [isToken, setIsToken] = useState(null);
-  const [show, setShow] = useState(false);
+  // const [show, setShow] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
-
+  const pathname = usePathname();
+  const publicRoutes = ["/", "/about", "/contactus", "/faq", "/login", "/register"];
 
   useEffect(() => {
     Aos.init({
       duration: 1200,
       once: true,
     });
-    setShow(true);
+    // setShow(true);
 
     const token = Cookies.get("accessToken");
     const firstVisit = localStorage.getItem("firstVisit");
+    const role = localStorage.getItem("role");
 
     if(token){
       setIsToken(true);
@@ -54,21 +60,25 @@ export default function RootLayout({ children }) {
       setIsToken(false)
     }
 
-    if (!isToken && !firstVisit) {
-        localStorage.setItem("firstVisit", "true");
+    if (!token && !publicRoutes.includes(pathname)) {
+      router.push("/login");
+    }
+    if (!isToken && !firstVisit && !role) {
+      setTimeout(() => {
         setShowModal(true);
+      }, 3000);
     } else {
       setShowModal(false);
     }
-  }, []);
+  }, [pathname]);
 
-  useEffect(()=>{
-    if (isToken === false) {
-      router.push("/login");
-    } else if (isToken === true) {
-      router.push("/");
-    }
-  },[isToken])
+  // useEffect(()=>{
+  //   if (isToken === false) {
+  //     router.push("/login");
+  //   } else if (isToken === true) {
+  //     router.push("/");
+  //   }
+  // },[isToken])
 
   if (isToken === null ) {
     return (
@@ -87,12 +97,14 @@ export default function RootLayout({ children }) {
       <QueryClientProvider client={queryClient}>
         <html lang="en">
           <body className={`body `} cz-shortcut-listen="false">
-            {show && (
+            {/* {show && ( */}
               <>
+            <ProtectedRoute>
                   <div className="wrapper ovh">{children}</div>
+            </ProtectedRoute>
                 <ScrollToTop />
               </>
-            )}
+            {/* )} */}
 
             <WelcomeModal showModal={showModal} setShowModal={setShowModal} />
           </body>

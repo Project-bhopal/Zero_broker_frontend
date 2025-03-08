@@ -2,16 +2,16 @@
 
 import React from "react";
 
-const PropertyType = ({ filterFunctions }) => {
+const PropertyType = ({ filterFunctions, handleFilterChange }) => {
   const options = [
-    { id: "flexRadioDefault1", label: "All",defaultChecked: true },
-    { id: "flexRadioDefault2", label: "Houses" },
-    { id: "flexRadioDefault3", label: "Apartments" },
-    { id: "flexRadioDefault4", label: "Office" },
-    { id: "flexRadioDefault5", label: "Villa" },
-    { id: "flexRadioDefault6", label: "Townhome" },
-    { id: "flexRadioDefault7", label: "Bungalow" },
-    { id: "flexRadioDefault8", label: "Loft" },
+    { id: "flexRadioPropertyType1", label: "All",defaultChecked: true },
+    { id: "flexRadioPropertyType2", label: "Houses" },
+    { id: "flexRadioPropertyType3", label: "Apartments" },
+    { id: "flexRadioPropertyType4", label: "Office" },
+    { id: "flexRadioPropertyType5", label: "Villa" },
+    { id: "flexRadioPropertyType6", label: "Townhome" },
+    { id: "flexRadioPropertyType7", label: "Bungalow" },
+    { id: "flexRadioPropertyType8", label: "Loft" },
   ];
   return (
     <>
@@ -25,10 +25,10 @@ const PropertyType = ({ filterFunctions }) => {
             className="form-check-input"
             type="radio"
             checked={filterFunctions?.propertyTypes === option.label}
-
-            onChange={() => filterFunctions.handlepropertyTypes(option.label)}
+            id={option.id}
+            onChange={() => {filterFunctions.handlepropertyTypes(option.label); handleFilterChange("propertyType", option.label)}}
           />
-          <label className="form-check-label" htmlFor={option.id}>
+          <label className="form-check-label" htmlFor={option.id} style={{fontSize : "16px"}}>
             {option.label}
           </label>
         </div>

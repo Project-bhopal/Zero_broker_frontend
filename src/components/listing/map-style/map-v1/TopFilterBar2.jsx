@@ -9,6 +9,7 @@ import Bathroom from "../../sidebar/Bathroom";
 import ListingStatus from "../../sidebar/ListingStatus";
 
 const TopFilterBar2 = ({ filterFunctions }) => {
+  const [showDropdown, setShowDropdown] = useState(null)
   const [selectedFilters, setSelectedFilters] = useState({
     listingStatus: "",
     propertyType: "",
@@ -16,33 +17,29 @@ const TopFilterBar2 = ({ filterFunctions }) => {
     bedrooms: "",
     bathrooms: "",
   });
-  const router = useRouter(); // Initialize the router
+  const router = useRouter();
 
-  // Function to handle the selection of filters
+  const toggleDropdown = (dropdownId) => {
+    setShowDropdown(showDropdown === dropdownId ? null : dropdownId);
+  };
+
+
   const handleFilterChange = (filterName, value) => {
+    console.log(filterName + ":" + value)
     setSelectedFilters((prevState) => ({
       ...prevState,
       [filterName]: value,
     }));
   };
 
-  // Function to handle the "Done" button click in each dropdown
-  const handleDoneClick = (dropdownId) => {
-    // Close the dropdown by triggering Bootstrap's dropdown hide method
-    const dropdownElement = document.getElementById(dropdownId);
-    const dropdown = new bootstrap.Dropdown(dropdownElement);
-    dropdown.hide();
 
-    // You can handle any additional logic after setting the filter state (optional)
-    console.log(`Selected ${dropdownId}: `, selectedFilters[dropdownId]);
+  const handleDoneClick = () => {
+    setShowDropdown(null)
   };
 
-  // Function to handle the "Find" button click
-  const handleFindClick = () => {
-    // Convert the selected filters to query params
-    const queryParams = new URLSearchParams(selectedFilters).toString();
 
-    // Update the URL with the selected filters as query params
+  const handleFindClick = () => {
+    const queryParams = new URLSearchParams(selectedFilters).toString();
     router.push(`/?${queryParams}`);
   };
   return (
@@ -53,7 +50,7 @@ const TopFilterBar2 = ({ filterFunctions }) => {
           className="d-flex align-items-center mb15"
           style={{
             backgroundColor: "var(--styleguide-color-neutral-01, #f7f7f7)",
-            borderRadius: "2.4rem",
+            borderRadius: "5px",
             cursor: "text",
             padding: "0.8rem 1.2rem",
             width: "100%",
@@ -81,21 +78,24 @@ const TopFilterBar2 = ({ filterFunctions }) => {
         <button
           type="button"
           className={`open-btn mb15 dropdown-toggle dropdown-toggle-custom ${filterFunctions?.listingStatus ? 'selected' : 'default'}`}
+          style={{borderRadius : '5px'}}
           data-bs-toggle="dropdown"
           data-bs-auto-close="outside"
           id="listingStatusDropdown"
+          onClick={()=> toggleDropdown("listingStatusDropdown")}
         >
-          {filterFunctions?.listingStatus ? filterFunctions?.listingStatus : 'For Sale'}
+          {filterFunctions?.listingStatus ||  'For Sale'}
           <i className="fa fa-angle-down ms-2" />
         </button>
-        <div className="dropdown-menu">
+        <div className={`dropdown-menu ${showDropdown === "listingStatusDropdown" ? "show" : ""}`}>
           <div className="widget-wrapper bdrb1 pb25 mb0 pl20">
             <h6 className="list-title">Listing Status</h6>
             <div className="radio-element">
               <ListingStatus
                 filterFunctions={filterFunctions}
-                onChange={(value) => handleFilterChange("listingStatus", value)}
+                handleFilterChange={handleFilterChange}
               />
+
             </div>
           </div>
           <div className="text-end mt10 pr10">
@@ -115,21 +115,23 @@ const TopFilterBar2 = ({ filterFunctions }) => {
         <button
           type="button"
           className={`open-btn mb15 dropdown-toggle dropdown-toggle-custom ${filterFunctions?.propertyTypes ? 'selected' : 'default'}`}
+          style={{borderRadius : '5px'}}
           data-bs-toggle="dropdown"
           data-bs-auto-close="outside"
           id="propertyTypeDropdown"
+          onClick={()=> toggleDropdown("propertyTypeDropdown")}
         >
-          {filterFunctions?.propertyTypes ? filterFunctions?.propertyTypes : 'Property Type'}
+          {filterFunctions?.propertyTypes || 'Property Type'}
           <i className="fa fa-angle-down ms-2" />
         </button>
-        <div className="dropdown-menu">
+        <div className={`dropdown-menu ${showDropdown === "propertyTypeDropdown" ? "show" : ""}`}>
           <div className="widget-wrapper bdrb1 pb25 mb0 pl20">
             <h6 className="list-title">Property Type</h6>
             <div className="radio-element">
 
               <PropertyType
                 filterFunctions={filterFunctions}
-                onChange={(value) => handleFilterChange("propertyType", value)}
+                handleFilterChange={handleFilterChange}
               />
             </div>
           </div>
@@ -150,19 +152,21 @@ const TopFilterBar2 = ({ filterFunctions }) => {
         <button
           type="button"
           className="open-btn mb15 dropdown-toggle"
+          style={{borderRadius : '5px'}}
           data-bs-toggle="dropdown"
           data-bs-auto-close="outside"
           id="priceRangeDropdown"
+          onClick={()=> toggleDropdown("priceRangeDropdown")}
         >
           Price <i className="fa fa-angle-down ms-2" />
         </button>
-        <div className="dropdown-menu dd3">
+        <div className={`dropdown-menu dd3 ${showDropdown === "priceRangeDropdown" ? "show" : ""}`}>
           <div className="widget-wrapper bdrb1 pb25 mb0 pl20 pr20">
             <h6 className="list-title">Price Range</h6>
             <div className="range-slider-style1">
               <PriceRange
                 filterFunctions={filterFunctions}
-                onChange={(value) => handleFilterChange("priceRange", value)}
+                handleFilterChange={handleFilterChange}
               />
             </div>
           </div>
@@ -183,19 +187,21 @@ const TopFilterBar2 = ({ filterFunctions }) => {
         <button
           type="button"
           className="open-btn mb15 dropdown-toggle"
+          style={{borderRadius : '5px'}}
           data-bs-toggle="dropdown"
           data-bs-auto-close="outside"
           id="bedsBathsDropdown"
+          onClick={()=> toggleDropdown("bedsBathsDropdown")}
         >
           Beds / Baths <i className="fa fa-angle-down ms-2" />
         </button>
-        <div className="dropdown-menu dd4 pb20">
+        <div className={`dropdown-menu dd4 pb20 ${showDropdown === "bedsBathsDropdown" ? "show" : ""}`}>
           <div className="widget-wrapper pl20 pr20">
             <h6 className="list-title">Bedrooms</h6>
             <div className="d-flex">
               <Bedroom
                 filterFunctions={filterFunctions}
-                onChange={(value) => handleFilterChange("bedrooms", value)}
+                handleFilterChange={handleFilterChange}
               />
             </div>
           </div>
@@ -205,7 +211,7 @@ const TopFilterBar2 = ({ filterFunctions }) => {
             <div className="d-flex">
               <Bathroom
                 filterFunctions={filterFunctions}
-                onChange={(value) => handleFilterChange("bathrooms", value)}
+                handleFilterChange={handleFilterChange}
               />
             </div>
           </div>
@@ -226,6 +232,7 @@ const TopFilterBar2 = ({ filterFunctions }) => {
         <button
           type="button"
           className="open-btn mb15"
+          style={{borderRadius : '5px'}}
           data-bs-toggle="modal"
           data-bs-target="#advanceSeachModal"
         >

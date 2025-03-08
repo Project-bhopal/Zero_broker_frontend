@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { pageRoutes } from "@/utilis/common";
+import Cookies from "js-cookie";
 
 const DefaultHeader = () => {
   const [navbar, setNavbar] = useState(false);
@@ -19,7 +20,7 @@ const DefaultHeader = () => {
       setNavbar(false);
     }
   };
-
+  const islogin = localStorage.getItem("loginSuccessfull")
   useEffect(() => {
     window.addEventListener("scroll", changeBackground);
     return () => {
@@ -76,7 +77,18 @@ const DefaultHeader = () => {
 
                   <div className="col-auto">
                     <div className="d-flex align-items-center">
-                      <a
+                      {islogin ? (
+                        <a
+                        href="/login"
+                        className="login-info d-flex align-items-cente"
+                        role="button"
+                        onClick={()=>{Cookies.remove("accessToken", "refreshToken")}}
+                      >
+                        <i className="fa fa-sign-out fz16 me-2" />{" "}
+                        <span className="d-none d-xl-block">Logout</span>
+                      </a>
+                      ) : (
+                        <a
                         href="#"
                         className="login-info d-flex align-items-cente"
                         data-bs-toggle="modal"
@@ -86,6 +98,9 @@ const DefaultHeader = () => {
                         <i className="far fa-user-circle fz16 me-2" />{" "}
                         <span className="d-none d-xl-block">Login</span>
                       </a>
+                      )}
+                      
+                      
                       {/* <Link
                     className="ud-btn btn-white add-property bdrs60 mx-2 mx-xl-4"
                     href="/dashboard-add-property"

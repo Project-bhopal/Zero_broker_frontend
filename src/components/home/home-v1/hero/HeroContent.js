@@ -16,7 +16,11 @@ const HeroContent = () => {
     { id: "sold", label: "Sold" },
   ];
 
+  
+
   return (
+    <>
+    {}
     <div className="advance-search-tab mt70 mt30-md mx-auto animate-up-3">
       <ul className="nav nav-tabs p-0 m-0">
         {tabs.map((tab) => (
@@ -81,6 +85,7 @@ const HeroContent = () => {
         ))}
       </div>
     </div>
+    </>
   );
 };
 

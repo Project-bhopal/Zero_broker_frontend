@@ -65,10 +65,10 @@ const PropertyDetails = () => {
             threshold: 0.6, // Trigger when 60% of the section is visible
         });
 
-        sections.forEach(({ id }) => {
-            const section = document.getElementById(id);
-            if (section) observer.observe(section);
-        });
+        // sections.forEach(({ id }) => {
+        //     const section = document.getElementById(id);
+        //     if (section) observer.observe(section);
+        // });
 
         return () => {
             observer.disconnect();
