@@ -7,8 +7,25 @@ import PriceRange from "./PriceRange";
 import Bedroom from "./Bedroom";
 import Bathroom from "./Bathroom";
 import Amenities from "./Amenities";
+import { useRef } from "react";
 
 const AdvanceFilterModal = ({ filterFunctions }) => {
+
+  const minFeetRef = useRef(null);
+  const maxFeetRef = useRef(null);
+
+  const handleMinChange = (e) => {
+    const minValue = e.target.value;
+    const maxValue = maxFeetRef.current?.value || 0;
+    filterFunctions?.handlesquirefeet([minValue, maxValue]);
+  };
+
+  const handleMaxChange = (e) => {
+    const maxValue = e.target.value;
+    const minValue = minFeetRef.current?.value || 0;
+    filterFunctions?.handlesquirefeet([minValue, maxValue]);
+  };
+
   const catOptions = [
     { value: "Houses", label: "Houses" },
     { value: "Office", label: "Office" },
@@ -167,12 +184,14 @@ const AdvanceFilterModal = ({ filterFunctions }) => {
                       <input
                         type="number"
                         className="form-control filterInput"
-                        onChange={(e) =>
-                          filterFunctions?.handlesquirefeet([
-                            e.target.value,
-                            document.getElementById("maxFeet3").value / 1,
-                          ])
-                        }
+                        ref={minFeetRef}
+                        // onChange={(e) =>
+                        //   filterFunctions?.handlesquirefeet([
+                        //     e.target.value,
+                        //     document.getElementById("maxFeet3").value / 1,
+                        //   ])
+                        // }
+                        onChange={handleMinChange}
                         placeholder="Min."
                         id="minFeet3"
                       />
@@ -182,14 +201,16 @@ const AdvanceFilterModal = ({ filterFunctions }) => {
                       <input
                         type="number"
                         className="form-control filterInput"
+                        ref={maxFeetRef} 
                         placeholder="Max"
                         id="maxFeet3"
-                        onChange={(e) =>
-                          filterFunctions?.handlesquirefeet([
-                            document.getElementById("minFeet3").value / 1,
-                            e.target.value,
-                          ])
-                        }
+                        // onChange={(e) =>
+                        //   filterFunctions?.handlesquirefeet([
+                        //     document.getElementById("minFeet3").value / 1,
+                        //     e.target.value,
+                        //   ])
+                        // }
+                        onChange={handleMaxChange}
                       />
                     </div>
                   </div>

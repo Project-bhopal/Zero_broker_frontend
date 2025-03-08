@@ -1,25 +1,36 @@
 "use client";
 import { usePost } from "@/hooks/usePost";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 
 function VerifyOTP() {
   const [otp, setOtp] = useState(new Array(6).fill(""));
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({});
+  const [email, setEmail] = useState("")
   const [resendOtp, setResendOtp] = useState(false)
   const [isVerified, setIsVerified] = useState(false);
   const [timeLeft, setTimeLeft] = useState(180);
   const [isResendEnabled, setIsResendEnabled] = useState(false);
+  const [ot, setOt] = useState("")
   const [error, setError] = useState(null)
 
   const mutation = usePost("/auth/verify-otp")
+  const mutation2 = usePost("/auth/generate-otp")
   const router = useRouter();
-  const params = useSearchParams();
-  const inputRef = useRef(null)
+  const inputRef = useRef(null);
 
   useEffect(()=>{
+    const email = sessionStorage.getItem("e");
     const user = JSON.parse(sessionStorage.getItem("user"));
+    const ot = sessionStorage.getItem("ot");
+    setEmail(email || user.email)
+    setOt(ot)
     setUser(user)
+  },[])
+
+
+  useEffect(()=>{
+   
     setOtp(new Array(6).fill(""))
     // startTimer()
     if(inputRef.current){
@@ -27,27 +38,25 @@ function VerifyOTP() {
     }
   }, [resendOtp]);
 
-  
-  // useEffect(() => {
-  //   mutation.mutate({email : params.email, otp, otp_type : params.otp_type},
-  //     {
-  //       onSuccess : (details)=>{
-  //         console.log("otp verification successfull", details)
-          
-  //       },
-  //       onError: (error)=>{
-  //         console.error("Error creating user", error)
-  //       }
-  //     }
-  //   )
-  // }, []);
 
   const handleResendOtp = () => {
-    setResendOtp(true)
-    // startTimer()
-    setTimeLeft(180);
+    const user = JSON.parse(sessionStorage.getItem("user"))
+    
+    
     setIsResendEnabled(false);
-    console.log("OTP Resent!");
+    mutation2.mutate(
+      { email: email, otp_type: ot },
+      {
+        onSuccess: (details) => {
+          setResendOtp(true)
+          setTimeLeft(180);
+        },
+        onError: (error) => {
+          console.log(`error during generating otp :`, error);
+
+        },
+      }
+    );
   };
 
   useEffect(() => {
@@ -87,17 +96,22 @@ function VerifyOTP() {
   const handleOtpSubmit = (e) =>{
     e.preventDefault();
     
-    const ot = sessionStorage.getItem("ot");
     const otp_number = otp.join("");
-    mutation.mutate({email : user.email , otp_number , otp_type: ot},
+    mutation.mutate({email : email , otp_number , otp_type: ot},
       {
         onSuccess : (details)=>{
           console.log("otp verification successfull", details);
-          router.push("/login")
+          if(ot === "forgot"){
+            router.push("/create-new-password")
+          } else {
+            router.push("/login")
+          }
         },
         onError: (error)=>{
           console.error("Error creating user", error)
-          setError(error.response.data.error.msg)
+          if(error.response.data.status == "Failed"){
+            setError("Invalid OTP")
+          }
         }
       }
     )
@@ -110,7 +124,7 @@ function VerifyOTP() {
           <h2 className="text-2xl  font-[200]">Verify OTP</h2>
           <p className="text-gray-500 mt-2">
             Enter the OTP sent to{" "}
-            <span className="font-medium">{user.email}</span>
+            <span className="font-medium">{email}</span>
           </p>
           <form onSubmit={handleOtpSubmit}>
           {/* OTP Inputs */}
@@ -130,6 +144,7 @@ function VerifyOTP() {
               />
             ))}
           </div>
+          {error && <p style={{ color: "red" , marginTop : "1px"}}>{error}</p>}
 
           {timeLeft > 0 && !isResendEnabled ? (
             <>

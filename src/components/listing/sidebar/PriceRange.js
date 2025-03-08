@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 
-const PriceRange = ({ filterFunctions }) => {
+const PriceRange = ({ filterFunctions, handleFilterChange }) => {
   const defaultRange = [20, 70987]; // Default price range
   const priceRange = filterFunctions?.priceRange || defaultRange; // Fallback for undefined
 
@@ -13,6 +13,7 @@ const PriceRange = ({ filterFunctions }) => {
   const handleOnChange = (value) => {
     setPrice(value);
     filterFunctions?.handlepriceRange?.(value);
+    handleFilterChange("priceRange", value)
   };
 
   return (

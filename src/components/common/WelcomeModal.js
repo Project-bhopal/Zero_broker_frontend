@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from 'next/dynamic';
 
@@ -7,23 +7,21 @@ const Select = dynamic(() => import('react-select'), { ssr: false });
 
 const WelcomeModal = ({ showModal, setShowModal }) => {
   const router = useRouter();
-
+  const modalRef = useRef(null);
+  const backdropRef = useRef([]);
   
   useEffect(() => {
-    if (typeof window !== "undefined" && showModal) {
+    if (typeof window !== "undefined" && showModal && modalRef.current) {
       import("bootstrap/dist/js/bootstrap.bundle.min")
         .then((bootstrap) => {
-          const modalElement = document?.getElementById("welcomeModal");
-          if (modalElement) {
-            const modal = new bootstrap.Modal(modalElement);
-            modal.show();
+          const modal = new bootstrap.Modal(modalRef.current);
+          modal.show();
 
-            modalElement.addEventListener("hidden.bs.modal", () => {
-              document.querySelectorAll(".modal-backdrop").forEach((backdrop) => {
-                backdrop.remove();
-              });
-            });
-          }
+          modalRef.current.addEventListener("hidden.bs.modal", () => {
+            // Remove all modal backdrops
+            backdropRef.current.forEach((backdrop) => backdrop.remove());
+            backdropRef.current = []; // Clear the ref array after removing backdrops
+          });
         })
         .catch((error) => console.error("Bootstrap Modal Error:", error));
     }
@@ -35,16 +33,18 @@ const WelcomeModal = ({ showModal, setShowModal }) => {
 
   const handleContinueAs = (role) => {
    localStorage.setItem("role", role)
+   localStorage.setItem("firstVisit" , "true")
     
   }
 
 
   return (
-    <div className="modal fade" id="welcomeModal" tabIndex={-1} aria-hidden="true"  data-bs-backdrop="static">
+    <div className="modal fade" id="welcomeModal" ref={modalRef} tabIndex={-1} aria-hidden="true"  data-bs-backdrop="static">
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
 
           <div className="modal-body ">
+            <h4 className="text-center mb-5">Continue as</h4>
             <div className="d-flex justify-content-center gap-3">
               {/* <button className="ud-btn btn-white" data-bs-dismiss="modal" onClick={handleCreateAccount}>
                 Create an Account
@@ -55,21 +55,21 @@ const WelcomeModal = ({ showModal, setShowModal }) => {
                 data-bs-dismiss="modal"
                 onClick={()=>{handleContinueAs("seller"); handleCreateAccount()}}
               >
-                Continue as a Seller
+                Seller
               </button>
               <button
                 className="ud-btn btn-white"
                 data-bs-dismiss="modal"
                 onClick={()=>{handleContinueAs("buyer"); handleCreateAccount()}}
               >
-                Continue as a Buyer
+                Buyer
               </button>
               <button
                 className="ud-btn btn-white"
                 data-bs-dismiss="modal"
                 onClick={()=>{handleContinueAs("guest")}}
               >
-                Continue as a Guest
+                Guest
               </button>
             </div>
           </div>

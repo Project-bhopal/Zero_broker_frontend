@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { use, useState } from "react";
 import GoogleAuth from "../google-oauth/GoogleOauth";
+import { NavLink } from "react-bootstrap";
 
 const SignIn = () => {
   const [show, setShow] = useState(false);
@@ -45,10 +46,11 @@ const SignIn = () => {
       {
         onSuccess: (details) => {
           router.push("/")
+          localStorage.setItem("loginSuccessfull" , "true")
         },
         onError: (error) => {
           console.error("Error creating user", error);
-          // setError(error.)
+          setError(error.response.data.error.message)
         },
       }
     );
@@ -102,15 +104,15 @@ const SignIn = () => {
           <input type="checkbox" defaultChecked="checked" />
           <span className="checkmark" />
         </label>
-        <a className="fz14 ff-heading" href="#">
+        <Link className="fz14 ff-heading" href="/verification/verify-email">
           Lost your password?
-        </a>
+        </Link>
       </div>
       {/* End  Lost your password? */}
       
-      {error && <p style={{ color: "red", fontSize: "14px" }}>{error}</p>}
+      {error && <p style={{ color: "red", fontSize: "16px" }}>{error}</p>}
       <div className="d-grid mb20">
-        <button className="ud-btn btn-thm" type="submit">
+        <button className="ud-btn btn-thm" type="submit" disabled={Object.values(validationError).some((error) => error !== "")}>
           Sign in <i className="fal fa-arrow-right-long" />
         </button>
       </div>

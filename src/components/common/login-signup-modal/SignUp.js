@@ -20,14 +20,49 @@ const SignUp = () => {
     mobile: "",
     password: "",
   });
+  const [validationErrors, setvalidationErrors] = useState({
+    fullname : "",
+    email : "",
+    password : ""
+  })
+  const [errors, setErrors] = useState([])
   const router = useRouter();
   const mutation = usePost("/auth/signup");
   const mutation1 = usePost("/auth/generate-otp");
 
+  const validateInput = (name, value) => {
+    let error = "";
+
+    if (name === "fullname") {
+      const nameRegex = /^[A-Za-z\s]+$/;
+      if (!nameRegex.test(value)) {
+        error = "Name should contain only alphabets.";
+      }
+    }
+
+    if (name === "email") {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailRegex.test(value)) {
+        error = "Enter a valid email address.";
+      }
+    }
+
+    if (name === "password") {
+      const passwordRegex =
+        /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      if (!passwordRegex.test(value)) {
+        error =
+          "Password must be at least 8 characters long, contain at least one uppercase letter, one number, and one special character(@$!%*?&).";
+      }
+    }
+
+    setvalidationErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
+  };
+
   const inputHandler = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
+    const {name, value} = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
+    validateInput(name, value)
   };
 
   const handleSubmit = (e) => {
@@ -49,7 +84,7 @@ const SignUp = () => {
             {
               onSuccess: (details) => {
                 if (details) {
-                  router.push("/verify-otp");
+                  router.push("/verification/verify-otp");
                 }
               },
               onError: (error) => {
@@ -60,6 +95,10 @@ const SignUp = () => {
         },
         onError: (error) => {
           console.error("Error creating user", error);
+          setErrors(error.response.data.errors)
+          error.response.data.errors.map((err)=>{
+            console.log(err.msg)
+          })
         },
       }
     );
@@ -70,6 +109,8 @@ const SignUp = () => {
     setState({ ...state, open: false });
   };
 
+
+  
 
 
   return (
@@ -85,6 +126,7 @@ const SignUp = () => {
             onChange={inputHandler}
             required
           />
+          {validationErrors.fullname && <p style={{ color: "red" }}>{validationErrors.fullname}</p>}
         </div>
         <div className="mb25">
           <label className="form-label fw600 dark-color">Email</label>
@@ -96,6 +138,7 @@ const SignUp = () => {
             onChange={inputHandler}
             required
           />
+          {validationErrors.email && <p style={{ color: "red" }}>{validationErrors.email}</p>}
         </div>
         {/* End Email */}
 
@@ -106,10 +149,13 @@ const SignUp = () => {
             name="mobile"
             className="form-control"
             placeholder="Enter Phone Number"
-            maxLength={10}
             onChange={inputHandler}
+            maxLength={10}
+            inputMode="tel"
+            pattern="[0-9]*"
             required
           />
+          
         </div>
 
         <div className="mb20">
@@ -136,11 +182,16 @@ const SignUp = () => {
               {show ? "Hide" : "Show"}
             </p>
           </div>
+          {validationErrors.password && <p style={{ color: "red" }}>{validationErrors.password}</p>}
         </div>
         {/* End Password */}
+        {errors&&errors.map((err)=>(
+          <p style={{ color: "red" }}>{err.msg}</p>
+        ))}
+
 
         <div className="d-grid mb20">
-          <button className="ud-btn btn-thm" type="submit">
+          <button className="ud-btn btn-thm" type="submit" disabled={Object.values(validationErrors).some((error) => error !== "")}>
             Create account <i className="fal fa-arrow-right-long" />
           </button>
         </div>

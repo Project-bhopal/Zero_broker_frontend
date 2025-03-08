@@ -54,13 +54,13 @@ export default function PropertyFiltering() {
     setyearBuild([0, 2050]);
     setCategories([]);
     setCurrentSortingOption("Newest");
-    document.querySelectorAll(".filterInput").forEach(function (element) {
-      element.value = null;
-    });
+    // document.querySelectorAll(".filterInput").forEach(function (element) {
+    //   element.value = null;
+    // });
 
-    document.querySelectorAll(".filterSelect").forEach(function (element) {
-      element.value = "All Cities";
-    });
+    // document.querySelectorAll(".filterSelect").forEach(function (element) {
+    //   element.value = "All Cities";
+    // });
   };
 
   const handlelistingStatus = (elm) => {

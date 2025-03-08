@@ -31,9 +31,9 @@ export default function FilteringAgent() {
       setPropertyTypes([])
       setLocation('All Cities')
       setCurrentSortingOption('Newest')
-     document.querySelectorAll(".filterInput").forEach(function(element) {
-      element.value = null;
-  });
+  //    document.querySelectorAll(".filterInput").forEach(function(element) {
+  //     element.value = null;
+  // });
 
     }
     const handlepropertyTypes =(elm)=>{

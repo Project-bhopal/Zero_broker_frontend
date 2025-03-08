@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { pageRoutes } from "@/utilis/common";
+import Cookies from "js-cookie";
 
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
@@ -19,6 +20,7 @@ const Header = () => {
     }
   };
 
+  const islogin = localStorage.getItem("loginSuccessfull")
   useEffect(() => {
     window.addEventListener("scroll", changeBackground);
     return () => {
@@ -106,7 +108,39 @@ const Header = () => {
               </div> */}
               <div className="col-auto">
                 <div className="d-flex align-items-center">
-                  <a
+                  {islogin ?(
+                    <a
+                    href="/login"
+                    className="login-info d-flex align-items-center"
+                    role="button"
+                    onClick={()=>{Cookies.remove("accessToken", "refreshToken")}}
+                    style={{
+                      textShadow: !navbar
+                        ? "2px 2px 6px rgba(0, 0, 0, 0.9)" // Shadow when navbar is not sticky
+                        : "none", // No shadow when navbar is sticky
+                    }}
+                  >
+                    <i
+                      className="fa fa-sign-out fz16 me-2"
+                      style={{
+                        textShadow: !navbar
+                          ? "2px 2px 6px rgba(0, 0, 0, 0.9)" // Shadow for the icon
+                          : "none",
+                      }}
+                    />
+                    <span
+                      className="d-none d-xl-block"
+                      style={{
+                        textShadow: !navbar
+                          ? "2px 2px 6px rgba(0, 0, 0, 0.9)" // Shadow for the text
+                          : "none",
+                      }}
+                    >
+                      Logout
+                    </span>
+                  </a>
+                  ) : (
+                    <a
                     href="#"
                     className="login-info d-flex align-items-center"
                     data-bs-toggle="modal"
@@ -137,6 +171,9 @@ const Header = () => {
                       Login
                     </span>
                   </a>
+                  )}
+                  
+                  
                 </div>
               </div>
               {/* End .col-auto */}
