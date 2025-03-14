@@ -1,5 +1,5 @@
 "use client";
-import { useAxiosPost } from "@/hooks/useAxiosPost";
+import useAxiosPost from "@/hooks/useAxiosPost";
 import { usePost } from "@/hooks/usePost";
 import { Box, Snackbar } from "@mui/material";
 import dynamic from "next/dynamic";
