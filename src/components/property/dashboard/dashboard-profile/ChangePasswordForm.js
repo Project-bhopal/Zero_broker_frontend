@@ -1,9 +1,10 @@
+import Link from "next/link";
 import React from "react";
 
 const ChangePasswordForm = () => {
   return (
     <form className="form-style1">
-      <div className="row">
+      {/* <div className="row">
         <div className="col-sm-6 col-xl-4">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
@@ -17,11 +18,11 @@ const ChangePasswordForm = () => {
             />
           </div>
         </div>
-      </div>
+      </div> */}
       {/* End .col */}
 
       <div className="row">
-        <div className="col-sm-6 col-xl-4">
+        {/* <div className="col-sm-6 col-xl-4">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
               New Password
@@ -33,10 +34,10 @@ const ChangePasswordForm = () => {
               required
             />
           </div>
-        </div>
+        </div> */}
         {/* End .col */}
 
-        <div className="col-sm-6 col-xl-4">
+        {/* <div className="col-sm-6 col-xl-4">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
               Confirm New Password
@@ -48,15 +49,15 @@ const ChangePasswordForm = () => {
               required
             />
           </div>
-        </div>
+        </div> */}
         {/* End .col */}
 
         <div className="col-md-12">
           <div className="text-end">
-            <button type="submit" className="ud-btn btn-dark">
+            <Link href={"/verification/verify-email"} className="ud-btn btn-dark">
               Change Password
               <i className="fal fa-arrow-right-long" />
-            </button>
+            </Link>
           </div>
         </div>
       </div>

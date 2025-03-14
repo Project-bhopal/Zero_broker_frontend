@@ -1,13 +1,20 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import Cookies from "js-cookie";
 
 const DboardMobileNavigation = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [role, setRole] = useState("")
   const pathname = usePathname();
+  useEffect(()=>{
+    // const user = JSON.parse(Cookies.get("user"))
+    // setRole(user.role)
+    setRole("buyer")
+  },[])
 
-  const sidebarItems = [
+  const buyersidebarItems = [
     {
       title: "MAIN",
       items: [
@@ -15,6 +22,11 @@ const DboardMobileNavigation = () => {
           href: "/dashboard-home",
           icon: "flaticon-discovery",
           text: "Dashboard",
+        },
+        {
+          href: "/dashboard-my-profile",
+          icon: "flaticon-user",
+          text: "My Profile",
         },
         {
           href: "/dashboard-message",
@@ -26,16 +38,6 @@ const DboardMobileNavigation = () => {
     {
       title: "MANAGE LISTINGS",
       items: [
-        {
-          href: "/dashboard-add-property",
-          icon: "flaticon-new-tab",
-          text: "Add New Property",
-        },
-        {
-          href: "/dashboard-my-properties",
-          icon: "flaticon-home",
-          text: "My Properties",
-        },
         {
           href: "/dashboard-my-favourites",
           icon: "flaticon-like",
@@ -59,13 +61,114 @@ const DboardMobileNavigation = () => {
         {
           href: "/dashboard-my-package",
           icon: "flaticon-protection",
-          text: "My Package",
+          text: "My Plan",
+        },
+        {
+          href: "/login",
+          icon: "flaticon-logout",
+          text: "Logout",
+        },
+      ],
+    },
+  ];
+
+  const sellersidebarItems = [
+    {
+      title: "MAIN",
+      items: [
+        {
+          href: "/dashboard-home",
+          icon: "flaticon-discovery",
+          text: "Dashboard",
         },
         {
           href: "/dashboard-my-profile",
           icon: "flaticon-user",
           text: "My Profile",
         },
+        {
+          href: "/dashboard-message",
+          icon: "flaticon-chat-1",
+          text: "Message",
+        },
+      ],
+    },
+    {
+      title: "MANAGE LISTINGS",
+      items: [
+        {
+          href: "/dashboard-my-properties",
+          icon: "flaticon-home",
+          text: "My Properties",
+        },
+        {
+          href: "/dashboard-reviews",
+          icon: "flaticon-review",
+          text: "Reviews",
+        },
+      ],
+    },
+    {
+      title: "MANAGE ACCOUNT",
+      items: [
+        {
+          href: "/login",
+          icon: "flaticon-logout",
+          text: "Logout",
+        },
+      ],
+    },
+  ];
+
+  const agentsidebarItems = [
+    {
+      title: "MAIN",
+      items: [
+        {
+          href: "/dashboard-home",
+          icon: "flaticon-discovery",
+          text: "Dashboard",
+        },
+        {
+          href: "/dashboard-my-profile",
+          icon: "flaticon-user",
+          text: "My Profile",
+        },
+        {
+          href: "/dashboard-message",
+          icon: "flaticon-chat-1",
+          text: "Message",
+        },
+      ],
+    },
+    {
+      title: "MANAGE LISTINGS",
+      items: [
+        {
+          href: "/dashboard-add-property",
+          icon: "flaticon-new-tab",
+          text: "Add New Property",
+        },
+        {
+          href: "/dashboard-my-properties",
+          icon: "flaticon-home",
+          text: "My Properties",
+        },
+        {
+          href: "/dashboard-request-to-add-property",
+          icon: "flaticon-home",
+          text: "Requests",
+        },
+        {
+          href: "/dashboard-reviews",
+          icon: "flaticon-review",
+          text: "Reviews",
+        },
+      ],
+    },
+    {
+      title: "MANAGE ACCOUNT",
+      items: [
         {
           href: "/login",
           icon: "flaticon-logout",
@@ -85,7 +188,55 @@ const DboardMobileNavigation = () => {
           <i className="fa fa-bars pr10" /> Dashboard Navigation
         </button>
         <ul className={`dropdown-content ${isDropdownOpen ? "show" : ""}`}>
-          {sidebarItems.map((section, sectionIndex) => (
+          {role === "seller"&&sellersidebarItems.map((section, sectionIndex) => (
+            <div key={sectionIndex}>
+              <p
+                className={`fz15 fw400 ff-heading mt30 pl30 ${
+                  sectionIndex === 0 ? "mt-0" : "mt30"
+                }`}
+              >
+                {section.title}
+              </p>
+              {section.items.map((item, itemIndex) => (
+                <div key={itemIndex} className="sidebar_list_item">
+                  <Link
+                    href={item.href}
+                    className={`items-center   ${
+                      pathname == item.href ? "-is-active" : ""
+                    } `}
+                  >
+                    <i className={`${item.icon} mr15`} />
+                    {item.text}
+                  </Link>
+                </div>
+              ))}
+            </div>
+          ))}
+          {role === "buyer"&&buyersidebarItems.map((section, sectionIndex) => (
+            <div key={sectionIndex}>
+              <p
+                className={`fz15 fw400 ff-heading mt30 pl30 ${
+                  sectionIndex === 0 ? "mt-0" : "mt30"
+                }`}
+              >
+                {section.title}
+              </p>
+              {section.items.map((item, itemIndex) => (
+                <div key={itemIndex} className="sidebar_list_item">
+                  <Link
+                    href={item.href}
+                    className={`items-center   ${
+                      pathname == item.href ? "-is-active" : ""
+                    } `}
+                  >
+                    <i className={`${item.icon} mr15`} />
+                    {item.text}
+                  </Link>
+                </div>
+              ))}
+            </div>
+          ))}
+          {role === "agent"&&agentsidebarItems.map((section, sectionIndex) => (
             <div key={sectionIndex}>
               <p
                 className={`fz15 fw400 ff-heading mt30 pl30 ${

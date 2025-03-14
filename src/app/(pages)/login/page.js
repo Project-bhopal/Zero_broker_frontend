@@ -1,18 +1,25 @@
+"use client";
 import SignIn from "@/components/common/login-signup-modal/SignIn";
+import Cookies from "js-cookie";
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 
-export const metadata = {
-  title: "Login  || ZeroBroker - Real Estate NextJS Template",
-};
 
 const Login = () => {
   
-
+  useEffect(()=>{
+    Cookies.remove("accessToken")
+    Cookies.remove("refreshToken")
+    Cookies.remove("user")
+  })
   
   return (
     <>
+    <Head>
+        <title>Login || ZeroBroker - Real Estate NextJS Template</title>
+      </Head>
       {/* Our Compare Area */}
       <section className="our-compare pt0 pb0">
         <Image

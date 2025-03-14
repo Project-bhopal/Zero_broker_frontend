@@ -1,8 +1,82 @@
-import React from "react";
+"use client"
+import React, { useEffect, useState } from "react";
 
-const PersonalInfo = () => {
+const PersonalInfo = ({ data, onChange, handleSubmit }) => {
+  // const [formData, setFormData] = useState({
+  //   username: "",
+  //   phone: "",
+  //   whatsapp: "",
+  //   profession: "",
+  //   address: "",
+  //   about: "",
+  // });
+
+  const [errors, setErrors] = useState({});
+
+  // // 🔹 Handle Input Change
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prev) => ({ ...prev, [name]: value }));
+  // };
+
+  // // 🔹 Validate Form
+  // const validateForm = () => {
+  //   let newErrors = {};
+
+  //   if (!formData.username) newErrors.username = "Username is required";
+  //   if (!formData.phone || !/^\d+$/.test(formData.phone)) 
+  //     newErrors.phone = "Phone must contain only numbers";
+  //   if (formData.whatsapp && !/^\d+$/.test(formData.whatsapp)) 
+  //     newErrors.whatsapp = "WhatsApp number must be numeric";
+  //   if (formData.about.length > 500) 
+  //     newErrors.about = "About Me cannot exceed 500 characters";
+
+  //   setErrors(newErrors);
+  //   return Object.keys(newErrors).length === 0;
+  // };
+
+  // // 🔹 Handle Form Submit
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // if (validateForm()) {
+  //     console.log("Form Submitted Successfully", formData);
+  //   // }
+  // };
+
+  const [localData, setLocalData] = useState(data);
+
+  useEffect(() => {
+    setLocalData(data);
+  }, [data]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    const updatedData = { ...localData, [name]: value };
+    setLocalData(updatedData);
+    onChange(updatedData); // 🔹 Send data back to parent
+  };
+
+  const validateForm = () => {
+    let newErrors = {};
+
+    if (localData.phone && !/^\d+$/.test(localData.phone)) 
+      newErrors.phone = "Phone must contain only numbers";
+    if (localData.whatsapp && !/^\d+$/.test(localData.whatsapp)) 
+      newErrors.whatsapp = "WhatsApp number must be numeric";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleLocalSubmit = (e)=>{
+    e.preventDefault()
+  if(validateForm()){
+    handleSubmit()
+  }
+  }
+
   return (
-    <form className="form-style1">
+    <form className="form-style1" onSubmit={handleLocalSubmit}>
       <div className="row">
         <div className="col-sm-6 col-xl-4">
           <div className="mb20">
@@ -11,25 +85,29 @@ const PersonalInfo = () => {
             </label>
             <input
               type="text"
+              name="username"
               className="form-control"
               placeholder="Your Name"
-              required
+              value={localData?.username || localData?.fullname}
+              onChange={handleInputChange}
+              
             />
+            {/* {errors.username && <p className="text-danger">{errors.username}</p>} */}
           </div>
         </div>
         {/* End .col */}
 
-        <div className="col-sm-6 col-xl-4">
+        {/* <div className="col-sm-6 col-xl-4">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">Email</label>
             <input
               type="email"
               className="form-control"
-              placeholder="Your Name"
-              required
+              placeholder="Your Email"
+              
             />
           </div>
-        </div>
+        </div> */}
         {/* End .col */}
 
         <div className="col-sm-6 col-xl-4">
@@ -38,9 +116,13 @@ const PersonalInfo = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="Your Name"
-              required
+              name="mobile"
+              placeholder="Your Phone"
+              value={localData?.mobile}
+              onChange={handleInputChange}
+              
             />
+            {errors.phone && <p className="text-danger">{errors.mobile}</p>}
           </div>
         </div>
         {/* End .col */}
@@ -48,19 +130,20 @@ const PersonalInfo = () => {
         <div className="col-sm-6 col-xl-4">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
-              First Name
+              Email
             </label>
             <input
               type="text"
+              value={localData?.email}
               className="form-control"
               placeholder="Your Name"
-              required
+              
             />
           </div>
         </div>
         {/* End .col */}
 
-        <div className="col-sm-6 col-xl-4">
+        {/* <div className="col-sm-6 col-xl-4">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
               Last Name
@@ -69,13 +152,13 @@ const PersonalInfo = () => {
               type="text"
               className="form-control"
               placeholder="Your Name"
-              required
+              
             />
           </div>
-        </div>
+        </div> */}
         {/* End .col */}
 
-        <div className="col-sm-6 col-xl-4">
+        {/* <div className="col-sm-6 col-xl-4">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
               Position
@@ -84,13 +167,13 @@ const PersonalInfo = () => {
               type="text"
               className="form-control"
               placeholder="Your Name"
-              required
+              
             />
           </div>
-        </div>
+        </div> */}
         {/* End .col */}
 
-        <div className="col-sm-6 col-xl-4">
+        {/* <div className="col-sm-6 col-xl-4">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
               Language
@@ -99,8 +182,27 @@ const PersonalInfo = () => {
               type="text"
               className="form-control"
               placeholder="Your Name"
-              required
+              
             />
+          </div>
+        </div> */}
+        {/* End .col */}
+
+        <div className="col-sm-6 col-xl-4">
+          <div className="mb20">
+            <label className="heading-color ff-heading fw600 mb10">
+              Whatsapp Number
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              name="whatsappNumber"
+              placeholder="Your Whatsapp Number"
+              value={localData?.whatsappNumber}
+              onChange={handleInputChange}
+              
+            />
+            {errors.whatsappNumber && <p className="text-danger">{errors.whatsappNumber}</p>}
           </div>
         </div>
         {/* End .col */}
@@ -108,29 +210,18 @@ const PersonalInfo = () => {
         <div className="col-sm-6 col-xl-4">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
-              Company Name
+              Profession
             </label>
             <input
               type="text"
               className="form-control"
+              name="profession"
               placeholder="Your Name"
-              required
+              value={localData?.profession}
+              onChange={handleInputChange}
+              
             />
-          </div>
-        </div>
-        {/* End .col */}
-
-        <div className="col-sm-6 col-xl-4">
-          <div className="mb20">
-            <label className="heading-color ff-heading fw600 mb10">
-              Tax Number
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Your Name"
-              required
-            />
+            {/* {errors.whatsapp && <p className="text-danger">{errors.profession}</p>} */}
           </div>
         </div>
         {/* End .col */}
@@ -143,9 +234,13 @@ const PersonalInfo = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="Your Name"
-              required
+              name="address"
+              placeholder="Your Address"
+              value={localData?.address}
+              onChange={handleInputChange}
+              
             />
+            {/* {errors.whatsapp && <p className="text-danger">{errors.address}</p>} */}
           </div>
         </div>
         {/* End .col */}
@@ -158,9 +253,14 @@ const PersonalInfo = () => {
             <textarea
               cols={30}
               rows={4}
-              placeholder="There are many variations of passages."
+              maxLength={500}
+              name="about"
+              placeholder="About yourself"
+              value={localData?.about || localData?.aboutMe}
+              onChange={handleInputChange}
               defaultValue={""}
             />
+            {/* {errors.about && <p className="text-danger">{errors.about}</p>} */}
           </div>
         </div>
         {/* End .col */}
@@ -175,7 +275,7 @@ const PersonalInfo = () => {
         </div>
         {/* End .col */}
       </div>
-    </form>
+     </form>
   );
 };
 

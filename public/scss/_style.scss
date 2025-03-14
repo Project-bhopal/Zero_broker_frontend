@@ -535,7 +535,7 @@ li {
 .user_setting .dropdown-menu .dropdown-item:hover,
 .user_setting .dropdown-menu .dropdown-item.-is-active,
 .user_setting .dropdown-menu .dropdown-item:hover span {
-    background-color: #181a20;
+    background-color: #0f8363;
     color: #ffffff;
 }
 
@@ -543,7 +543,7 @@ li {
 .dashboard_sidebar_list .sidebar_list_item a:active,
 .dashboard_sidebar_list .sidebar_list_item a:focus,
 .dashboard_sidebar_list .sidebar_list_item a.-is-active {
-    background-color: #181a20;
+    background-color: #0f8363;
     color: #ffffff;
 }
 
@@ -646,7 +646,7 @@ li {
     width: 4px;
 }
 .dashboard__sidebar::-webkit-scrollbar-thumb {
-    background-color: rgba(33, 37, 41, 0.3);
+    background-color: #27c89a;
     border-radius: 12px;
 }
 
@@ -861,13 +861,13 @@ li {
     position: relative;
 }
 .inbox_chatting_box::-webkit-scrollbar {
-    background: transparent;
+    background: rgb(228, 225, 225);
     border-radius: 10px;
     padding-right: 10px;
     width: 4px;
 }
 .inbox_chatting_box::-webkit-scrollbar-thumb {
-    background-color: #f1fcfa;
+    background-color: #27c89a;
     border-radius: 10px;
 }
 .inbox_chatting_box .chatting_content {
@@ -967,13 +967,13 @@ li {
     overflow-y: scroll;
 }
 .chat-member-list::-webkit-scrollbar {
-    background: transparent;
+    background: rgb(207, 205, 205);
     border-radius: 10px;
     padding-right: 10px;
     width: 4px;
 }
 .chat-member-list::-webkit-scrollbar-thumb {
-    background-color: #f1fcfa;
+    background-color: #27c89a;
     border-radius: 10px;
     height: 250px;
 }
@@ -2720,7 +2720,7 @@ li {
     width: 5px;
 }
 .half_map_area_content::-webkit-scrollbar-thumb {
-    background-color: #f7f7f7;
+    background-color: #27c89a;
     border-radius: 3px;
     height: 200px;
 }
@@ -7526,7 +7526,7 @@ li.mm-listitem:focus {
     border-radius: 12px;
 }
 .rightside-hidden-bar::-webkit-scrollbar-thumb {
-    background-color: #dddddd;
+    background-color: #27c89a;
     border-radius: 12px;
 }
 
@@ -7584,13 +7584,13 @@ li.mm-listitem:focus {
     overflow-y: scroll;
 }
 .lefttside-hidden-bar .hsidebar-content::-webkit-scrollbar {
-    background: transparent;
+    background: white;
     border-radius: 10px;
     padding-right: 10px;
     width: 10px;
 }
 .lefttside-hidden-bar .hsidebar-content::-webkit-scrollbar-thumb {
-    background-color: #f1fcfa;
+    background-color: #27c89a;
     border-radius: 10px;
 }
 .lefttside-hidden-bar.map-page .hsidebar-content {
@@ -9546,7 +9546,7 @@ input:focus-visible {
 
 .selection input[type="radio"]:checked ~ label {
     border: 2px solid #181a20;
-    outlinie: transparent;
+    outline: transparent;
     z-index: 1;
 }
 

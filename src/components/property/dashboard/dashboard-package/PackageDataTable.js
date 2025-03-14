@@ -88,8 +88,8 @@ const PackageDataTable = () => {
     <table className="table-style3 table">
       <thead className="t-head">
         <tr>
-          <th scope="col">Current Package</th>
-          <th scope="col">Properties remaining</th>
+          <th scope="col">Current plan</th>
+          <th scope="col">Contacts remaining</th>
           <th scope="col">Featured remaining</th>
           <th scope="col">Renewal remaining</th>
           <th scope="col">Storage Space</th>

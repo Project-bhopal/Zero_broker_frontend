@@ -8,67 +8,175 @@ import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 const DashboardHeader = () => {
-  const pathname = usePathname();
+     const [role, setRole] = useState("")
+      const pathname = usePathname();
+      useEffect(()=>{
+        // const user = JSON.parse(Cookies.get("user"))
+        // setRole(user.role )
+        setRole("agent")
+      },[])
+    
+  
+    const buyermenuItems = [
+      {
+        title: "MAIN",
+        items: [
+          {
+            href: "/dashboard-my-profile",
+            icon: "flaticon-user",
+            text: "My Profile",
+          },
+          {
+            href: "/dashboard-message",
+            icon: "flaticon-chat-1",
+            text: "Message",
+          },
+        ],
+      },
+      {
+        title: "MANAGE LISTINGS",
+        items: [
+          {
+            href: "/dashboard-my-favourites",
+            icon: "flaticon-like",
+            text: "My Favorites",
+          },
+          {
+            href: "/dashboard-saved-search",
+            icon: "flaticon-search-2",
+            text: "Saved Search",
+          },
+          {
+            href: "/dashboard-reviews",
+            icon: "flaticon-review",
+            text: "Reviews",
+          },
+        ],
+      },
+      {
+        title: "MANAGE ACCOUNT",
+        items: [
+          {
+            href: "/dashboard-my-package",
+            icon: "flaticon-protection",
+            text: "My Plan",
+          },
+          {
+            href: "/login",
+            icon: "flaticon-logout",
+            text: "Logout",
+          },
+        ],
+      },
+    ];
+  
+    const sellermenuItems = [
+      {
+        title: "MAIN",
+        items: [
+          {
+            href: "/dashboard-home",
+            icon: "flaticon-discovery",
+            text: "Dashboard",
+          },
+          {
+            href: "/dashboard-my-profile",
+            icon: "flaticon-user",
+            text: "My Profile",
+          },
+          {
+            href: "/dashboard-message",
+            icon: "flaticon-chat-1",
+            text: "Message",
+          },
+        ],
+      },
+      {
+        title: "MANAGE LISTINGS",
+        items: [
+          {
+            href: "/dashboard-my-properties",
+            icon: "flaticon-home",
+            text: "My Properties",
+          },
+          {
+            href: "/dashboard-reviews",
+            icon: "flaticon-review",
+            text: "Reviews",
+          },
+        ],
+      },
+      {
+        title: "MANAGE ACCOUNT",
+        items: [
+          {
+            href: "/login",
+            icon: "flaticon-logout",
+            text: "Logout",
+          },
+        ],
+      },
+    ];
+  
+    const agentmenuItems = [
+      {
+        title: "MAIN",
+        items: [
+          {
+            href: "/dashboard-home",
+            icon: "flaticon-discovery",
+            text: "Dashboard",
+          },
+          {
+            href: "/dashboard-my-profile",
+            icon: "flaticon-user",
+            text: "My Profile",
+          },
+          {
+            href: "/dashboard-message",
+            icon: "flaticon-chat-1",
+            text: "Message",
+          },
+        ],
+      },
+      {
+        title: "MANAGE LISTINGS",
+        items: [
+          {
+            href: "/dashboard-add-property",
+            icon: "flaticon-new-tab",
+            text: "Add New Property",
+          },
+          {
+            href: "/dashboard-my-properties",
+            icon: "flaticon-home",
+            text: "My Properties",
+          },
+          {
+            href: "/dashboard-request-to-add-property",
+            icon: "flaticon-home",
+            text: "Requests",
+          },
+          {
+            href: "/dashboard-reviews",
+            icon: "flaticon-review",
+            text: "Reviews",
+          },
+        ],
+      },
+      {
+        title: "MANAGE ACCOUNT",
+        items: [
+          {
+            href: "/login",
+            icon: "flaticon-logout",
+            text: "Logout",
+          },
+        ],
+      },
+    ];
 
-  const menuItems = [
-    {
-      title: "MAIN",
-      items: [
-        {
-          icon: "flaticon-discovery",
-          text: "Dashboard",
-          href: "/dashboard-home",
-        },
-        {
-          icon: "flaticon-chat-1",
-          text: "Message",
-          href: "/dashboard-message",
-        },
-      ],
-    },
-    {
-      title: "MANAGE LISTINGS",
-      items: [
-        {
-          icon: "flaticon-new-tab",
-          text: "Add New Property",
-          href: "/dashboard-add-property",
-        },
-        {
-          icon: "flaticon-home",
-          text: "My Properties",
-          href: "/dashboard-my-properties",
-        },
-        {
-          icon: "flaticon-like",
-          text: "My Favorites",
-          href: "/dashboard-my-favourites",
-        },
-        {
-          icon: "flaticon-search-2",
-          text: "Saved Search",
-          href: "/dashboard-saved-search",
-        },
-        { icon: "flaticon-review", text: "Reviews", href: "/dashboard-review" },
-      ],
-    },
-    {
-      title: "MANAGE ACCOUNT",
-      items: [
-        {
-          icon: "flaticon-protection",
-          text: "My Package",
-          href: "/dashboard-my-package",
-        },
-        {
-          icon: "flaticon-user",
-          text: "My Profile",
-          href: "/dashboard-my-profile",
-        },
-        { icon: "flaticon-exit", text: "Logout", href: "/login" },
-      ],
-    },
-  ];
+
 
   return (
     <>
@@ -91,7 +199,7 @@ const DashboardHeader = () => {
                   {/* End Logo */}
 
                   <a
-                    className="dashboard_sidebar_toggle_icon text-thm1 vam"
+                    className="dashboard_sidebar_toggle_icon text-thm1 vam md:hidden block"
                     href="#"
                     data-bs-toggle="offcanvas"
                     data-bs-target="#SidebarPanel"
@@ -144,7 +252,53 @@ const DashboardHeader = () => {
                         </a>
                         <div className="dropdown-menu">
                           <div className="user_setting_content">
-                            {menuItems.map((section, sectionIndex) => (
+                            {role === "seller"&&sellermenuItems.map((section, sectionIndex) => (
+                              <div key={sectionIndex}>
+                                <p
+                                  className={`fz15 fw400 ff-heading ${
+                                    sectionIndex === 0 ? "mb20" : "mt30"
+                                  }`}
+                                >
+                                  {section.title}
+                                </p>
+                                {section.items.map((item, itemIndex) => (
+                                  <Link
+                                    key={itemIndex}
+                                    className={`dropdown-item ${
+                                      pathname == item.href ? "-is-active" : ""
+                                    } `}
+                                    href={item.href}
+                                  >
+                                    <i className={`${item.icon} mr10`} />
+                                    {item.text}
+                                  </Link>
+                                ))}
+                              </div>
+                            ))}
+                            {role === "buyer"&&buyermenuItems.map((section, sectionIndex) => (
+                              <div key={sectionIndex}>
+                                <p
+                                  className={`fz15 fw400 ff-heading ${
+                                    sectionIndex === 0 ? "mb20" : "mt30"
+                                  }`}
+                                >
+                                  {section.title}
+                                </p>
+                                {section.items.map((item, itemIndex) => (
+                                  <Link
+                                    key={itemIndex}
+                                    className={`dropdown-item ${
+                                      pathname == item.href ? "-is-active" : ""
+                                    } `}
+                                    href={item.href}
+                                  >
+                                    <i className={`${item.icon} mr10`} />
+                                    {item.text}
+                                  </Link>
+                                ))}
+                              </div>
+                            ))}
+                            {role === "agent"&&agentmenuItems.map((section, sectionIndex) => (
                               <div key={sectionIndex}>
                                 <p
                                   className={`fz15 fw400 ff-heading ${

@@ -79,7 +79,7 @@ const MainMenu = ({ navbar }) => {
       submenu: false,
     },
     {
-      name: "Find agent",
+      name: "News",
       url: "/",
       submenu: false,
     },

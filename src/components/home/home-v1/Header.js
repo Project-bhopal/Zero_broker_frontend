@@ -11,6 +11,7 @@ import Cookies from "js-cookie";
 
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
+  const [islogin, setIsLogin] = useState(false)
 
   const changeBackground = () => {
     if (window.scrollY >= 10) {
@@ -20,8 +21,10 @@ const Header = () => {
     }
   };
 
-  const islogin = localStorage.getItem("loginSuccessfull")
   useEffect(() => {
+    const islogin = Cookies.get('accessToken')
+    setIsLogin(islogin)
+    // setIsLogin(islogin)
     window.addEventListener("scroll", changeBackground);
     return () => {
       window.removeEventListener("scroll", changeBackground);
@@ -110,10 +113,9 @@ const Header = () => {
                 <div className="d-flex align-items-center">
                   {islogin ?(
                     <a
-                    href="/login"
+                    href="/dashboard-my-profile"
                     className="login-info d-flex align-items-center"
                     role="button"
-                    onClick={()=>{Cookies.remove("accessToken"); Cookies.remove("refreshToken")}}
                     style={{
                       textShadow: !navbar
                         ? "2px 2px 6px rgba(0, 0, 0, 0.9)" // Shadow when navbar is not sticky
@@ -121,7 +123,7 @@ const Header = () => {
                     }}
                   >
                     <i
-                      className="fa fa-sign-out fz16 me-2"
+                      className="far fa-user-circle fz16 me-2"
                       style={{
                         textShadow: !navbar
                           ? "2px 2px 6px rgba(0, 0, 0, 0.9)" // Shadow for the icon
@@ -136,9 +138,10 @@ const Header = () => {
                           : "none",
                       }}
                     >
-                      Logout
+                      Profile
                     </span>
                   </a>
+                  
                   ) : (
                     <a
                     href="#"

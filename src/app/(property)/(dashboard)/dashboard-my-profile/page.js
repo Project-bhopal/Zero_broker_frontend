@@ -1,3 +1,5 @@
+"use client"
+import { ApiFetchRequest, ApiPutRequest } from "@/axios/apiRequest";
 import DashboardHeader from "@/components/common/DashboardHeader";
 import MobileMenu from "@/components/common/mobile-menu";
 import DboardMobileNavigation from "@/components/property/dashboard/DboardMobileNavigation";
@@ -7,14 +9,73 @@ import ChangePasswordForm from "@/components/property/dashboard/dashboard-profil
 import PersonalInfo from "@/components/property/dashboard/dashboard-profile/PersonalInfo";
 import ProfileBox from "@/components/property/dashboard/dashboard-profile/ProfileBox";
 import SocialField from "@/components/property/dashboard/dashboard-profile/SocialField";
-
-export const metadata = {
-  title: "Dashboard My Profile || ZeroBroker - Real Estate NextJS Template",
-};
+import Head from "next/head";
+import useAxiosFetch from "@/hooks/useAxiosFetch";
+import { useEffect, useState } from "react";
+const api_url = process.env.NEXT_PUBLI_API_BASE_UR
+// export const metadata = {
+//   title: "Dashboard My Profile || ZeroBroker - Real Estate NextJS Template",
+// };
 
 const DashboardMyProfile = () => {
+  const [formData, setFormData] = useState({
+    userProfile: null,
+    personalInfo: {},
+    socialMediaLinks: {},
+  });
+  
+  const { data, isLoading, isError, error } = useAxiosFetch("/profile/me");
+  
+  useEffect(() => {
+    if (data?.data) {
+      setFormData((prev) => ({
+        ...prev,
+        socialMediaLinks: { ...data.data.socialMediaLinks }, // Ensure a valid object
+        userProfile: data.data.profilePhoto || null, // Handle potential null values
+        personalInfo: {
+          ...data.data.user,
+          whatsappNumber: data.data.whatsappNumber, // Fix merging issue
+          address : data.data.address,
+          aboutMe : data.data.aboutMe,
+          profession : data.data.profession,
+        },
+      }));
+    }
+  }, [data]);
+  
+  useEffect(() => {
+    console.log("Updated formData:", formData);
+  }, [formData]);
+
+ 
+  const handleFormChange = (section, data) => {
+    setFormData((prev) => ({
+      ...prev,
+      [section]: { ...prev[section], ...data },
+    }));
+  };
+
+  
+  const handleSubmit = async () => {
+    const userData = {...formData.userProfile, ...formData.personalInfo}
+    console.log(userData)
+    try {
+      const response = await ApiPutRequest("/profile/update", userData);
+      if(response.data){
+        console.log("Profile updated successfully:", response.data);
+        alert("Profile updated successfully!");
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("Error updating profile. Please try again.");
+    }
+  };
+  
   return (
     <>
+    <Head>
+      <title>Dashboard My Profile || ZeroBroker - Real Estate NextJS Template</title>
+    </Head>
       {/* Main Header Nav */}
       <DashboardHeader />
       {/* End Main Header Nav */}
@@ -53,12 +114,19 @@ const DashboardMyProfile = () => {
                 <div className="col-xl-12">
                   <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                     <div className="col-xl-7">
-                      <ProfileBox />
+                    <ProfileBox
+                      data={formData.userProfile}
+                      onChange={(data) => handleFormChange("userProfile", data)}
+                    />
                     </div>
                     {/* End ProfileBox */}
 
                     <div className="col-lg-12">
-                      <PersonalInfo />
+                    <PersonalInfo
+                      data={formData.personalInfo }
+                      onChange={(data) => handleFormChange("personalInfo", data)}
+                      handleSubmit={()=>handleSubmit()}
+                    />
                     </div>
                     {/* End PersonalInfo */}
                   </div>
@@ -66,7 +134,7 @@ const DashboardMyProfile = () => {
 
                   <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                     <h4 className="title fz17 mb30">Social Media</h4>
-                    <SocialField />
+                    <SocialField data ={formData.socialMediaLinks}/>
                   </div>
                   {/* End .ps-widget */}
 

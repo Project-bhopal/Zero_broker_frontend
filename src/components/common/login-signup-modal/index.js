@@ -3,7 +3,7 @@ import SignUp from "./SignUp";
 
 const LoginSignupModal = () => {
   return (
-    <div className="modal-content">
+    <div className="modal-content" id="loginmodal">
       <div className="modal-header" style={{ justifyContent: "center",marginBottom:"10px"}}>
         <h5 className="modal-title" id="exampleModalToggleLabel"
           style={{

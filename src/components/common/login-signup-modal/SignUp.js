@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import GoogleAuth from "../google-oauth/GoogleOauth";
 import Cookies from "js-cookie";
 import WelcomeModal from "../WelcomeModal";
+import AnimatedModal from "../AnimatedModal";
 
 const SignUp = () => {
   const [showModal, setShowModal] = useState(false);
@@ -271,7 +272,8 @@ const SignUp = () => {
           }}
         />
       </Box>
-      <WelcomeModal showModal={showModal} setShowModal={setShowModal} />
+      {/* <WelcomeModal showModal={showModal} setShowModal={setShowModal} /> */}
+      <AnimatedModal show={showModal} handleClose={() => setShowModal(false)} />
     </>
   );
 };
