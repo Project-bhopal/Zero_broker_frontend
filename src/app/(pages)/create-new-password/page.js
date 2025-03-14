@@ -15,7 +15,9 @@ export default function CreateNewPassword() {
   const [validationError, setValidationError] = useState("");
   const [confirmValidationError, setConfirmValidationError] = useState("");
   const [passwordMatch, setPasswordMatch] = useState(null);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({
+    email:""
+  });
   const [email, setEmail] = useState("")
   const [state, setState] = useState({
     open: false,
@@ -30,7 +32,7 @@ export default function CreateNewPassword() {
     const user = JSON.parse(sessionStorage.getItem("user"));
     setUser(user);
     const email = sessionStorage.getItem("e");
-    setEmail(email || user.email)
+    setEmail(email)
   }, []);
 
   const handleInputChange = (e) => {

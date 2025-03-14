@@ -37,6 +37,7 @@ const queryClient = new QueryClient();
 
 export default function RootLayout({ children }) {
   const [isToken, setIsToken] = useState(null);
+  const [user, setUser] = useState({})
   // const [show, setShow] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
@@ -53,13 +54,18 @@ export default function RootLayout({ children }) {
     const token = Cookies.get("accessToken");
     const firstVisit = localStorage.getItem("firstVisit");
     const role = localStorage.getItem("role");
-
+    const user = Cookies.get("user")
+  
+    if(user){
+      const parsedUser = JSON.parse(user)
+      setUser(parsedUser);
+    }
     if(token){
       setIsToken(true);
     } else {
       setIsToken(false)
     }
-
+    
     if (!token && !publicRoutes.includes(pathname)) {
       router.push("/login");
     }
@@ -70,6 +76,7 @@ export default function RootLayout({ children }) {
     } else {
       setShowModal(false);
     }
+   
   }, [pathname]);
 
   // useEffect(()=>{
@@ -99,7 +106,8 @@ export default function RootLayout({ children }) {
           <body className={`body `} cz-shortcut-listen="false">
             {/* {show && ( */}
               <>
-            <ProtectedRoute>
+            <ProtectedRoute user={user}>
+                  
                   <div className="wrapper ovh">{children}</div>
             </ProtectedRoute>
                 <ScrollToTop />

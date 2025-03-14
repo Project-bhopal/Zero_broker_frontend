@@ -19,7 +19,7 @@ const ProSidebarContent = () => {
     },
     {
       name: "Rent",
-      url: "/",
+      url: pageRoutes.rent.propertyForRent,
       submenu: false,
     },
     {
@@ -38,22 +38,7 @@ const ProSidebarContent = () => {
       submenu: false,
     },
     {
-      name: "Explore",
-      url: "/",
-      submenu: true,
-      subMenus: [
-        {
-          name: "Explore 001",
-          url: "/001",
-        },
-        {
-          name: "Explore 002",
-          url: "/",
-        },
-      ],
-    },
-    {
-      name: "Mortgages",
+      name: "News",
       url: "/",
       submenu: false,
     },

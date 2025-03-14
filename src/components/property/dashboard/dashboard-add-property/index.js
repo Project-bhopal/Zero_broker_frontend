@@ -5,7 +5,7 @@ import LocationField from "./LocationField";
 import DetailsFiled from "./details-field";
 import Amenities from "./Amenities";
 
-const AddPropertyTabContent = () => {
+const   AddPropertyTabContent = () => {
   return (
     <>
       <nav>

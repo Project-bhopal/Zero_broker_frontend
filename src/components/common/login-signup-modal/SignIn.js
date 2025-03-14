@@ -2,7 +2,7 @@
 import { usePost } from "@/hooks/usePost";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import GoogleAuth from "../google-oauth/GoogleOauth";
 import { NavLink } from "react-bootstrap";
 
@@ -17,6 +17,7 @@ const SignIn = () => {
   });
   const router = useRouter();
   const mutation = usePost("/auth/login");
+
 
   const inputHandler = (e) => {
     const { name, value } = e.target;
@@ -47,6 +48,13 @@ const SignIn = () => {
         onSuccess: (details) => {
           router.push("/")
           localStorage.setItem("loginSuccessfull" , "true")
+          const modalElement = document.getElementById("loginmodal"); // Replace 'myModal' with your modal's ID
+      if (modalElement) {
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        if (modal) {
+          modal.hide();
+        }
+      }
         },
         onError: (error) => {
           console.error("Error creating user", error);
@@ -112,7 +120,7 @@ const SignIn = () => {
       
       {error && <p style={{ color: "red", fontSize: "16px" }}>{error}</p>}
       <div className="d-grid mb20">
-        <button className="ud-btn btn-thm" type="submit" disabled={Object.values(validationError).some((error) => error !== "")}>
+        <button className="ud-btn btn-thm"  type="submit" disabled={Object.values(validationError).some((error) => error !== "")}>
           Sign in <i className="fal fa-arrow-right-long" />
         </button>
       </div>

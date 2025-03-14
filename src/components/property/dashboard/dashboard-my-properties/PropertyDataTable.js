@@ -6,7 +6,7 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 
 const propertyData = [
   {
-    id: 1,
+    _id: 1,
     title: "Equestrian Family Home",
     imageSrc: "/images/listings/list-1.jpg",
     location: "California City, CA, USA",
@@ -15,7 +15,7 @@ const propertyData = [
     status: "Pending",
   },
   {
-    id: 2,
+    _id: 2,
     title: "Luxury villa in Rego Park",
     imageSrc: "/images/listings/list-2.jpg",
     location: "California City, CA, USA",
@@ -24,7 +24,7 @@ const propertyData = [
     status: "Published",
   },
   {
-    id: 3,
+    _id: 3,
     title: "Villa on Hollywood Boulevard",
     imageSrc: "/images/listings/list-3.jpg",
     location: "California City, CA, USA",
@@ -33,7 +33,7 @@ const propertyData = [
     status: "Processing",
   },
   {
-    id: 4,
+    _id: 4,
     title: "Equestrian Family Home",
     imageSrc: "/images/listings/list-4.jpg",
     location: "California City, CA, USA",
@@ -42,7 +42,7 @@ const propertyData = [
     status: "Pending",
   },
   {
-    id: 5,
+    _id: 5,
     title: "Luxury villa in Rego Park",
     imageSrc: "/images/listings/list-5.jpg",
     location: "California City, CA, USA",
@@ -79,7 +79,7 @@ const PropertyDataTable = () => {
       </thead>
       <tbody className="t-body">
         {propertyData.map((property) => (
-          <tr key={property.id}>
+          <tr key={property._id}>
             <th scope="row">
               <div className="listing-style1 dashboard-style d-xxl-flex align-items-center mb-0">
                 <div className="list-thumb">
@@ -111,28 +111,30 @@ const PropertyDataTable = () => {
             <td className="vam">{property.datePublished}</td>
             <td className="vam">
               <div className="d-flex">
-                <button
+                <Link
+                  href={`/dashboard/request-to-agent/${property._id}`}
                   className="icon"
                   style={{ border: "none" }}
-                  data-tooltip-id={`edit-${property.id}`}
+                  data-tooltip-id={`edit-${property._id}`}
                 >
                   <span className="fas fa-pen fa" />
-                </button>
-                <button
+                </Link>
+                <Link
+                  href={`/dashboard/request-to-agent/${property._id}`}
                   className="icon"
                   style={{ border: "none" }}
                   data-tooltip-id={`delete-${property.id}`}
                 >
                   <span className="flaticon-bin" />
-                </button>
+                </Link>
 
                 <ReactTooltip
-                  id={`edit-${property.id}`}
+                  id={`edit-${property._id}`}
                   place="top"
-                  content="Edi"
+                  content="Edit"
                 />
                 <ReactTooltip
-                  id={`delete-${property.id}`}
+                  id={`delete-${property._id}`}
                   place="top"
                   content="Delete"
                 />

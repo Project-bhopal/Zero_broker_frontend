@@ -3,17 +3,21 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import React, { useState } from "react";
 import Image from "next/image";
 
-const ProfileBox = () => {
-  const [uploadedImage, setUploadedImage] = useState(null);
+const ProfileBox = ({ data, onChange}) => {
+  const [uploadedImage, setUploadedImage] = useState(null || data);
 
   const handleUpload = (event) => {
     const file = event.target.files[0];
+    const name = event.target.name
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
         setUploadedImage(e.target.result);
       };
       reader.readAsDataURL(file);
+      console.log(file)
+      const uploadedImage = {[name] : file}
+      onChange({[name] : file})
     }
   };
 
@@ -45,6 +49,7 @@ const ProfileBox = () => {
         <label className="upload-label pointer">
           <input
             type="file"
+            name="userprofile"
             accept="image/jpeg,image/png"
             onChange={handleUpload}
             style={{ display: "none" }}

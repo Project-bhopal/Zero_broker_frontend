@@ -12,13 +12,37 @@ export async function LoginRequest (url, request) {
     }
 }
 
-export async function ApiRequest(url, request){
+export async function ApiPutRequest(url, request){
     try {
-        const res = await api(url, request)
+        const res = await api.put(url, request)
         return res
     } catch (error) {
         if(error.response && error.response.status == 401){
-            window.location.href("/login")
+            window.location.href= "/login"
+        } else {
+            return error
+        }
+    }
+}
+export async function ApiPostRequest(url, request){
+    try {
+        const res = await api.post(url, request)
+        return res
+    } catch (error) {
+        if(error.response && error.response.status == 401){
+            window.location.href = "/login"
+        } else {
+            return error
+        }
+    }
+}
+export async function ApiFetchRequest(url){
+    try {
+        const res = await api.get(url)
+        return res
+    } catch (error) {
+        if(error.response && error.response.status == 401){
+            window.location.href = "/login"
         } else {
             return error
         }

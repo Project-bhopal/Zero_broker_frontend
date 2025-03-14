@@ -1,26 +1,31 @@
-"use client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ children, user }) => {
   const router = useRouter();
-//   const [loading, setLoading] = useState(true);
+  const pathname = typeof window !== "undefined" ? window.location.pathname : "";
+  // const user = JSON.parse(Cookies.get("user"));
+  useEffect(() => {
 
-//   useEffect(() => {
-//     const token = Cookies.get("accessToken");
+    const restrictedRoutes = {
+      admin: ["/dashboard-add-property", "/dashboar"],
+      buyer: ["/dashboard-my-properties", "/dashboard-reviews" , "/dashboard-add-property", "/dashboard-home"],
+      seller: ["/dashboard-add-property", "/dashboard-my-favourites", "/dashboard-saved-search", "/dashboard-my-package", ""],
+      agent: ["/dashboard-saved-search", "/dashbaord-my-favourites", "/dashboard-my-package"],
+    };
 
-//     if (!token) {
-//       router.push("/login");
-//       setLoading(false)
-//     } else {
-//       setLoading(false);
-//     }
-//   }, []);
+    const userRole = user?.role || "guest"; // Default to guest
 
-//   if (loading) return <div>Loading...</div>; 
+    // Check if route is restricted for the user's role
+    const isRestricted = restrictedRoutes[userRole]?.includes(pathname);
 
-  return <>{children}</>;
+    if (isRestricted) {
+      router.push("/dashboard-my-profile");
+    }
+  }, [pathname, user, router]);
+
+  return children;
 };
 
 export default ProtectedRoute;
