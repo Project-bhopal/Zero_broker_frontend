@@ -11,9 +11,9 @@ const DashboardHeader = () => {
      const [role, setRole] = useState("")
       const pathname = usePathname();
       useEffect(()=>{
-        // const user = JSON.parse(Cookies.get("user"))
-        // setRole(user.role )
-        setRole("agent")
+        const role = JSON.parse(Cookies.get("role"))
+        setRole(role )
+        // setRole("agent")
       },[])
     
   

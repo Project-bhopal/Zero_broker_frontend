@@ -37,7 +37,7 @@ const queryClient = new QueryClient();
 
 export default function RootLayout({ children }) {
   const [isToken, setIsToken] = useState(null);
-  const [user, setUser] = useState({})
+  const [role, setRole] = useState({})
   // const [show, setShow] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
@@ -54,11 +54,11 @@ export default function RootLayout({ children }) {
     const token = Cookies.get("accessToken");
     const firstVisit = localStorage.getItem("firstVisit");
     const role = localStorage.getItem("role");
-    const user = Cookies.get("user")
+    const cookieRole = Cookies.get("role")
   
-    if(user){
-      const parsedUser = JSON.parse(user)
-      setUser(parsedUser);
+    if(cookieRole){
+      const parsedRole = JSON.parse(cookieRole)
+      setRole(parsedRole);
     }
     if(token){
       setIsToken(true);
@@ -106,7 +106,7 @@ export default function RootLayout({ children }) {
           <body className={`body `} cz-shortcut-listen="false">
             {/* {show && ( */}
               <>
-            <ProtectedRoute user={user}>
+            <ProtectedRoute role={role}>
                   
                   <div className="wrapper ovh">{children}</div>
             </ProtectedRoute>

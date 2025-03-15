@@ -2,10 +2,10 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-const ProtectedRoute = ({ children, user }) => {
+const ProtectedRoute = ({ children, role }) => {
   const router = useRouter();
   const pathname = typeof window !== "undefined" ? window.location.pathname : "";
-  // const user = JSON.parse(Cookies.get("user"));
+  // const role = JSON.parse(Cookies.get("role"));
   useEffect(() => {
 
     const restrictedRoutes = {
@@ -15,7 +15,7 @@ const ProtectedRoute = ({ children, user }) => {
       agent: ["/dashboard-saved-search", "/dashbaord-my-favourites", "/dashboard-my-package"],
     };
 
-    const userRole = user?.role || "guest"; // Default to guest
+    const userRole = role || "guest"; // Default to guest
 
     // Check if route is restricted for the user's role
     const isRestricted = restrictedRoutes[userRole]?.includes(pathname);

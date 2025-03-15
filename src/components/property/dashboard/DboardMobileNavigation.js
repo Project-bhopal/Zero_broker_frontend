@@ -9,9 +9,9 @@ const DboardMobileNavigation = () => {
   const [role, setRole] = useState("")
   const pathname = usePathname();
   useEffect(()=>{
-    // const user = JSON.parse(Cookies.get("user"))
-    // setRole(user.role)
-    setRole("buyer")
+    const parsedRole = JSON.parse(Cookies.get("role"))
+    setRole(parsedRole)
+    // setRole("buyer")
   },[])
 
   const buyersidebarItems = [

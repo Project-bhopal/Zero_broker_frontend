@@ -10,10 +10,10 @@ const SidebarDashboard = () => {
     const pathname = usePathname();
 
     useEffect(()=>{
-      const user = Cookies.get("user")
-      if(user){
-        const parsedUser = JSON.parse(user)
-        setRole(parsedUser.role )
+      const role = Cookies.get("role")
+      if(role){
+        const parsedRole = JSON.parse(role)
+        setRole(parsedRole )
       }
       // setRole("agent")
     },[])

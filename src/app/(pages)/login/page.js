@@ -12,7 +12,7 @@ const Login = () => {
   useEffect(()=>{
     Cookies.remove("accessToken")
     Cookies.remove("refreshToken")
-    Cookies.remove("user")
+    Cookies.remove("role")
   })
   
   return (
