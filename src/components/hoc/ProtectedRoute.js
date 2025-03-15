@@ -23,7 +23,7 @@ const ProtectedRoute = ({ children, role }) => {
     if (isRestricted) {
       router.push("/dashboard-my-profile");
     }
-  }, [pathname, user, router]);
+  }, [pathname, role, router]);
 
   return children;
 };
