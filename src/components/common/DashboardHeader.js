@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import Cookies from "js-cookie";
 
 const DashboardHeader = () => {
      const [role, setRole] = useState("")

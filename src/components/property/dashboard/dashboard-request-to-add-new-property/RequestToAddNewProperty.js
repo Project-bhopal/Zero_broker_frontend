@@ -3,6 +3,7 @@ import useAxiosPost from "@/hooks/useAxiosPost";
 import { usePost } from "@/hooks/usePost";
 import { Box, Snackbar } from "@mui/material";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const Select = dynamic(() => import('react-select'), { ssr: false });
@@ -24,6 +25,7 @@ function RequestToAddNewProperty() {
         vertical: "top",
         horizontal: "center",
       });
+      const router = useRouter()
      
     
     const catergoryOptions = [
@@ -36,8 +38,8 @@ function RequestToAddNewProperty() {
         { value: "Townhome", label: "Townhome" },
       ];
     const PurposeOptions = [
-        { value: "Sell", label: "Sell" },
-        { value: "Rent7", label: "Rent" },
+        { value: "Sale", label: "Sell" },
+        { value: "Rent", label: "Rent" },
       ];
 
     const customStyles = {
@@ -69,6 +71,8 @@ function RequestToAddNewProperty() {
       const mutation = useAxiosPost("/property/create", {
         onSuccess: (data) => {
           console.log("Property created successfully:", data);
+          setState((prev) =>({...prev, open: true}))
+          router.push("/dashboard-my-properties")
         },
         onError: (error) => {
           console.error("Error creating property:", error);
