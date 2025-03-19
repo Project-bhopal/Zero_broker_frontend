@@ -36,7 +36,11 @@ a {
 	position: relative;
 }
 .ace-responsive-menu li a {
-	color: #c0c0c0;
+	/* background-color: #0f836281;
+	border: 20px;
+	color: #c0c0c0; */
+	color: black;
+	text-shadow: 10px;
 }
 .ace-responsive-menu > li > a.active span {
 	color: #f5c34b;

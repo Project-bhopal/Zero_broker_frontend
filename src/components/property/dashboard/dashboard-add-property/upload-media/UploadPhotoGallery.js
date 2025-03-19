@@ -44,15 +44,15 @@ const UploadPhotoGallery = () => {
   return (
     <>
       <div
-        className="upload-img position-relative overflow-hidden bdrs12 text-center mb30 px-2"
+        className="upload-img position-relative overflow-hidden bdrs12 text-center mb30 px-2 min-h-56"
         onDrop={handleDrop}
         onDragOver={handleDragOver}
       >
-        <div className="icon mb30">
+        <div className="icon mb5">
           <span className="flaticon-upload" />
         </div>
-        <h4 className="title fz17 mb10">Upload/Drag photos of your property</h4>
-        <p className="text mb25">
+        <h4 className="title fz17 mb1">Upload/Drag photos of your property</h4>
+        <p className="text fz-10 mb10">
           Photos must be JPEG or PNG format and at least 2048x768
         </p>
         <label className="ud-btn btn-white">
@@ -73,7 +73,7 @@ const UploadPhotoGallery = () => {
       <div className="row profile-box position-relative d-md-flex align-items-end mb50">
         {uploadedImages.map((imageData, index) => (
           <div className="col-2" key={index}>
-            <div className="profile-img mb20 position-relative">
+            <div className="profile-img mb20 position-relative sm:w-[100px] w-[70px]">
               <Image
                 width={212}
                 height={194}
@@ -83,13 +83,13 @@ const UploadPhotoGallery = () => {
               />
               <button
                 style={{ border: "none" }}
-                className="tag-del"
+                className="tag-del sm:h-[45px] rounded-lg sm:w-[45px] h-[25px] w-[25px] absolute sm:top-[10px] top-[3px] sm:left-[10px] left-[2px]"
                 title="Delete Image"
                 onClick={() => handleDelete(index)}
                 type="button"
                 data-tooltip-id={`delete-${index}`}
               >
-                <span className="fas fa-trash-can" />
+                <span className="fas fa-trash-can sm:text-base text-xs sm:mt-0 mt-[-10px]" />
               </button>
 
               <ReactTooltip

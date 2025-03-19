@@ -247,11 +247,11 @@ const TopFilterBar2 = ({ filterFunctions }) => {
           className="open-btn mb15"
           style={{
             borderRadius: "10px",
-            backgroundColor: "red",
+            backgroundColor: "#0f8363",
             color: "white",
             padding: "0.5rem 1rem",
             border: "none",
-            fontWeight: "bold",
+            fontWeight:"normal",
           }}
           onClick={handleFindClick} // Trigger the Find button action
         >

@@ -20,8 +20,9 @@ if (typeof window !== "undefined") {
   require("bootstrap/dist/css/bootstrap.min.css");
   require("bootstrap/dist/js/bootstrap.bundle.min");
 }
-import WelcomeModal from "@/components/common/WelcomeModal";
 import ProtectedRoute from "@/components/hoc/ProtectedRoute";
+import DefaultHeader from "@/components/common/DefaultHeader";
+import { UserContextProvider } from "@/context/useContext";
 
 // if (typeof window !== "undefined") {
 //   import("bootstrap");
@@ -38,6 +39,7 @@ const queryClient = new QueryClient();
 export default function RootLayout({ children }) {
   const [isToken, setIsToken] = useState(null);
   const [role, setRole] = useState({})
+  const [user, setUser] = useState("")
   // const [show, setShow] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
@@ -50,14 +52,13 @@ export default function RootLayout({ children }) {
       once: true,
     });
     // setShow(true);
-
     const token = Cookies.get("accessToken");
     const firstVisit = localStorage.getItem("firstVisit");
     const role = localStorage.getItem("role");
     const cookieRole = Cookies.get("role")
   
     if(cookieRole){
-      const parsedRole = JSON.parse(cookieRole)
+      const parsedRole = cookieRole
       setRole(parsedRole);
     }
     if(token){
@@ -102,21 +103,21 @@ export default function RootLayout({ children }) {
   return (
     <>
       <QueryClientProvider client={queryClient}>
+      <UserContextProvider value={{user, setUser}}>
         <html lang="en">
           <body className={`body `} cz-shortcut-listen="false">
             {/* {show && ( */}
               <>
             <ProtectedRoute role={role}>
-                  
                   <div className="wrapper ovh">{children}</div>
             </ProtectedRoute>
                 <ScrollToTop />
               </>
             {/* )} */}
-
             
           </body>
         </html>
+        </UserContextProvider>
       </QueryClientProvider>
     </>
   );

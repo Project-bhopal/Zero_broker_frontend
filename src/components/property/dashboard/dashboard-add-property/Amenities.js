@@ -32,6 +32,7 @@ const amenitiesData = {
 
 const Amenities = () => {
   return (
+    <>
     <div className="row">
       {Object.keys(amenitiesData).map((columnKey, index) => (
         <div key={index} className="col-sm-6 col-lg-3 col-xxl-2">
@@ -49,7 +50,13 @@ const Amenities = () => {
           </div>
         </div>
       ))}
+    <div className="flex justify-end">
+      <button className="w-52 ud-btn btn-thm">
+        submit
+      </button>
     </div>
+    </div>
+    </>
   );
 };
 

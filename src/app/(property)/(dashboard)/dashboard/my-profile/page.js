@@ -134,7 +134,9 @@ const DashboardMyProfile = () => {
 
                   <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                     <h4 className="title fz17 mb30">Social Media</h4>
-                    <SocialField data ={formData.socialMediaLinks}/>
+                    <SocialField data ={formData.socialMediaLinks}
+                    onChange={(data) => handleFormChange("personalInfo", data)}
+                    handleSubmit={()=>handleSubmit()}/>
                   </div>
                   {/* End .ps-widget */}
 

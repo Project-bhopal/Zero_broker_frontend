@@ -1,18 +1,22 @@
 "use client";
-
 import MainMenu from "@/components/common/MainMenu";
 import SidebarPanel from "@/components/common/sidebar-panel";
 import LoginSignupModal from "@/components/common/login-signup-modal";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { pageRoutes } from "@/utilis/common";
 import Cookies from "js-cookie";
+import useInfo, { userContext } from "@/context/useContext";
+import useAxiosFetch from "@/hooks/useAxiosFetch";
 
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
   const [islogin, setIsLogin] = useState(false)
+  const {user} = useContext(userContext)
 
+  // const {data, isLoading, error, isError} = useAxiosFetch("/profile/me")
+  
   const changeBackground = () => {
     if (window.scrollY >= 10) {
       setNavbar(true);
@@ -33,7 +37,7 @@ const Header = () => {
   return (
     <>
       <header
-        className={`header-nav nav-homepage-style main-menu  ${navbar ? "sticky slideInDown animated" : ""
+        className={`header-nav nav-homepage-style main-menu  ${navbar ? "sticky" : ""
           } z-50`}
       >
         <nav className="posr">
@@ -111,34 +115,30 @@ const Header = () => {
               </div> */}
               <div className="col-auto">
                 <div className="d-flex align-items-center">
+                <span className="text-white font-bold"> Hii, {user} </span> &nbsp; &nbsp;
                   {islogin ?(
                     <a
-                    href="/dashboard-my-profile"
+                    href="/dashboard/my-profile"
                     className="login-info d-flex align-items-center"
                     role="button"
                     style={{
-                      textShadow: !navbar
-                        ? "2px 2px 6px rgba(0, 0, 0, 0.9)" // Shadow when navbar is not sticky
-                        : "none", // No shadow when navbar is sticky
+                      textShadow: "none", // No shadow when navbar is sticky
                     }}
                   >
+                   
                     <i
-                      className="far fa-user-circle fz16 me-2"
+                      className="far fa-user-circle fz16 me-1"
                       style={{
-                        textShadow: !navbar
-                          ? "2px 2px 6px rgba(0, 0, 0, 0.9)" // Shadow for the icon
-                          : "none",
+                        textShadow: "none",
                       }}
                     />
                     <span
-                      className="d-none d-xl-block"
+                      className=""
                       style={{
-                        textShadow: !navbar
-                          ? "2px 2px 6px rgba(0, 0, 0, 0.9)" // Shadow for the text
-                          : "none",
+                        textShadow:  "none",
                       }}
                     >
-                      Profile
+                    Profile 
                     </span>
                   </a>
                   
@@ -149,26 +149,18 @@ const Header = () => {
                     data-bs-toggle="modal"
                     data-bs-target="#loginSignupModal"
                     role="button"
-                    style={{
-                      textShadow: !navbar
-                        ? "2px 2px 6px rgba(0, 0, 0, 0.9)" // Shadow when navbar is not sticky
-                        : "none", // No shadow when navbar is sticky
-                    }}
+                    style={{textShadow:"none"}}
                   >
                     <i
                       className="far fa-user-circle fz16 me-2"
                       style={{
-                        textShadow: !navbar
-                          ? "2px 2px 6px rgba(0, 0, 0, 0.9)" // Shadow for the icon
-                          : "none",
+                        textShadow:"none",
                       }}
                     />
                     <span
                       className="d-none d-xl-block"
                       style={{
-                        textShadow: !navbar
-                          ? "2px 2px 6px rgba(0, 0, 0, 0.9)" // Shadow for the text
-                          : "none",
+                        textShadow: "none",
                       }}
                     >
                       Login

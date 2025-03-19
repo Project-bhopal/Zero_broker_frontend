@@ -1,19 +1,48 @@
+import useAxiosFetch from "@/hooks/useAxiosFetch";
 import React from "react";
 
-const statisticsData = [
+const adminStatisticsData = [
   {
-    text: "All Properties",
+    text: "Total Seller",
     title: "583",
+    icon: "flaticon-user",
+  },
+  {
+    text: "Total Agent",
+    title: "192",
+    icon: "flaticon-user1",
+  },
+  {
+    text: "Listed Properties",
+    title: "43",
     icon: "flaticon-home",
   },
   {
-    text: "Total Views",
+    text: "Total Requests",
+    title: "67",
+    icon: "flaticon-like",
+  },
+  {
+    text: "Requests Accepted",
+    title: "67",
+    icon: "flaticon-like",
+  },
+  {
+    text: "Requests Pending",
+    title: "67",
+    icon: "flaticon-clock",
+  },
+];
+
+const buyerStatisticsData = [
+  {
+    text: "Total Credits",
     title: "192",
     icon: "flaticon-search-chart",
   },
   {
-    text: "Total Visitor Reviews",
-    title: "438",
+    text: "Remaining Credits",
+    title: "43",
     icon: "flaticon-review",
   },
   {
@@ -23,10 +52,72 @@ const statisticsData = [
   },
 ];
 
-const TopStateBlock = () => {
+const sellerStatisticsData = [
+  {
+    text: "All Properties",
+    title: "583",
+    icon: "flaticon-home",
+  },
+  {
+    text: "Views",
+    title: "192",
+    icon: "flaticon-search-chart",
+  },
+  {
+    text: "Requested",
+    title: "43",
+    icon: "flaticon-review",
+  },
+  {
+    text: "Favorites",
+    title: "67",
+    icon: "flaticon-like",
+  },
+  {
+    text: "Pending",
+    title: "67",
+    icon: "flaticon-clock",
+  },
+  {
+    text: "Accepted",
+    title: "67",
+    icon: "flaticon-like",
+  },
+];
+
+const agentStatisticsData = [
+  {
+    text: "Pending Requests",
+    title: "83",
+    icon: "flaticon-clock Requests",
+  },
+  {
+    text: "Accepted Requests",
+    title: "102",
+    icon: "flaticon-search-chart",
+  },
+  {
+    text: "isting",
+    title: "63",
+    icon: "flaticon-home",
+  },
+  {
+    text: "Approved properties",
+    title: "47",
+    icon: "flaticon-like",
+  },
+  
+];
+
+const TopStateBlock = ({role}) => {
+
+  const { data, isLoading, isError, error } = useAxiosFetch(`/dashboard/${role}`)
+  console.log(data?.data)
+
+
   return (
     <>
-      {statisticsData.map((data, index) => (
+      {role == "seller"&&sellerStatisticsData.map((data, index) => (
         <div key={index} className="col-sm-6 col-xxl-3">
           <div className="d-flex justify-content-between statistics_funfact">
             <div className="details">
@@ -39,7 +130,46 @@ const TopStateBlock = () => {
           </div>
         </div>
       ))}
-    </>
+      {role == "buyer"&&buyerStatisticsData.map((data, index) => (
+        <div key={index} className="col-sm-6 col-xxl-3">
+          <div className="d-flex justify-content-between statistics_funfact">
+            <div className="details">
+              <div className="text fz25">{data.text}</div>
+              <div className="title">{data.title}</div>
+            </div>
+            <div className="icon text-center">
+              <i className={data.icon} />
+            </div>
+          </div>
+        </div>
+      ))}
+      {role == "agent"&&agentStatisticsData.map((data, index) => (
+        <div key={index} className="col-sm-6 col-xxl-3">
+          <div className="d-flex justify-content-between statistics_funfact">
+            <div className="details">
+              <div className="text fz25">{data.text}</div>
+              <div className="title">{data.title}</div>
+            </div>
+            <div className="icon text-center">
+              <i className={data.icon} />
+            </div>
+          </div>
+        </div>
+      ))}
+      {role == "admin"&&adminStatisticsData.map((data, index) => (
+        <div key={index} className="col-sm-6 col-xxl-3">
+          <div className="d-flex justify-content-between statistics_funfact">
+            <div className="details">
+              <div className="text fz25">{data.text}</div>
+              <div className="title">{data.title}</div>
+            </div>
+            <div className="icon text-center">
+              <i className={data.icon} />
+            </div>
+          </div>
+        </div>
+      ))}
+    </> 
   );
 };
 

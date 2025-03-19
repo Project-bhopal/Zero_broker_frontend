@@ -13,7 +13,7 @@ const BlogV1 = () => {
   return (
     <div className="bgc-f7">
       {/* Main Header Nav */}
-      <DefaultHeader />
+      <DefaultHeader />/
       {/* End Main Header Nav */}
 
       {/* Mobile Nav  */}

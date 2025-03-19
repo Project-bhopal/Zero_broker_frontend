@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 const Pagination = () => {
   const totalPages = 8; // Replace this with your actual total number of pages
-  const [currentPage, setCurrentPage] = useState(2); // Initialize the current page state to 2 (or any other default active page)
+  const [currentPage, setCurrentPage] = useState(1); // Initialize the current page state to 2 (or any other default active page)
 
   const handlePageClick = (page) => {
     setCurrentPage(page);

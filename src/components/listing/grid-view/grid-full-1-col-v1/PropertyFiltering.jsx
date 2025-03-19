@@ -505,7 +505,7 @@ export default function PropertyFiltering() {
 
 
               {/* Get More Information Section */}
-              <div style={{ border: "1px solid #ddd", borderRadius: "15px", padding: "20px", backgroundColor: "#fff" }}>
+              {/* <div style={{ border: "1px solid #ddd", borderRadius: "15px", padding: "20px", backgroundColor: "#fff" }}>
                 <h4>Get More Information</h4>
                 <div style={{ display: "flex", gap: "15px", alignItems: "center", marginBottom: "20px" }}>
                   <Image
@@ -535,7 +535,7 @@ export default function PropertyFiltering() {
                 >
                   Contact Agent
                 </button>
-              </div>
+              </div> */}
             </div>
 
 

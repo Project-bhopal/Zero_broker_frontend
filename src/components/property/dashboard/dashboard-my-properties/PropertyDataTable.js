@@ -112,7 +112,7 @@ const PropertyDataTable = () => {
             <td className="vam">
               <div className="d-flex">
                 <Link
-                  href={`/dashboard/request-to-agent/${property._id}`}
+                  href={`/dashboard/seller/request-to-agent/${property._id}`}
                   className="icon"
                   style={{ border: "none" }}
                   data-tooltip-id={`edit-${property._id}`}
@@ -123,7 +123,7 @@ const PropertyDataTable = () => {
                   href={`/dashboard/request-to-agent/${property._id}`}
                   className="icon"
                   style={{ border: "none" }}
-                  data-tooltip-id={`delete-${property.id}`}
+                  data-tooltip-id={`delete-${property._id}`}
                 >
                   <span className="flaticon-bin" />
                 </Link>

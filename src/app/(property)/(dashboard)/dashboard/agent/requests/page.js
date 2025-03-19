@@ -1,17 +1,21 @@
+"use client"
 import DashboardHeader from "@/components/common/DashboardHeader";
 import MobileMenu from "@/components/common/mobile-menu";
 import DboardMobileNavigation from "@/components/property/dashboard/DboardMobileNavigation";
 import Footer from "@/components/property/dashboard/Footer";
 import SidebarDashboard from "@/components/property/dashboard/SidebarDashboard";
-import RecentActivities from "@/components/property/dashboard/dashboard-home/RecentActivities";
-import TopStateBlock from "@/components/property/dashboard/dashboard-home/TopStateBlock";
-import PropertyViews from "@/components/property/dashboard/dashboard-home/property-view";
+import FilterHeader from "@/components/property/dashboard/dashboard-my-properties/FilterHeader";
+import PackageDataTable from "@/components/property/dashboard/dashboard-package/PackageDataTable";
+import RequestsDataTable from "@/components/property/dashboard/dashboard-property-requests/RequestsDataTable";
+import RequestedAcceptedByMeDataTable from "@/components/property/dashboard/dashboard-request-accepted-by-me/RequestedAcceptedByMeDataTable";
+import { useState } from "react";
 
-export const metadata = {
-  title: "Dashboard Home || ZeroBroker - Real Estate NextJS Template",
-};
+// export const metadata = {
+//   title: "Dashboard Requests || ZeroBroker - Real Estate NextJS Template",
+// };
 
-const DashboardHome = () => {
+const DashboardRequests = () => {
+  const [showTable, setShowTable] = useState("Pending")
   return (
     <>
       {/* Main Header Nav */}
@@ -35,39 +39,38 @@ const DashboardHome = () => {
                   <DboardMobileNavigation />
                 </div>
                 {/* End .col-12 */}
+              </div>
+              {/* End .row */}
 
-                <div className="col-lg-12">
+              
+              <div className="row align-items-center pb40">
+                <div className="col-xxl-3">
                   <div className="dashboard_title_area">
-                    <h2>Howdy, Ali!</h2>
+                    <h2>Seller's Requests</h2>
                     <p className="text">We are glad to see you again!</p>
                   </div>
                 </div>
-                {/* col-lg-12 */}
               </div>
               {/* End .row */}
-
-              <div className="row">
-                <TopStateBlock />
+              <div className="flex  justify-self-end gap-2 me-3 mb-5">
+                <button className={`ud-btn btn-${showTable === 'Pending' ? 'thm' : 'white'}`} onClick={()=>{setShowTable("Pending")}}>Pending</button>
+                <button className={`ud-btn btn-${showTable === 'Accepted' ? 'thm' : 'white'}`} onClick={()=>{setShowTable("Accepted")}}>Accepted</button>
               </div>
-              {/* End .row */}
-
               <div className="row">
-                <div className="col-xl-8">
+                <div className="col-xl-12">
                   <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                    <div className="row">
-                      <PropertyViews />
+                    <div className="packages_table table-responsive">
+                      {showTable === "Pending"&&(
+                        <RequestsDataTable />
+                      )}  
+                      {showTable === "Accepted"&&(
+                        <RequestedAcceptedByMeDataTable/>
+                      )}
+
+                      
                     </div>
                   </div>
                 </div>
-                {/* End col-xl-8 */}
-
-                <div className="col-xl-4">
-                  <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                    <h4 className="title fz17 mb25">Recent Activities</h4>
-                    <RecentActivities />
-                  </div>
-                </div>
-                {/* End .col-xl-4 */}
               </div>
               {/* End .row */}
             </div>
@@ -83,4 +86,4 @@ const DashboardHome = () => {
   );
 };
 
-export default DashboardHome;
+export default DashboardRequests;

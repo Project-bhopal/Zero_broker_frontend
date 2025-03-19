@@ -8,10 +8,14 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { pageRoutes } from "@/utilis/common";
 import Cookies from "js-cookie";
+import { usePathname } from "next/navigation";
+import useAxiosFetch from "@/hooks/useAxiosFetch";
 
 const DefaultHeader = () => {
   const [navbar, setNavbar] = useState(false);
   const [show, setShow] = useState(false);
+  
+        // const {data, isLoading, error, isError} = useAxiosFetch("/profile/me")
 
   const changeBackground = () => {
     if (window.scrollY >= 10) {
@@ -20,7 +24,7 @@ const DefaultHeader = () => {
       setNavbar(false);
     }
   };
-  const islogin = localStorage.getItem("loginSuccessfull")
+  const islogin = localStorage.getItem("loginSuccessfull");
   useEffect(() => {
     window.addEventListener("scroll", changeBackground);
     return () => {
@@ -32,13 +36,181 @@ const DefaultHeader = () => {
     setShow(true);
   }, []);
 
+  const [role, setRole] = useState("");
+  const pathname = usePathname();
+  useEffect(() => {
+    const role = Cookies.get("role");
+    setRole(role);
+    // setRole("agent")
+  }, []);
+
+  const buyermenuItems = [
+    {
+      title: `MAIN`,
+      items: [
+        {
+          href: "/dashboard-my-profile",
+          icon: "flaticon-user",
+          text: "My Profile",
+        },
+        {
+          href: "/dashboard-message",
+          icon: "flaticon-chat-1",
+          text: "Message",
+        },
+      ],
+    },
+    {
+      title: "MANAGE LISTINGS",
+      items: [
+        {
+          href: "/dashboard-my-favourites",
+          icon: "flaticon-like",
+          text: "My Favorites",
+        },
+        {
+          href: "/dashboard-saved-search",
+          icon: "flaticon-search-2",
+          text: "Saved Search",
+        },
+        {
+          href: "/dashboard-reviews",
+          icon: "flaticon-review",
+          text: "Reviews",
+        },
+      ],
+    },
+    {
+      title: "MANAGE ACCOUNT",
+      items: [
+        {
+          href: "/dashboard-my-package",
+          icon: "flaticon-protection",
+          text: "My Plan",
+        },
+        {
+          href: "/login",
+          icon: "flaticon-logout",
+          text: "Logout",
+        },
+      ],
+    },
+  ];
+
+  const sellermenuItems = [
+    {
+      title: `MAIN`,
+      items: [
+        {
+          href: "/dashboard-home",
+          icon: "flaticon-discovery",
+          text: "Dashboard",
+        },
+        {
+          href: "/dashboard-my-profile",
+          icon: "flaticon-user",
+          text: "My Profile",
+        },
+        {
+          href: "/dashboard-message",
+          icon: "flaticon-chat-1",
+          text: "Message",
+        },
+      ],
+    },
+    {
+      title: "MANAGE LISTINGS",
+      items: [
+        {
+          href: "/dashboard-my-properties",
+          icon: "flaticon-home",
+          text: "My Properties",
+        },
+        {
+          href: "/dashboard-reviews",
+          icon: "flaticon-review",
+          text: "Reviews",
+        },
+      ],
+    },
+    {
+      title: "MANAGE ACCOUNT",
+      items: [
+        {
+          href: "/login",
+          icon: "flaticon-logout",
+          text: "Logout",
+        },
+      ],
+    },
+  ];
+
+  const agentmenuItems = [
+    {
+      title: `MAIN`,
+      items: [
+        {
+          href: "/dashboard-home",
+          icon: "flaticon-discovery",
+          text: "Dashboard",
+        },
+        {
+          href: "/dashboard-my-profile",
+          icon: "flaticon-user",
+          text: "My Profile",
+        },
+        {
+          href: "/dashboard-message",
+          icon: "flaticon-chat-1",
+          text: "Message",
+        },
+      ],
+    },
+    {
+      title: "MANAGE LISTINGS",
+      items: [
+        {
+          href: "/dashboard-add-property",
+          icon: "flaticon-new-tab",
+          text: "Add New Property",
+        },
+        {
+          href: "/dashboard-my-properties",
+          icon: "flaticon-home",
+          text: "My Properties",
+        },
+        {
+          href: "/dashboard-request-to-add-property",
+          icon: "flaticon-home",
+          text: "Requests",
+        },
+        {
+          href: "/dashboard-reviews",
+          icon: "flaticon-review",
+          text: "Reviews",
+        },
+      ],
+    },
+    {
+      title: "MANAGE ACCOUNT",
+      items: [
+        {
+          href: "/login",
+          icon: "flaticon-logout",
+          text: "Logout",
+        },
+      ],
+    },
+  ];
+
   return (
     <>
       {show && (
         <>
           <header
-            className={`header-nav nav-homepage-style light-header menu-home4 main-menu ${navbar ? "sticky slideInDown animated" : ""
-              }`}
+            className={`header-nav nav-homepage-style light-header menu-home4 main-menu ${
+              navbar ? "sticky slideInDown animated" : ""
+            }`}
           >
             <nav className="posr">
               <div className="container posr menu_bdrt1">
@@ -50,21 +222,21 @@ const DefaultHeader = () => {
                           className="header-logo logo1"
                           href={pageRoutes.home}
                         >
-                        <img
-                        className="h-20"
-                        src="/images/logoBlack.png"
-                        alt="Header Logo"
-                      />
+                          <img
+                            className="h-20"
+                            src="/images/logoBlack.png"
+                            alt="Header Logo"
+                          />
                         </Link>
                         <Link
                           className="header-logo logo2"
                           href={pageRoutes.home}
                         >
-                       <img
-                       className="h-20"
-                        src="/images/logoBlack.png"
-                        alt="Header Logo"
-                      />
+                          <img
+                            className="h-20"
+                            src="/images/logoBlack.png"
+                            alt="Header Logo"
+                          />
                         </Link>
                       </div>
                       {/* End Logo */}
@@ -78,29 +250,125 @@ const DefaultHeader = () => {
                   <div className="col-auto">
                     <div className="d-flex align-items-center">
                       {islogin ? (
-                        <a
-                        href="/login"
-                        className="login-info d-flex align-items-cente"
-                        role="button"
-                        onClick={()=>{Cookies.remove("accessToken", "refreshToken")}}
-                      >
-                        <i className="fa fa-sign-out fz16 me-2" />{" "}
-                        <span className="d-none d-xl-block">Logout</span>
-                      </a>
+                        <div className="col-6 col-lg-auto">
+                        <div className="text-center text-lg-end header_right_widgets">
+                          <ul className="mb0 d-flex justify-content-center justify-content-sm-end p-0">
+                            <li className="d-none d-xl-block">
+                              <Link href={"/"} className="text-center mr15">
+                                <span className="flaticon-email hover:text-[#0f8363]" />
+                              </Link>
+                            </li>
+                            {/* End email box */}
+        
+                            <li className="d-none d-xl-block">
+                              <a className="text-center mr20 notif" href="#">
+                                <span className="flaticon-bell hover:text-[#0f8363]" />
+                              </a>
+                            </li>
+                            {/* End notification icon */}
+        
+                            <li className=" user_setting">
+                              <div className="dropdown">
+                                <a className="btn" href="#" data-bs-toggle="dropdown">
+                                  <Image
+                                    width={44}
+                                    height={44}
+                                    src="/images/resource/user.png"
+                                    alt="user.png"
+                                  />
+                                </a>
+                                <div className="dropdown-menu">
+                                  <div className="user_setting_content">
+                                    {role === "seller"&&sellermenuItems.map((section, sectionIndex) => (
+                                      <div key={sectionIndex}>
+                                        <p
+                                          className={`fz15 fw400 ff-heading ${
+                                            sectionIndex === 0 ? "mb20" : "mt30"
+                                          }`}
+                                        >
+                                          {section.title}
+                                        </p>
+                                        {section.items.map((item, itemIndex) => (
+                                          <Link
+                                            key={itemIndex}
+                                            className={`dropdown-item ${
+                                              pathname == item.href ? "-is-active" : ""
+                                            } `}
+                                            href={item.href}
+                                          >
+                                            <i className={`${item.icon} mr10`} />
+                                            {item.text}
+                                          </Link>
+                                        ))}
+                                      </div>
+                                    ))}
+                                    {role === "buyer"&&buyermenuItems.map((section, sectionIndex) => (
+                                      <div key={sectionIndex}>
+                                        <p
+                                          className={`fz15 fw400 ff-heading ${
+                                            sectionIndex === 0 ? "mb20" : "mt30"
+                                          }`}
+                                        >
+                                          {section.title}
+                                        </p>
+                                        {section.items.map((item, itemIndex) => (
+                                          <Link
+                                            key={itemIndex}
+                                            className={`dropdown-item ${
+                                              pathname == item.href ? "-is-active" : ""
+                                            } `}
+                                            href={item.href}
+                                          >
+                                            <i className={`${item.icon} mr10`} />
+                                            {item.text}
+                                          </Link>
+                                        ))}
+                                      </div>
+                                    ))}
+                                    {role === "agent"&&agentmenuItems.map((section, sectionIndex) => (
+                                      <div key={sectionIndex}>
+                                        <p
+                                          className={`fz15 fw400 ff-heading ${
+                                            sectionIndex === 0 ? "mb20" : "mt30"
+                                          }`}
+                                        >
+                                          {section.title}
+                                        </p>
+                                        {section.items.map((item, itemIndex) => (
+                                          <Link
+                                            key={itemIndex}
+                                            className={`dropdown-item ${
+                                              pathname == item.href ? "-is-active" : ""
+                                            } `}
+                                            href={item.href}
+                                          >
+                                            <i className={`${item.icon} mr10`} />
+                                            {item.text}
+                                          </Link>
+                                        ))}
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                            {/* End avatar dropdown */}
+                          </ul>
+                        </div>
+                      </div>
                       ) : (
                         <a
-                        href="#"
-                        className="login-info d-flex align-items-cente"
-                        data-bs-toggle="modal"
-                        data-bs-target="#loginSignupModal"
-                        role="button"
-                      >
-                        <i className="far fa-user-circle fz16 me-2" />{" "}
-                        <span className="d-none d-xl-block">Login</span>
-                      </a>
+                          href="#"
+                          className="login-info d-flex align-items-cente"
+                          data-bs-toggle="modal"
+                          data-bs-target="#loginSignupModal"
+                          role="button"
+                        >
+                          <i className="far fa-user-circle fz16 me-2" />{" "}
+                          <span className="d-none d-xl-block">Login</span>
+                        </a>
                       )}
-                      
-                      
+
                       {/* <Link
                     className="ud-btn btn-white add-property bdrs60 mx-2 mx-xl-4"
                     href="/dashboard-add-property"

@@ -37,7 +37,7 @@ body {
 }
 a {
     text-decoration: none !important;
-    color: #000;
+    color: #0f8363;
 }
 a,
 .btn {
@@ -96,7 +96,7 @@ h6 {
 
 p {
     margin: 0 0 15px 0;
-    color: var(--headings-color);
+    // color: var(--headings-color);
     line-height: 1.85;
     font-weight: 400;
 }
@@ -511,7 +511,7 @@ li {
     margin-top: 0;
     margin-left: -195px !important;
     padding: 20px 30px;
-    width: 280px;
+    width: 320px;
     -webkit-transform: translate(-35px, 66px) !important;
     -ms-transform: translate(-35px, 66px) !important;
     transform: translate(-35px, 66px) !important;
@@ -757,8 +757,8 @@ li {
     color: #e4b303;
 }
 .pending-style.style2 {
-    background-color: #e5f0fd;
-    color: #3554d1;
+    background-color: #eafff9;
+    color: var(--primary-color);
 }
 .pending-style.style3 {
     background-color: #fff5f8;
@@ -767,26 +767,20 @@ li {
 
 .profile-box .tag-del {
     background-color: #ffffff;
-    border-radius: 12px;
     color: var(--headings-color);
     font-size: 18px;
-    height: 45px;
-    line-height: 45px;
-    left: 10px;
-    position: absolute;
-    top: 10px;
+    // line-height: 45px;
     text-align: center;
-    width: 45px;
 }
 
 .upload-img {
     border: 1px dashed var(--primary-color);
     padding-bottom: 50px;
-    padding-top: 50px;
+    padding-top: 10px;
 }
 .upload-img .icon {
-    font-size: 120px;
-    color: #dddddd;
+    font-size: 50px;
+    color: #0686623d;
 }
 
 /* DashBoard Message Styles */
@@ -1108,8 +1102,13 @@ li {
 }
 .listing-style1 .list-meta a {
     font-family: var(--title-font-family);
-    font-size: 13px;
+    font-size: 15px;
     margin-right: 24px;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    color: var(--primary-color)
 }
 .listing-style1 .list-meta a:last-child {
     margin-right: 0;
@@ -1144,6 +1143,7 @@ li {
 }
 .listing-style1 .list-meta2 a {
     background-color: #ffffff;
+    color: #0f8363;
     border-radius: 6px;
     height: 35px;
     line-height: 40px;
@@ -5528,7 +5528,7 @@ section {
 }
 .form-style1 .form-control {
     border-radius: 8px;
-    border: 1px solid #dddddd;
+    // border: 1px solid #dddddd;
     -webkit-box-shadow: none;
     box-shadow: none;
     font-size: 14px;
@@ -5558,8 +5558,8 @@ section {
 }
 .form-style1 .form-control.active,
 .form-style1 .form-control:focus {
-    border: 1px solid transparent;
-    outline: 2px solid var(--headings-color);
+    // border: 1px solid transparent;
+    outline: 2px solid #0f8363;
     color: var(--headings-color);
 }
 .form-style1 .form-label {
@@ -5613,7 +5613,7 @@ section {
 .form-style2 .form-control.active,
 .form-style2 .form-control:focus {
     border: 1px solid transparent;
-    outline: 2px solid var(--headings-color);
+    outline: 2px solid #0f8363;
 }
 .form-style2 .form-label {
     font-family: var(--title-font-family);
@@ -5629,14 +5629,14 @@ textarea {
 }
 textarea:focus {
     border: 1px solid transparent;
-    outline: 2px solid var(--headings-color);
+    outline: 2px solid #0f8363;
     -webkit-box-shadow: none;
     box-shadow: none;
 }
 
 .form-control {
     border-radius: 8px;
-    border: 1px solid #dddddd;
+    border: 1px solid #0f8363;
     -webkit-box-shadow: none;
     box-shadow: none;
     font-size: 14px;
@@ -5650,8 +5650,8 @@ textarea:focus {
     font-family: var(--title-font-family);
 }
 .form-control:focus {
-    border: 1px solid transparent;
-    outline: 2px solid var(--headings-color);
+    border: 1px solid #0f8363;
+    outline: 2px solid #0f8363;
     -webkit-box-shadow: none;
     box-shadow: none;
 }

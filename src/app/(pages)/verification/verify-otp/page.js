@@ -23,7 +23,7 @@ function VerifyOTP() {
     const email = sessionStorage.getItem("e");
     const user = JSON.parse(sessionStorage.getItem("user"));
     const ot = sessionStorage.getItem("ot");
-    setEmail(email || user.email)
+    setEmail(email || user?.email)
     setOt(ot)
     setUser(user)
   },[])
@@ -103,7 +103,7 @@ function VerifyOTP() {
           console.log("otp verification successfull", details);
           if(ot === "forgot"){
             router.push("/create-new-password")
-          } else {
+          } else if("varification"){
             router.push("/login")
           }
         },

@@ -42,13 +42,13 @@ const FeaturedListings = ({ data, colstyle, setIsScheduleTourModal }) => {
                   alt="agent"
                 />
               </div>
-              <h6 className="list-title">
-                <Link href={`/single-v2/${listing.id}`}>{listing.title}</Link>
+              <h6 className="list-title text-[#0f8363] fz18">
+                <Link className="text-[#0c6c52]" href={`/single-v2/${listing.id}`}>{listing.title}</Link>
               </h6>
-              <div style={{ display: "flex", gap: "20px",alignItems:"center" }}>
+              <div style={{ display: "flex", gap: "40px",alignItems:"center" }}>
                 <p className="list-text">{listing.location}</p>
                 <p
-                  className="list-text"
+                  className="text-[#0c6c52] p-2 rounded-lg bg-[#0f836233] border-1 border-[#0f8363]"
                   style={{ display: "flex", gap: "5px", cursor: "pointer" }}
                   onClick={(e) => {
                     e?.stopPropagation();
@@ -59,7 +59,7 @@ const FeaturedListings = ({ data, colstyle, setIsScheduleTourModal }) => {
                   Request for call back
                 </p>
                 <p
-                  className="list-text"
+                  className="text-[#09523e] p-2 rounded-lg bg-[#0f836233] border-1 border-[#0f8363]"
                   style={{ display: "flex", gap: "5px", cursor: "pointer" }}
                   onClick={(e) => {
                     e?.stopPropagation();
@@ -71,8 +71,8 @@ const FeaturedListings = ({ data, colstyle, setIsScheduleTourModal }) => {
                 </p>
               </div>
 
-              <div className="list-meta d-flex align-items-center">
-                <a href="#">
+              <div className="list-meta d-flex align-items-center text-[#0f8363] fsz10">
+                <a className="fsz10" href="#">
                   <span className="flaticon-bed" /> {listing.bed} bed
                 </a>
                 <a href="#">

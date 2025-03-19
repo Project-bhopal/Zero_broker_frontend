@@ -9,10 +9,10 @@ const ProtectedRoute = ({ children, role }) => {
   useEffect(() => {
 
     const restrictedRoutes = {
-      admin: ["/dashboard-add-property", "/dashboar"],
-      buyer: ["/dashboard-my-properties", "/dashboard-reviews" , "/dashboard-add-property", "/dashboard-home"],
-      seller: ["/dashboard-add-property", "/dashboard-my-favourites", "/dashboard-saved-search", "/dashboard-my-package", ""],
-      agent: ["/dashboard-saved-search", "/dashbaord-my-favourites", "/dashboard-my-package"],
+      admin: ["/dashboard/agent/add-property", "/dashboard"],
+      buyer: ["/dashboard/seller/my-properties", "/my-reviews" , "/dashboard/agent/add-property", "/dashboard/home"],
+      seller: ["/dashboard/agent/add-property", "/dashboard/my-favourites", "/dashboard/saved-search", "/my-plan", ""],
+      agent: ["/dashboard-saved-search", "/my-favourites", "/my-plan"],
     };
 
     const userRole = role || "guest"; // Default to guest
@@ -21,7 +21,7 @@ const ProtectedRoute = ({ children, role }) => {
     const isRestricted = restrictedRoutes[userRole]?.includes(pathname);
 
     if (isRestricted) {
-      router.push("/dashboard-my-profile");
+      router.push("/dashboard/my-profile");
     }
   }, [pathname, role, router]);
 

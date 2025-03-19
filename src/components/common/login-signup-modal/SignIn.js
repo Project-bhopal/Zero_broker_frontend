@@ -2,14 +2,18 @@
 import { usePost } from "@/hooks/usePost";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import GoogleAuth from "../google-oauth/GoogleOauth";
 import { NavLink } from "react-bootstrap";
+import Loader from "../Loader";
+import useInfo, { userContext } from "@/context/useContext";
 
 const SignIn = () => {
   const [show, setShow] = useState(false);
-  const [validationError, setValidationError] = useState("")
-  const [error, setError] = useState("")
+  const [isLoading, setIsLoading] = useState(false);
+  const [isEmailVerified, setIsEmailVerified] = useState(true);
+  const [validationError, setValidationError] = useState("");
+  const [error, setError] = useState("");
   const [data, setData] = useState({
     email: "",
     mobile: "",
@@ -17,8 +21,7 @@ const SignIn = () => {
   });
   const router = useRouter();
   const mutation = usePost("/auth/login");
-
-
+  const {setUser} = useContext(userContext)
   const inputHandler = (e) => {
     const { name, value } = e.target;
 
@@ -32,7 +35,9 @@ const SignIn = () => {
         setValidationError(""); // Clear error if valid
       } else {
         setData((prev) => ({ ...prev, email: "", mobile: "" }));
-        setValidationError("Please enter a valid email or 10-digit mobile number.");
+        setValidationError(
+          "Please enter a valid email or 10-digit mobile number."
+        );
       }
     } else {
       // Handle password normally
@@ -41,28 +46,43 @@ const SignIn = () => {
   };
 
   const handleSubmit = (e) => {
+    
     e.preventDefault();
-    mutation.mutate(
-      data ,
-      {
-        onSuccess: (details) => {
-          router.push("/")
-          localStorage.setItem("loginSuccessfull" , "true")
-          const modalElement = document.getElementById("loginmodal"); // Replace 'myModal' with your modal's ID
-      if (modalElement) {
-        const modal = bootstrap.Modal.getInstance(modalElement);
-        if (modal) {
-          modal.hide();
+    setIsLoading(true);
+    mutation.mutate(data, {
+      onSuccess: (details) => {
+        console.log(details);
+        if (!details.data.isVerified) {
+          sessionStorage.setItem("e", data.email)
+
+          setUser(details.data.full_name)
+
+          setIsLoading(false);
+          setIsEmailVerified(false);
+          setError("Your Email is not Verified first verify your email");
+          sessionStorage.setItem("ot", "varification");
+        } else if(details.data.isVerified) {
+           router.push("/")
+        localStorage.setItem("loginSuccessfull", "true");
+        setIsLoading(false);
+        const modalElement = document.getElementById("loginmodal"); // Replace 'myModal' with your modal's ID
+        if (modalElement) {
+          const modal = bootstrap.Modal.getInstance(modalElement);
+          if (modal) {
+            modal.hide();
+          }
         }
-      }
-        },
-        onError: (error) => {
-          console.error("Error creating user", error);
-          setError(error.response.data.error.message)
-        },
-      }
-    );
-    console.log(data);
+        }
+        setIsLoading(false);
+      },
+      onError: (error) => {
+        console.error("Error creating user", error);
+        setIsLoading(false);
+        setError(
+          error.response.data.error.message || error.response.data.error.message
+        );
+      },
+    });
   };
 
   return (
@@ -77,7 +97,9 @@ const SignIn = () => {
           onChange={inputHandler}
           required
         />
-      {validationError && <p style={{ color: "red", fontSize: "14px" }}>{validationError}</p>}
+        {validationError && (
+          <p style={{ color: "red", fontSize: "14px" }}>{validationError}</p>
+        )}
       </div>
 
       <div className="mb15">
@@ -117,13 +139,34 @@ const SignIn = () => {
         </Link>
       </div>
       {/* End  Lost your password? */}
-      
+
       {error && <p style={{ color: "red", fontSize: "16px" }}>{error}</p>}
-      <div className="d-grid mb20">
-        <button className="ud-btn btn-thm"  type="submit" disabled={Object.values(validationError).some((error) => error !== "")}>
-          Sign in <i className="fal fa-arrow-right-long" />
-        </button>
-      </div>
+      {!isEmailVerified ? (
+        <div className="d-grid mb20">
+          <Link href={"/verification/verify-otp"} className="ud-btn btn-thm">
+            Verify Email
+            <i className="fal fa-arrow-right-long" />
+          </Link>
+        </div>
+      ) : (
+        <div className="d-grid mb20">
+          <button
+            className="ud-btn btn-thm"
+            type="submit"
+            disabled={Object.values(validationError).some(
+              (error) => error !== ""
+            )}
+          >
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <>
+                Sign in <i className="fal fa-arrow-right-long" />
+              </>
+            )}
+          </button>
+        </div>
+      )}
       {/* End submit */}
 
       <div className="hr_content mb20">
@@ -132,7 +175,7 @@ const SignIn = () => {
       </div>
 
       <div className="d-grid mb10">
-        <GoogleAuth/>
+        <GoogleAuth />
       </div>
       {/* <div className="d-grid mb10">
         <button className="ud-btn btn-fb" type="button">
