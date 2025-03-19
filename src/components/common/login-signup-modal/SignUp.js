@@ -39,7 +39,7 @@ const SignUp = () => {
       const token = Cookies.get("accessToken");
       const firstVisit = localStorage.getItem("firstVisit");
       const role = localStorage.getItem("role");
-
+      localStorage.clear()
       if (!token && !firstVisit && !role) {
         setTimeout(() => {
           setShowModal(true);
@@ -69,7 +69,7 @@ const SignUp = () => {
 
     if (name === "password") {
       const passwordRegex =
-        /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&#]{8,}$/;
       if (!passwordRegex.test(value)) {
         error =
           "Password must be at least 8 characters long, contain at least one uppercase letter, one number, and one special character(@$!%*?&).";
@@ -88,12 +88,12 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const role = localStorage.getItem("role");
+    const interest = localStorage.getItem("interestedIn");
 
     mutation.mutate(
-      { ...data, role },
+      { ...data, role, interest},
       {
         onSuccess: (details) => {
-          console.log("Sign up successfull", details);
           sessionStorage.removeItem("user", "ot");
           setState({ ...state, open: true });
 

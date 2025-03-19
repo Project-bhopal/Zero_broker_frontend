@@ -46,7 +46,7 @@ const customStyles = {
     return {
       ...styles,
       backgroundColor: isSelected
-        ? "#eb6753"
+        ? "#0f8363"
         : isHovered
         ? "#eb675312"
         : isFocused
@@ -57,7 +57,7 @@ const customStyles = {
 };
 
 const SelectMultiField = () => {
-  const fieldTitles = ["Country / State", "City", "Country"];
+  const fieldTitles = ["Emirate", "City", "Country"];
   return (
     <>
       {Object.keys(options).map((key, index) => (
@@ -73,7 +73,6 @@ const SelectMultiField = () => {
                 className="select-custom pl-0"
                 classNamePrefix="select"
                 required
-                isMulti
                 options={options[key].map((item) => ({
                   value: item,
                   label: item,

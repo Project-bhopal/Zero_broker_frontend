@@ -1,52 +1,86 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const SocialField = ({data}) => {
-  const [formData, setFormData] = useState({
-    facebook: "",
-    instagram: "",
-    twitter: "",
-    linkedin: "",
-  });
+const SocialField = ({ data, onChange, handleSubmit }) => {
+  // const [formData, setFormData] = useState({
+  //   facebook: "",
+  //   instagram: "",
+  //   twitter: "",
+  //   linkedin: "",
+  // });
 
   const [errors, setErrors] = useState({});
 
-  // 🔹 URL Validation Regex
-  const isValidUrl = (url) => {
-    const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,4}(:\d+)?(\/.*)?$/i;
-    return urlPattern.test(url);
-  };
+  // // 🔹 URL Validation Regex
+  // const isValidUrl = (url) => {
+  //   const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,4}(:\d+)?(\/.*)?$/i;
+  //   return urlPattern.test(url);
+  // };
 
-  // 🔹 Handle Input Change
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  // // 🔹 Handle Input Change
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prev) => ({ ...prev, [name]: value }));
+  // };
 
-  // 🔹 Validate Form
-  const validateForm = () => {
-    let newErrors = {};
+  // // 🔹 Validate Form
+  // const validateForm = () => {
+  //   let newErrors = {};
 
-    Object.keys(formData).forEach((field) => {
-      if (formData[field]&&!isValidUrl(formData[field])) {
-        newErrors[field] = "Invalid URL format";
-      }
-    });
+  //   Object.keys(formData).forEach((field) => {
+  //     if (formData[field]&&!isValidUrl(formData[field])) {
+  //       newErrors[field] = "Invalid URL format";
+  //     }
+  //   });
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  //   setErrors(newErrors);
+  //   return Object.keys(newErrors).length === 0;
+  // };
 
-  // 🔹 Handle Form Submit
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      console.log("Social Links Updated Successfully", formData);
+  // // 🔹 Handle Form Submit
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (validateForm()) {
+  //     console.log("Social Links Updated Successfully", formData);
+  //   }
+  // };
+
+  
+    const [localData, setLocalData] = useState(data);
+  
+    useEffect(() => {
+      setLocalData(data);
+    }, [data]);
+  
+    const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      const updatedData = { ...localData, [name]: value };
+      setLocalData(updatedData);
+      onChange(updatedData); // 🔹 Send data back to parent
+    };
+  
+    const validateForm = () => {
+      let newErrors = {};
+  
+      if (localData.phone && !/^\d+$/.test(localData.phone)) 
+        newErrors.phone = "Phone must contain only numbers";
+      if (localData.whatsapp && !/^\d+$/.test(localData.whatsapp)) 
+        newErrors.whatsapp = "WhatsApp number must be numeric";
+  
+      setErrors(newErrors);
+      return Object.keys(newErrors).length === 0;
+    };
+  
+    const handleLocalSubmit = (e)=>{
+      e.preventDefault()
+    if(validateForm()){
+      handleSubmit()
     }
-  };
+    }
+  
 
   return (
-    <form className="form-style1" onSubmit={handleSubmit}>
+    <form className="form-style1" onSubmit={handleLocalSubmit}>
       <div className="row">
         <div className="col-sm-6 col-xl-4">
           <div className="mb20">
@@ -58,7 +92,7 @@ const SocialField = ({data}) => {
               name="facebook"
               className="form-control"
               placeholder="Your Facebook"
-              value={formData.facebook  || data.facebook}
+              value={localData.facebook}
               onChange={handleInputChange}
               
             />
@@ -90,7 +124,7 @@ const SocialField = ({data}) => {
               className="form-control"
                name="instagram"
               placeholder="Your Instagram"
-              value={formData.instagram || data.instagram}
+              value={localData.instagram}
               onChange={handleInputChange}
               
             />
@@ -108,7 +142,7 @@ const SocialField = ({data}) => {
               name="twitter"
               className="form-control"
               placeholder="Your Twitter"
-              value={formData.twitter || data.twitter}
+              value={localData.twitter}
               onChange={handleInputChange}
               
             />
@@ -126,7 +160,7 @@ const SocialField = ({data}) => {
                name="linkedin"
               className="form-control"
               placeholder="Your Linkedin"
-              value={formData.linkedin || data.linkedin}
+              value={localData.linkedin}
               onChange={handleInputChange}
               
             />

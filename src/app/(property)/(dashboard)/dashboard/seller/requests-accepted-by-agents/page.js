@@ -1,16 +1,18 @@
 import DashboardHeader from "@/components/common/DashboardHeader";
 import MobileMenu from "@/components/common/mobile-menu";
-import DboardMobileNavigation from "@/components/property/dashboard/DboardMobileNavigation";
+import Pagination from "@/components/property/Pagination";
 import Footer from "@/components/property/dashboard/Footer";
 import SidebarDashboard from "@/components/property/dashboard/SidebarDashboard";
-import PackageDataTable from "@/components/property/dashboard/dashboard-package/PackageDataTable";
-import RequestsDataTable from "@/components/property/dashboard/dashboard-property-requests/RequestsDataTable";
+import FilterHeader from "../../../../../../components/property/dashboard/dashboard-my-properties/FilterHeader";
+import PropertyDataTable from "@/components/property/dashboard/dashboard-my-properties/PropertyDataTable";
+import DboardMobileNavigation from "@/components/property/dashboard/DboardMobileNavigation";
+import RequestedAcceptedDataTable from "@/components/property/dashboard/dashboard-requests-accepted-by-agents/RequestedAcceptedDataTable";
 
 export const metadata = {
-  title: "Dashboard Requests || ZeroBroker - Real Estate NextJS Template",
+  title: "Dashboard Request Accepted by Agents || ZeroBroker - Real Estate NextJS Template",
 };
 
-const DashboardRequests = () => {
+const DashboardRequestsAcceptedByAgent = () => {
   return (
     <>
       {/* Main Header Nav */}
@@ -38,11 +40,14 @@ const DashboardRequests = () => {
               {/* End .row */}
 
               <div className="row align-items-center pb40">
-                <div className="col-lg-12">
+                <div className="col-xxl-3">
                   <div className="dashboard_title_area">
-                    <h2>Seller's Requests</h2>
+                    <h2>My Requests Accepted By Agents</h2>
                     <p className="text">We are glad to see you again!</p>
                   </div>
+                </div>
+                <div className="col-xxl-9">
+                  <FilterHeader show={false} />
                 </div>
               </div>
               {/* End .row */}
@@ -51,7 +56,11 @@ const DashboardRequests = () => {
                 <div className="col-xl-12">
                   <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                     <div className="packages_table table-responsive">
-                      <RequestsDataTable />
+                      <RequestedAcceptedDataTable />
+
+                      <div className="mt30">
+                        <Pagination />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -70,4 +79,4 @@ const DashboardRequests = () => {
   );
 };
 
-export default DashboardRequests;
+export default DashboardRequestsAcceptedByAgent;

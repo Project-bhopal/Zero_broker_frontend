@@ -6,17 +6,20 @@ const Select = dynamic(() => import('react-select'), { ssr: false });
 
 
 const structureTypeOptions = [
-  { value: "Apartments", label: "Apartments" },
-  { value: "Bungalow", label: "Bungalow" },
-  { value: "Houses", label: "Houses" },
-  { value: "Loft", label: "Loft" },
-];
+    { value: "Apartments", label: "Apartments" },
+    { value: "Bungalow", label: "Bungalow" },
+    { value: "Houses", label: "Houses" },
+    { value: "Loft", label: "Loft" },
+    { value: "Office", label: "Office" },
+    { value: "Townhome", label: "Townhome" },
+    { value: "Villa", label: "Villa" },
+  ];
 
 const customStyles = {
   option: (styles, { isFocused, isSelected, isHovered }) => ({
     ...styles,
     backgroundColor: isSelected
-      ? "#eb6753"
+      ? "#0f8363"
       : isHovered
       ? "#eb675312"
       : isFocused
@@ -39,7 +42,6 @@ const StructureType = () => {
             className="select-custom pl-0"
             classNamePrefix="select"
             required
-            isMulti
             defaultValue={[structureTypeOptions[0]]}
             name="structureType"
             options={structureTypeOptions}

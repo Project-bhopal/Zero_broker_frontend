@@ -11,9 +11,9 @@ function RequestsDataTable() {
   const [requestData, setRequestData] = useState([]);
   const router = useRouter();
 
-
-  const { data, isLoading, isError, error } = useAxiosFetch("/property/pending");
-        
+ 
+    const { data, isLoading, isError, error } = useAxiosFetch("/property/pending");
+ 
 
   useEffect(() => {
     if (data) {
@@ -92,7 +92,7 @@ function RequestsDataTable() {
             <td className="vam">
               <div className="flex gap-2">
                 <button
-                  className="py-1 px-2 bg-[#0f8363] text-white rounded-xl"
+                  className="py-1 px-3  hover:bg-[#0f8363] border-1 border-[#0f8363] text-[#0f8363] hover:text-white font-semibold rounded-xl"
                   style={{
                     borderRadius: "10px",
                     fontSize: "14px",

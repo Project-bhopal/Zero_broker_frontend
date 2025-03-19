@@ -140,8 +140,8 @@ const MainMenu = ({ navbar }) => {
               className={`list-item`}
               href={res.url}
               style={{
-                color: (navbar || pathname !== "/") ? "" : "#ffffff",
-                textShadow: (navbar || pathname !== "/") ? "" : "3px 3px 8px rgba(0, 0, 0, 0.9)",
+                color: "#fffff  ",
+               
               }}
             >
               {res.name}
