@@ -176,6 +176,34 @@ html {
         }
     }
 }
+.home-select-custom {
+    width: 100%;
+    .select__control {
+        border-radius: 8px;
+        border: 1px solid #0f8363;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        min-height: 40px;
+        outline: none;
+        padding-left: 15px;
+        &:hover {
+            border-color: #dddddd;
+        }
+
+        &.select__control--menu-is-open {
+            border-color: transparent;
+            border: 2px solid #0f8363 !important;
+        }
+    }
+    .select__indicator-separator {
+        background-color: #ddd;
+    }
+    &.pl-0 {
+        .select__control {
+            padding-left: 7px;
+        }
+    }
+}
 .reset-button {
     outline: none;
     background: transparent;

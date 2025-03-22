@@ -10,7 +10,7 @@ function PropertyListedByMeDataTable() {
     const router = useRouter();
   
   
-    const { data, isLoading, isError, error } = useAxiosFetch("");
+    const { data, isLoading, isError, error } = useAxiosFetch(``);
           
   
     useEffect(() => {

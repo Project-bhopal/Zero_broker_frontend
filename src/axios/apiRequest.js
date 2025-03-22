@@ -32,7 +32,19 @@ export async function ApiPostRequest(url, request){
         if(error.response && error.response.status == 401){
             window.location.href = "/login"
         } else {
-            return error
+            throw error
+        }
+    }
+}
+export async function ApiDeleteRequest(url){
+    try {
+        const res = await api.delete(url)
+        return res
+    } catch (error) {
+        if(error.response && error.response.status == 401){
+            window.location.href = "/login"
+        } else {
+            throw error
         }
     }
 }

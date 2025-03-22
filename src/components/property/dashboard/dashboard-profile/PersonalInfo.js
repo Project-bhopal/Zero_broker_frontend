@@ -136,7 +136,7 @@ const PersonalInfo = ({ data, onChange, handleSubmit }) => {
               type="text"
               value={localData?.email}
               className="form-control"
-              placeholder="Your Name"
+              placeholder="Your Email"
               
             />
           </div>

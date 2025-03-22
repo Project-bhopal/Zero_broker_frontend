@@ -90,7 +90,7 @@ export const propertyItems = [
       { label: "Saved Search", href: "/dashboard-saved-search" },
       { label: "Reviews", href: "/dashboard-reviews" },
       { label: "My Package", href: "/dashboard-my-package" },
-      { label: "My Profile", href: "/dashboard-my-profile" },
+      { label: "My Profile", href: "/dashboard/my-profile" },
     ],
   },
 ];

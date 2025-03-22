@@ -37,10 +37,10 @@ const DashboardHeader = () => {
         ],
       },
       {
-        title: "MANAGE LISTINGS",
+        title: "MANAGE ACCOUNT",
         items: [
           {
-            href: "/my-favourites",
+            href: "/dashboard/user/my-favourites",
             icon: "flaticon-like",
             text: "My Favorites",
           },
@@ -53,6 +53,21 @@ const DashboardHeader = () => {
             href: "/my-reviews",
             icon: "flaticon-review",
             text: "Reviews",
+          },
+          {
+            href: "/dashboard/user/payments",
+            icon: "flaticon-review",
+            text: "Payments",
+          },
+          {
+            href: "/dashboard/user/subcription",
+            icon: "flaticon-review",
+            text: "Subcription",
+          },
+          {
+            href: "/dashboard/user/wallet",
+            icon: "flaticon-review",
+            text: "Wallet",
           },
         ],
       },
@@ -209,7 +224,7 @@ const DashboardHeader = () => {
             text: "My Profile",
           },
           {
-            href: "/dashboard-message",
+            href: "/dashboard/message",
             icon: "flaticon-chat-1",
             text: "Message",
           },
@@ -230,7 +245,7 @@ const DashboardHeader = () => {
           },
           {
             href: "/dashboard/admin/all-users",
-            icon: "flaticon-user1",
+            icon: "flaticon-user",
             text: "All Users",
           },
         ],

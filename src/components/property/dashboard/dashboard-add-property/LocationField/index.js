@@ -1,10 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import SelectMulitField from "./SelectMulitField";
 import Map from "./Map";
 
-const LocationField = () => {
+const LocationField = ({setData}) => {
+  const [saved, setSaved] = useState(false)
+  const [location, setLocation] = useState({
+    country: "",
+    emirate: "",
+    city: "",
+    landmark: "",
+    address: "",
+    latitude: "",
+    longitude: "",
+    neighborhood: "",
+    street: "",
+    building_name: "",
+    apartment_number: "",
+    floor_number: "",
+  });
+
+  // Handle input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setLocation((prevLocation) => ({
+      ...prevLocation,
+      [name]: value,
+    }));
+  };
+
+  const handleLocationSubmit =(e) =>{
+    e.preventDefault();
+    setData((prev)=>({...prev, location}))
+    setSaved(true)
+
+  }
   return (
-    <form className="form-style1">
+    <form className="form-style1" onSubmit={handleLocationSubmit} >
       <div className="row">
         <div className="col-sm-12">
           <div className="mb20">
@@ -15,25 +46,27 @@ const LocationField = () => {
               type="text"
               className="form-control"
               name="address"
-              value={""}
+              value={location.address}
+              onChange={handleChange}
               placeholder="Property Address"
             />
           </div>
         </div>
+
         <div className="col-sm-6 col-xl-4">
           <div className="mb20">
-            <label className="heading-color ff-heading fw600 mb10">
-              Street
-            </label>
+            <label className="heading-color ff-heading fw600 mb10">Street</label>
             <input
               type="text"
               name="street"
-              value={""}
+              value={location.street}
+              onChange={handleChange}
               className="form-control"
               placeholder="Street"
             />
           </div>
         </div>
+
         <div className="col-sm-6 col-xl-4">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
@@ -43,23 +76,14 @@ const LocationField = () => {
               type="text"
               className="form-control"
               name="building_name"
-              value={""}
+              value={location.building_name}
+              onChange={handleChange}
               placeholder="Building Name"
             />
           </div>
         </div>
 
-        {/* End col-12 */}
-
-        <SelectMulitField />
-
-        {/* <div className="col-sm-6 col-xl-4">
-          <div className="mb20">
-            <label className="heading-color ff-heading fw600 mb10">Zip</label>
-            <input type="text" className="form-control" />
-          </div>
-        </div> */}
-        {/* End col-4 */}
+        <SelectMulitField location={location} setLocation={setLocation}/>
 
         <div className="col-sm-6 col-xl-4">
           <div className="mb20">
@@ -70,11 +94,13 @@ const LocationField = () => {
               type="text"
               className="form-control"
               name="neighborhood"
-              value={""}
+              value={location.neighborhood}
+              onChange={handleChange}
               placeholder="Neighborhood"
             />
           </div>
         </div>
+
         <div className="col-sm-6 col-xl-4">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
@@ -83,28 +109,45 @@ const LocationField = () => {
             <input
               type="text"
               name="landmark"
-              value={""}
+              value={location.landmark}
+              onChange={handleChange}
               className="form-control"
               placeholder="Landmark"
             />
           </div>
         </div>
+
         <div className="col-sm-6 col-xl-4">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
-              Apartment Number 
+              Apartment Number
             </label>
             <input
               type="number"
               name="apartment_number"
-              value={""}
+              value={location.apartment_number}
+              onChange={handleChange}
               className="form-control"
               placeholder="Apartment Number"
             />
           </div>
         </div>
 
-        {/* End col-4 */}
+        <div className="col-sm-6 col-xl-4">
+          <div className="mb20">
+            <label className="heading-color ff-heading fw600 mb10">
+              Floor Number
+            </label>
+            <input
+              type="number"
+              name="floor_number"
+              value={location.floor_number}
+              onChange={handleChange}
+              className="form-control"
+              placeholder="Floor Number eg 02..."
+            />
+          </div>
+        </div>
 
         <div className="col-sm-12">
           <div className="mb20 mt30">
@@ -114,9 +157,7 @@ const LocationField = () => {
             <Map />
           </div>
         </div>
-        {/* End col-12 */}
       </div>
-      {/* End .row */}
 
       <div className="row">
         <div className="col-sm-6 col-xl-4">
@@ -127,13 +168,13 @@ const LocationField = () => {
             <input
               type="text"
               name="latitude"
-              value={""}
+              value={location.latitude}
+              onChange={handleChange}
               className="form-control"
               placeholder="Latitude"
-              />
+            />
           </div>
         </div>
-        {/* End .col-sm-6 */}
 
         <div className="col-sm-6 col-xl-4">
           <div className="mb30">
@@ -143,14 +184,19 @@ const LocationField = () => {
             <input
               type="text"
               name="longitude"
-              value={""}
+              value={location.longitude}
+              onChange={handleChange}
               className="form-control"
               placeholder="Longitude"
-              />
+            />
           </div>
         </div>
       </div>
-      {/* End .row */}
+      <div className="flex justify-end">
+          <button type="submit" disabled={saved} className={`ud-btn ${saved ? "btn-thm" : "btn-white2"} duration-200 flex`}>
+           {saved?<>Saved Description <i className="fa fa-check-circle rotate-45"></i></>: <> Save Location Details </>}
+          </button>
+        </div>
     </form>
   );
 };

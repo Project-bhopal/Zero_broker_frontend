@@ -35,8 +35,10 @@ const Home_V1 = () => {
       {/* Home Banner Style V1 */}
       <section 
       className="home-banner-style1 p0" 
-      style={{
-        backgroundImage:`url('/images/background/homePageBanner.jpg')`,
+       style={{
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url('/images/background/homePageBanner.jpg')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
       >
         <div className="home-style1">

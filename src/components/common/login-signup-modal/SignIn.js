@@ -62,6 +62,7 @@ const SignIn = () => {
           setError("Your Email is not Verified first verify your email");
           sessionStorage.setItem("ot", "varification");
         } else if(details.data.isVerified) {
+          localStorage.setItem("name" , details.data.full_name)
            router.push("/")
         localStorage.setItem("loginSuccessfull", "true");
         setIsLoading(false);

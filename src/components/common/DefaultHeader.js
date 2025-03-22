@@ -49,34 +49,49 @@ const DefaultHeader = () => {
       title: `MAIN`,
       items: [
         {
-          href: "/dashboard-my-profile",
+          href: "/dashboard/my-profile",
           icon: "flaticon-user",
           text: "My Profile",
         },
         {
-          href: "/dashboard-message",
+          href: "/dashboard/message",
           icon: "flaticon-chat-1",
           text: "Message",
         },
       ],
     },
     {
-      title: "MANAGE LISTINGS",
+      title: "MANAGE ACCOUNT",
       items: [
         {
-          href: "/dashboard-my-favourites",
+          href: "/dashboard/user/my-favourites",
           icon: "flaticon-like",
           text: "My Favorites",
         },
         {
-          href: "/dashboard-saved-search",
+          href: "/saved-search",
           icon: "flaticon-search-2",
           text: "Saved Search",
         },
         {
-          href: "/dashboard-reviews",
+          href: "/my-reviews",
           icon: "flaticon-review",
           text: "Reviews",
+        },
+        {
+          href: "/dashboard/user/payments",
+          icon: "flaticon-review",
+          text: "Payments",
+        },
+        {
+          href: "/dashboard/user/subcription",
+          icon: "flaticon-review",
+          text: "Subcription",
+        },
+        {
+          href: "/dashboard/user/wallet",
+          icon: "flaticon-review",
+          text: "Wallet",
         },
       ],
     },
@@ -107,12 +122,12 @@ const DefaultHeader = () => {
           text: "Dashboard",
         },
         {
-          href: "/dashboard-my-profile",
+          href: "/dashboard/my-profile",
           icon: "flaticon-user",
           text: "My Profile",
         },
         {
-          href: "/dashboard-message",
+          href: "/dashboard/message",
           icon: "flaticon-chat-1",
           text: "Message",
         },
@@ -155,12 +170,12 @@ const DefaultHeader = () => {
           text: "Dashboard",
         },
         {
-          href: "/dashboard-my-profile",
+          href: "/dashboard/my-profile",
           icon: "flaticon-user",
           text: "My Profile",
         },
         {
-          href: "/dashboard-message",
+          href: "/dashboard/message",
           icon: "flaticon-chat-1",
           text: "Message",
         },
