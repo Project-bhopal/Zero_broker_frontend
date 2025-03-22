@@ -10,7 +10,7 @@ const adminStatisticsData = [
   {
     text: "Total Agent",
     title: "192",
-    icon: "flaticon-user1",
+    icon: "flaticon-user-1",
   },
   {
     text: "Listed Properties",
@@ -20,7 +20,7 @@ const adminStatisticsData = [
   {
     text: "Total Requests",
     title: "67",
-    icon: "flaticon-like",
+    icon: "",
   },
   {
     text: "Requests Accepted",
@@ -97,7 +97,7 @@ const agentStatisticsData = [
     icon: "flaticon-search-chart",
   },
   {
-    text: "isting",
+    text: "Listing",
     title: "63",
     icon: "flaticon-home",
   },

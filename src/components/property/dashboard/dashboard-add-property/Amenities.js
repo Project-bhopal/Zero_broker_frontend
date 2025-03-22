@@ -1,61 +1,117 @@
-import React from "react";
+import React, { useState } from "react";
 
 const amenitiesData = {
   column1: [
-    { label: "Attic", defaultChecked: false },
-    { label: "Basketball court", defaultChecked: true },
-    { label: "Air Conditioning", defaultChecked: true },
-    { label: "Lawn", defaultChecked: true },
-    { label: "Swimming Pool", defaultChecked: false },
-    { label: "Barbeque", defaultChecked: false },
-    { label: "Microwave", defaultChecked: false },
+    { label: "Attic" },
+    { label: "Basketball court" },
+    { label: "Air Conditioning" },
+    { label: "Lawn" },
+    { label: "Swimming Pool" },
+    { label: "Barbeque" },
+    { label: "Microwave" },
   ],
   column2: [
-    { label: "TV Cable", defaultChecked: false },
-    { label: "Dryer", defaultChecked: true },
-    { label: "Outdoor Shower", defaultChecked: true },
-    { label: "Washer", defaultChecked: true },
-    { label: "Gym", defaultChecked: false },
-    { label: "Ocean view", defaultChecked: false },
-    { label: "Private space", defaultChecked: false },
+    { label: "TV Cable" },
+    { label: "Dryer" },
+    { label: "Outdoor Shower" },
+    { label: "Washer" },
+    { label: "Gym" },
+    { label: "Ocean view" },
+    { label: "Private space" },
   ],
   column3: [
-    { label: "Lake view", defaultChecked: false },
-    { label: "Wine cellar", defaultChecked: true },
-    { label: "Front yard", defaultChecked: true },
-    { label: "Refrigerator", defaultChecked: true },
-    { label: "WiFi", defaultChecked: false },
-    { label: "Laundry", defaultChecked: false },
-    { label: "Sauna", defaultChecked: false },
+    { label: "Lake view" },
+    { label: "Wine cellar" },
+    { label: "Front yard" },
+    { label: "Refrigerator" },
+    { label: "WiFi" },
+    { label: "Laundry" },
+    { label: "Sauna" },
   ],
 };
 
-const Amenities = () => {
+const Amenities = ({setData}) => {
+  const [saved, setSaved] = useState(false)
+  const [selectedAmenities, setSelectedAmenities] = useState([]);
+  const [otherAmenities, setOtherAmenities] = useState("");
+  const [otherAmenitiesArray, setOtherAmenitiesArray] = useState([]);
+
+  const handleCheckboxChange = (label) => {
+    setSelectedAmenities((prev) =>
+      prev.includes(label)
+        ? prev.filter((item) => item !== label)
+        : [...prev, label]
+    );
+    setSaved(false)
+  };
+
+  const handleOtherAmenitiesChange = (e) => {
+    setOtherAmenities(e.target.value);
+    setOtherAmenitiesArray(
+      e.target.value.split(",").map((item) => item.trim()).filter(Boolean)
+    );
+    
+    setSaved(false)
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const otherAmenitiesArray = otherAmenities
+    .split(",")
+    .map((item) => item.trim()) // Trim spaces
+    .filter(Boolean);
+    console.log("Selected Amenities:", selectedAmenities);
+    console.log("other Amenities:", otherAmenitiesArray);
+    setData((prev)=>({...prev, features_amenities: selectedAmenities, otherAmenitiesArray}))
+    setSaved(true)
+  };
+
   return (
     <>
-    <div className="row">
-      {Object.keys(amenitiesData).map((columnKey, index) => (
-        <div key={index} className="col-sm-6 col-lg-3 col-xxl-2">
-          <div className="checkbox-style1">
-            {amenitiesData[columnKey].map((amenity, amenityIndex) => (
-              <label key={amenityIndex} className="custom_checkbox">
-                {amenity.label}
-                <input
-                  type="checkbox"
-                  defaultChecked={amenity.defaultChecked}
-                />
-                <span className="checkmark" />
+      <form onSubmit={handleSubmit}>
+      <div className="row">
+        {Object.keys(amenitiesData).map((columnKey, index) => (
+          <div key={index} className="col-sm-6 col-lg-3 col-xxl-2">
+            <div className="checkbox-style1">
+              {amenitiesData[columnKey].map((amenity, amenityIndex) => (
+                <label key={amenityIndex} className="custom_checkbox">
+                  {amenity.label}
+                  <input
+                    type="checkbox"
+                    name="amenities"
+                    checked={selectedAmenities.includes(amenity.label)}
+                    onChange={() => handleCheckboxChange(amenity.label)}
+                  />
+                  <span className="checkmark" />
+                </label>
+              ))}
+            </div>
+          </div>
+        ))}
+        <div className="row">
+          <div className="col-sm-12">
+            <div className="mb20">
+              <label className="heading-color ff-heading fw600 mb10 mt50">
+                Other Amenities (Type amenities separated by comma ",")
               </label>
-            ))}
+              <textarea
+                cols={30}
+                rows={5}
+                name="other_amenities"
+                placeholder="Power Backup, Back yard ..."
+                value={otherAmenities}
+                onChange={handleOtherAmenitiesChange}
+              />
+            </div>
           </div>
         </div>
-      ))}
-    <div className="flex justify-end">
-      <button className="w-52 ud-btn btn-thm">
-        submit
-      </button>
-    </div>
-    </div>
+        <div className="flex justify-end">
+          <button type="submit" disabled={saved} className={`ud-btn ${saved ? "btn-thm" : "btn-white2"} duration-200 flex`}>
+           {saved?<>Saved <i className="fa fa-check-circle rotate-45"></i></>: <> Save Amenities </>}
+          </button>
+        </div>
+      </div>
+      </form>
     </>
   );
 };

@@ -9,7 +9,7 @@ const api_url = process.env.NEXT_PUBLIC_API_BASE_URL;
   return useMutation({
     mutationFn: async (data) => {
       const response = await ApiPostRequest(`${api_url}${url}`, data);
-      return response.data;
+      return response;
     },
     ...options,
   });

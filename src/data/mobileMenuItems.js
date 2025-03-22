@@ -99,7 +99,7 @@ module.exports = [
       { label: "Saved Search", path: "/dashboard-saved-search" },
       { label: "Reviews", path: "/dashboard-reviews" },
       { label: "My Package", path: "/dashboard-my-package" },
-      { label: "My Profile", path: "/dashboard-my-profile" },
+      { label: "My Profile", path: "/dashboard/my-profile" },
     ],
   },
   {

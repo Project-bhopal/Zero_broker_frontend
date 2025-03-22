@@ -13,7 +13,7 @@ import useAxiosFetch from "@/hooks/useAxiosFetch";
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
   const [islogin, setIsLogin] = useState(false)
-  const {user} = useContext(userContext)
+  const [user, setUser] = useState(false)
 
   // const {data, isLoading, error, isError} = useAxiosFetch("/profile/me")
   
@@ -28,6 +28,7 @@ const Header = () => {
   useEffect(() => {
     const islogin = Cookies.get('accessToken')
     setIsLogin(islogin)
+    setUser(localStorage.getItem("name"))
     // setIsLogin(islogin)
     window.addEventListener("scroll", changeBackground);
     return () => {
@@ -44,11 +45,11 @@ const Header = () => {
           <div className="container posr menu_bdrt1">
             <div className="flex items-center justify-between">
               <div className="col-auto">
-                <div className="d-flex align-items-center justify-conmtent-between">
+                <div className="d-flex align-items-center justify-content-between">
                   <div className="logos mr40">
                     <Link className="header-logo logo1" href={pageRoutes.home}>
                       <img
-                        src="/images/logoBlack.png"
+                        src="/images/logoWhite.png"
                         alt="Header Logo"
                         className="h-20 w-auto"
                       />  
@@ -115,7 +116,7 @@ const Header = () => {
               </div> */}
               <div className="col-auto">
                 <div className="d-flex align-items-center">
-                <span className="text-white font-bold"> Hii, {user} </span> &nbsp; &nbsp;
+                <span className={`${!navbar ? "text-white" : "text-black" } font-semibold`}> Hii, {user} </span> &nbsp; &nbsp;
                   {islogin ?(
                     <a
                     href="/dashboard/my-profile"

@@ -31,10 +31,10 @@ const DboardMobileNavigation = () => {
       ],
     },
     {
-      title: "MANAGE LISTINGS",
+      title: "MANAGE ACCOUNT",
       items: [
         {
-          href: "/my-favourites",
+          href: "/dashbaord/user/my-favourites",
           icon: "flaticon-like",
           text: "My Favorites",
         },
@@ -47,6 +47,21 @@ const DboardMobileNavigation = () => {
           href: "/my-reviews",
           icon: "flaticon-review",
           text: "Reviews",
+        },
+        {
+          href: "/dashboard/user/payments",
+          icon: "flaticon-review",
+          text: "Payments",
+        },
+        {
+          href: "/dashboard/user/subcription",
+          icon: "flaticon-review",
+          text: "Subcriptions",
+        },
+        {
+          href: "/dashboard/user/wallet",
+          icon: "flaticon-review",
+          text: "Wallet",
         },
       ],
     },
@@ -82,7 +97,7 @@ const DboardMobileNavigation = () => {
           text: "My Profile",
         },
         {
-          href: "/dashboard-message",
+          href: "/dashboard/message",
           icon: "flaticon-chat-1",
           text: "Message",
         },
@@ -145,7 +160,7 @@ const DboardMobileNavigation = () => {
           text: "My Profile",
         },
         {
-          href: "/dashboard-message",
+          href: "/dashboard/message",
           icon: "flaticon-chat-1",
           text: "Message",
         },
@@ -203,7 +218,7 @@ const DboardMobileNavigation = () => {
           text: "My Profile",
         },
         {
-          href: "/dashboard-message",
+          href: "/dashboard/message",
           icon: "flaticon-chat-1",
           text: "Message",
         },
@@ -224,7 +239,7 @@ const DboardMobileNavigation = () => {
         },
         {
           href: "/dashboard/admin/all-users",
-          icon: "flaticon-user1",
+          icon: "flaticon-user",
           text: "All Users",
         },
       ],

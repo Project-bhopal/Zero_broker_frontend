@@ -1,0 +1,137 @@
+"use client";
+import DashboardHeader from "@/components/common/DashboardHeader";
+import MobileMenu from "@/components/common/mobile-menu";
+import Pagination from "@/components/property/Pagination";
+import Footer from "@/components/property/dashboard/Footer";
+import SidebarDashboard from "@/components/property/dashboard/SidebarDashboard";
+import DboardMobileNavigation from "@/components/property/dashboard/DboardMobileNavigation";
+import AgentsRequestsDataTable from "@/components/property/dashboard/admin-agents-requests/AgentsRequestsDataTable";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import useAxiosFetch from "@/hooks/useAxiosFetch";
+import dynamic from "next/dynamic";
+
+const Select = dynamic(() => import("react-select"), { ssr: false });
+
+const Options = [
+  { value: "Pending", label: "Pending" },
+  { value: "Approved", label: "Approved" },
+];
+
+const customStyles = {
+  option: (styles, { isFocused, isSelected }) => ({
+    ...styles,
+    backgroundColor: isSelected ? "#0f8363" : isFocused ? "#ebfff9" : undefined,
+  }),
+};
+
+const AgentsPropertyRequests = () => {
+  const [status, setStatus] = useState(null);
+  const [agentsRequests, setRequests] = useState([]);
+  const [message, setMessage] = useState("Agent deleted Successfully");
+  const [selectedValue, setSelectedValue] = useState("Pending"); // Default value
+  const [state, setState] = useState({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+  });
+
+  const router = useRouter();
+  const { data, isLoading, error, isError } = useAxiosFetch(
+    "/property/getProperties"
+  );
+
+  useEffect(() => {
+    setRequests(data?.properties);
+  }, [data]);
+
+  const handleChange = (selectedOption) => {
+    setSelectedValue(selectedOption.value);
+  };
+
+  return (
+    <>
+      {/* Main Header Nav */}
+      <DashboardHeader />
+      {/* End Main Header Nav */}
+
+      {/* Mobile Nav  */}
+      <MobileMenu />
+      {/* End Mobile Nav  */}
+
+      {/* dashboard_content_wrapper */}
+      <div className="dashboard_content_wrapper">
+        <div className="dashboard dashboard_wrapper pr30 pr0-xl">
+          <SidebarDashboard />
+          {/* End .dashboard__sidebar */}
+
+          <div className="dashboard__main pl0-md">
+            <div className="dashboard__content bgc-f7">
+              <div className="row pb40">
+                <div className="col-lg-12">
+                  <DboardMobileNavigation />
+                </div>
+                {/* End .col-12 */}
+              </div>
+              {/* End .row */}
+
+              <div className="w-full pb40">
+                <div className="col-xxl-3">
+                  <div className="dashboard_title_area">
+                    <h2>My Properties</h2>
+                    <p className="text">We are glad to see you again!</p>
+                  </div>
+                </div>
+                <div className="col-2 justify-self-end">
+                  <div className="mb20">
+                    <label className="heading-color ff-heading fw600 mb10">
+                      Status
+                    </label>
+                    <div className="location-area">
+                      <Select
+                        name="currency"
+                        value={selectedValue.value} // Select expects an object
+                        onChange={handleChange}
+                        options={Options}
+                        styles={customStyles}
+                        className="select-custom pl-0"
+                        classNamePrefix="select"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* End .row */}
+
+              <div className="row">
+                <div className="col-xl-12">
+                  <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                    <div className="packages_table table-responsive">
+                      <AgentsRequestsDataTable
+                        agentsRequests={agentsRequests}
+                        selectedValue={selectedValue}
+                      />
+
+                      <div className="mt30">
+                        <Pagination />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* End .row */}
+            </div>
+            {/* End .dashboard__content */}
+
+            <Footer />
+          </div>
+          {/* End .dashboard__main */}
+        </div>
+      </div>
+      {/* dashboard_content_wrapper */}
+    </>
+  );
+};
+
+export default AgentsPropertyRequests;

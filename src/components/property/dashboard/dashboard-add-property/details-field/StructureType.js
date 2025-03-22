@@ -37,12 +37,12 @@ const StructureType = () => {
         </label>
         <div className="location-area">
           <Select
-                key={Date.now()}
+            key={Date.now()}
             styles={customStyles}
             className="select-custom pl-0"
             classNamePrefix="select"
             required
-            defaultValue={[structureTypeOptions[0]]}
+            defaultValue={""}
             name="structureType"
             options={structureTypeOptions}
           />

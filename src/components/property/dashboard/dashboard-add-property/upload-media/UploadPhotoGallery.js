@@ -3,27 +3,29 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import React, { useState, useRef } from "react";
 import Image from "next/image";
 
-const UploadPhotoGallery = () => {
-  const [uploadedImages, setUploadedImages] = useState([]);
+const UploadPhotoGallery = ({setImages}) => {
+  const [uploaded, setUploaded] = useState(false)
+  const [uploadedImages, setUploadedImages] = useState([]); // Stores both file & preview
   const fileInputRef = useRef(null);
 
-  const handleUpload = (files) => {
+  const handleUpload = (e) => {
+    const files = e.target.files || e; // Support both input & drag/drop
     const newImages = [...uploadedImages];
-
+    
     for (const file of files) {
       const reader = new FileReader();
-      reader.onload = (e) => {
-        newImages.push(e.target.result);
-        setUploadedImages(newImages);
+      reader.onload = (event) => {
+        newImages.push({ file, preview: event.target.result });
+        setUploadedImages([...newImages]); // Ensure state updates properly
       };
       reader.readAsDataURL(file);
     }
+    setUploaded(false)
   };
 
   const handleDrop = (event) => {
     event.preventDefault();
-    const files = event.dataTransfer.files;
-    handleUpload(files);
+    handleUpload(event.dataTransfer.files);
   };
 
   const handleDragOver = (event) => {
@@ -31,7 +33,6 @@ const UploadPhotoGallery = () => {
   };
 
   const handleButtonClick = () => {
-    // Programmatically trigger the hidden file input
     fileInputRef.current.click();
   };
 
@@ -39,6 +40,12 @@ const UploadPhotoGallery = () => {
     const newImages = [...uploadedImages];
     newImages.splice(index, 1);
     setUploadedImages(newImages);
+    setUploaded(false)
+  };
+
+  const handleSubmit =  () => {
+    setImages(uploadedImages)
+    setUploaded(true)
   };
 
   return (
@@ -61,24 +68,26 @@ const UploadPhotoGallery = () => {
             ref={fileInputRef}
             id="fileInput"
             type="file"
+            name="images"
             multiple
             className="ud-btn btn-white"
-            onChange={(e) => handleUpload(e.target.files)}
+            onChange={handleUpload}
             style={{ display: "none" }}
+            required
           />
         </label>
       </div>
 
       {/* Display uploaded images */}
       <div className="row profile-box position-relative d-md-flex align-items-end mb50">
-        {uploadedImages.map((imageData, index) => (
+        {uploadedImages.map(({ preview }, index) => (
           <div className="col-2" key={index}>
             <div className="profile-img mb20 position-relative sm:w-[100px] w-[70px]">
               <Image
                 width={212}
                 height={194}
                 className="w-100 bdrs12 cover"
-                src={imageData}
+                src={preview}
                 alt={`Uploaded Image ${index + 1}`}
               />
               <button
@@ -100,7 +109,14 @@ const UploadPhotoGallery = () => {
             </div>
           </div>
         ))}
+      {uploadedImages.length !== 0 &&<div className="flex justify-end">
+          <button  disabled={uploadedImages.length === 0} className={`ud-btn ${uploaded ? "btn-thm" : "btn-white2"} duration-200 flex`} onClick={()=>handleSubmit()}>
+           {uploaded?<>Saved <i className="fa fa-check-circle rotate-45"></i></>: <> Save Images </>}
+          </button>
+        </div>}
       </div>
+
+      {/* Submit Button */}
     </>
   );
 };

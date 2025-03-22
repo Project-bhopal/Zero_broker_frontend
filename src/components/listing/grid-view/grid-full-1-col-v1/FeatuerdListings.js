@@ -37,7 +37,7 @@ const FeaturedListings = ({ data, colstyle, setIsScheduleTourModal }) => {
                 <Image
                   width={114}
                   height={114}
-                  className="rounded-circle w-full h-full cover"
+                  className="rounded-circle w-full h-full object-cover"
                   src={listing.image}
                   alt="agent"
                 />

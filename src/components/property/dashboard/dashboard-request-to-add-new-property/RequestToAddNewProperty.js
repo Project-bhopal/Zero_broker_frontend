@@ -70,9 +70,9 @@ function RequestToAddNewProperty() {
 
       const mutation = useAxiosPost("/property/create", {
         onSuccess: (data) => {
-          console.log("Property created successfully:", data);
+          console.log("Request created successfully:", data);
           setState((prev) =>({...prev, open: true}))
-          router.push("/dashboard-my-properties")
+          router.push("/dashboard/seller/my-properties")
         },
         onError: (error) => {
           console.error("Error creating property:", error);
