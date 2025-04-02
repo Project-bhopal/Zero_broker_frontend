@@ -4,51 +4,46 @@ import Link from "next/link";
 import React from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
-const propertyData = [
+const buyers = [
   {
     _id: 1,
-    title: "Equestrian Family Home",
-    imageSrc: "/images/listings/list-1.jpg",
-    location: "California City, CA, USA",
-    price: "$14,000/mo",
-    datePublished: "December 31, 2022",
-    status: "Pending",
+    fullname: "Jhon Seller",
+    email: "jhon@gmail.com",
+    role:"Buyer",
+    mobile: "6091412609",
+    createdAt: "13/03/2025",
   },
   {
-    _id: 2,
-    title: "Luxury villa in Rego Park",
-    imageSrc: "/images/listings/list-2.jpg",
-    location: "California City, CA, USA",
-    price: "$14,000/mo",
-    datePublished: "December 31, 2022",
-    status: "Published",
+    _id: 1,
+    fullname: "abhi buyer",
+    email: "abhishekgurjar5020@gmail.com",
+    role:"Buyer",
+    mobile: "7849687574",
+    createdAt: "15/03/2025",
   },
   {
-    _id: 3,
-    title: "Villa on Hollywood Boulevard",
-    imageSrc: "/images/listings/list-3.jpg",
-    location: "California City, CA, USA",
-    price: "$14,000/mo",
-    datePublished: "December 31, 2022",
-    status: "Processing",
+    _id: 1,
+    fullname: "Aman buyer",
+    email: "amanbuyer@gmail.com",
+    role:"Buyer",
+    mobile: "9985478541",
+    createdAt: "18/03/2025",
   },
   {
-    _id: 4,
-    title: "Equestrian Family Home",
-    imageSrc: "/images/listings/list-4.jpg",
-    location: "California City, CA, USA",
-    price: "$14,000/mo",
-    datePublished: "December 31, 2022",
-    status: "Pending",
+    _id: 1,
+    fullname: "abhi Seller",
+    email: "abhi11@gmail.com",
+    role:"Buyer",
+    mobile: "7849187529",
+    createdAt: "15/03/2025",
   },
   {
-    _id: 5,
-    title: "Luxury villa in Rego Park",
-    imageSrc: "/images/listings/list-5.jpg",
-    location: "California City, CA, USA",
-    price: "$14,000/mo",
-    datePublished: "December 31, 2022",
-    status: "Published",
+    _id: 1,
+    fullname: "Jhon Seller",
+    email: "abhi1212@gmail.com",
+    role:"Buyer",
+    mobile: "6121412609",
+    createdAt: "19/03/2025",
   },
 ];
 
@@ -66,6 +61,19 @@ const getStatusStyle = (status) => {
 };
 
 const AllBuyersDataTable = () => {
+  function formatDate(dateString) {
+    if (!dateString) return "Invalid Date"; // Handle empty or undefined input
+
+    const date = new Date(dateString);
+    if (isNaN(date)) return "Invalid Date"; // Handle invalid date formats
+
+    const day = String(date.getDate()).padStart(2, "0"); // Ensure two-digit day
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Ensure two-digit month
+    const year = date.getFullYear();
+
+    return `${day}/${month}/${year}`; // Returns DD/MM/YYYY
+  }
+
   return (
     <table className="table-style3 table at-savesearch">
       <thead className="t-head">
@@ -78,71 +86,66 @@ const AllBuyersDataTable = () => {
         </tr>
       </thead>
       <tbody className="t-body">
-        {propertyData.map((property) => (
-          <tr key={property._id}>
-            <th scope="row">
-              <div className="listing-style1 dashboard-style d-xxl-flex align-items-center mb-0">
-                <div className="list-thumb">
-                  <Image
-                    width={110}
-                    height={94}
-                    className="w-100"
-                    src={property.imageSrc}
-                    alt="property"
-                  />
-                </div>
-                <div className="list-content py-0 p-0 mt-2 mt-xxl-0 ps-xxl-4">
-                  <div className="h6 list-title">
-                    <Link href={`/single-v1/${property.id}`}>{property.title}</Link>
-                  </div>
-                  <p className="list-text mb-0">{property.location}</p>
-                  <div className="list-price">
-                    <a href="#">{property.price}</a>
-                  </div>
-                </div>
-              </div>
-            </th>
-            <td className="vam">{property.datePublished}</td>
-            <td className="vam">
-              <span className={getStatusStyle(property.status)}>
-                {property.status}
-              </span>
-            </td>
-            <td className="vam">{property.datePublished}</td>
-            <td className="vam">
-              <div className="d-flex">
-                <Link
-                  href={`/dashboard/seller/request-to-agent/${property._id}`}
-                  className="icon"
-                  style={{ border: "none" }}
-                  data-tooltip-id={`edit-${property._id}`}
-                >
-                  <span className="fas fa-pen fa" />
-                </Link>
-                <Link
-                  href={`/dashboard/request-to-agent/${property._id}`}
-                  className="icon"
-                  style={{ border: "none" }}
-                  data-tooltip-id={`delete-${property._id}`}
-                >
-                  <span className="flaticon-bin" />
-                </Link>
-
-                <ReactTooltip
-                  id={`edit-${property._id}`}
-                  place="top"
-                  content="Edit"
-                />
-                <ReactTooltip
-                  id={`delete-${property._id}`}
-                  place="top"
-                  content="Delete"
-                />
-              </div>
-            </td>
-          </tr>
-        ))}
-      </tbody>
+              {buyers.map((agent) => (
+                <tr key={agent._id}>
+                  <th scope="row">
+                    <div className="listing-style1 dashboard-style d-xxl-flex align-items-center mb-0">
+                      <div className="list-thumb">
+                        <Image
+                          width={110}
+                          height={94}
+                          className="w-100"
+                          src={agent.imageSrc}
+                          alt="agent"
+                        />
+                      </div>
+                      <div className="list-content py-0 p-0 mt-2 mt-xxl-0 ps-xxl-4">
+                          <Link href={`/single-v1/${agent._id}`}>{agent.fullname}</Link>
+                      </div>
+                    </div>
+                  </th>
+                  <td className="vam">
+                    <span className={getStatusStyle(agent?.status)}>
+                    <p className="list-text mb-0">{agent.email}</p>
+                    <p href="#">{agent.mobile}</p>
+                    </span>
+                  </td>
+                  <td className="vam">{agent.role}</td>
+                  <td className="vam">{agent.createdAt}</td>
+                  <td className="vam">
+                    <div className="d-flex">
+                      <Link
+                        href={`/dashboard/seller/request-to-agent/${agent._id}`}
+                        className="icon"
+                        style={{ border: "none" }}
+                        data-tooltip-id={`edit-${agent._id}`}
+                      >
+                        <span className="fas fa-pen fa" />
+                      </Link>
+                      <p
+                        className="icon"
+                        style={{ border: "none" }}
+                        data-tooltip-id={`delete-${agent._id}`}
+                        onClick={()=>{handleAgentDeleteClick(agent._id)}}
+                      >
+                        <span className="flaticon-bin" />
+                      </p>
+      
+                      <ReactTooltip
+                        id={`edit-${agent._id}`}
+                        place="top"
+                        content="Edit"
+                      />
+                      <ReactTooltip
+                        id={`delete-${agent._id}`}
+                        place="top"
+                        content="Delete"
+                      />
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
     </table>
   );
 };

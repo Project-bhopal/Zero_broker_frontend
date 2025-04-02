@@ -85,11 +85,11 @@ const PersonalInfo = ({ data, onChange, handleSubmit }) => {
             </label>
             <input
               type="text"
-              name="username"
+              name="fullname"
               className="form-control"
               placeholder="Your Name"
-              value={localData?.username || localData?.fullname}
-              onChange={handleInputChange}
+              readOnly
+              value={localData?.fullname}
               
             />
             {/* {errors.username && <p className="text-danger">{errors.username}</p>} */}
@@ -118,8 +118,8 @@ const PersonalInfo = ({ data, onChange, handleSubmit }) => {
               className="form-control"
               name="mobile"
               placeholder="Your Phone"
+              readOnly
               value={localData?.mobile}
-              onChange={handleInputChange}
               
             />
             {errors.phone && <p className="text-danger">{errors.mobile}</p>}
@@ -134,10 +134,10 @@ const PersonalInfo = ({ data, onChange, handleSubmit }) => {
             </label>
             <input
               type="text"
+              readOnly
               value={localData?.email}
               className="form-control"
               placeholder="Your Email"
-              
             />
           </div>
         </div>
@@ -254,9 +254,9 @@ const PersonalInfo = ({ data, onChange, handleSubmit }) => {
               cols={30}
               rows={4}
               maxLength={500}
-              name="about"
+              name="aboutMe"
               placeholder="About yourself"
-              value={localData?.about || localData?.aboutMe}
+              value={localData?.aboutMe}
               onChange={handleInputChange}
               defaultValue={""}
             />

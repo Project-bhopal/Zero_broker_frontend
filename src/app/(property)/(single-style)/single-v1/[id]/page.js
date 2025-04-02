@@ -44,16 +44,16 @@ const SingleV1 = ({params}) => {
       {/* Property All Single V1 */}
       <section className="pt60 pb90 bgc-f7">
         <div className="container">
-          <div className="row">
-            <PropertyHeader id={params.id} />
-          </div>
-          {/* End .row */}
 
-          <div className="row mb30 mt30">
+          <div className="row mb30">
             <PropertyGallery id={params.id}/>
           </div>
           {/* End .row */}
 
+          <div className="row">
+            <PropertyHeader id={params.id} />
+          </div>
+          {/* End .row */}
           <div className="row wrap">
             <div className="col-lg-8">
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
@@ -92,15 +92,15 @@ const SingleV1 = ({params}) => {
               </div>
               {/* End .ps-widget */}
 
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Energy Class</h4>
                 <div className="row">
                   <EnergyClass />
                 </div>
-              </div>
+              </div> */}
               {/* End .ps-widget */}
 
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Floor Plans</h4>
                 <div className="row">
                   <div className="col-md-12">
@@ -109,7 +109,7 @@ const SingleV1 = ({params}) => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
               {/* End .ps-widget */}
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 ">
@@ -136,7 +136,7 @@ const SingleV1 = ({params}) => {
               </div>
               {/* End .ps-widget */}
 
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Walkscore</h4>
                 <div className="row">
                   <div className="col-md-12">
@@ -146,30 +146,30 @@ const SingleV1 = ({params}) => {
                     <WalkScore />
                   </div>
                 </div>
-              </div>
+              </div> */}
               {/* End .ps-widget */}
 
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Mortgage Calculator</h4>
-                <div className="row">
-                  <MortgageCalculator />
-                </div>
-              </div>
+                {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+                  <h4 className="title fz17 mb30">Mortgage Calculator</h4>
+                  <div className="row">
+                    <MortgageCalculator />
+                  </div>
+                </div> */}
               {/* End .ps-widget */}
 
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <div className="row">
                   <PropertyViews />
                 </div>
-              </div>
+              </div> */}
               {/* End .ps-widget */}
 
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+              {/* <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Home Value</h4>
                 <div className="row">
                   <HomeValueChart />
                 </div>
-              </div>
+              </div> */}
               {/* End .ps-widget */}
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">

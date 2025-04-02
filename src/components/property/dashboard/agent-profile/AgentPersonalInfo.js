@@ -6,7 +6,7 @@ import Snackbar from "@/components/Snackbar/Snackbar";
 import StatusSnackbar from "@/components/Snackbar/Snackbar";
 import useAxiosPost from "@/hooks/useAxiosPost";
 
-const AgentPersonalInfo = ({ data}) => {
+const AgentPersonalInfo = ({ create, data}) => {
   const [uploadedImage, setUploadedImage] = useState(null);
   const [show, setShow] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
@@ -148,7 +148,7 @@ const AgentPersonalInfo = ({ data}) => {
                     style={{ display: "none" }}
                   />
                   <div className="ud-btn btn-white2 mb30">
-                    Upload Agent's Profile Photo
+                    Upload {create}'s Profile Photo
                     <i className="fal fa-arrow-right-long" />
                   </div>
                 </label>
@@ -158,7 +158,7 @@ const AgentPersonalInfo = ({ data}) => {
         <div className="col-sm-6 col-xl-4">
           <div className="mb20">
             <label className="heading-color ff-heading fw600 mb10">
-              Agent Name
+            {create} Name
             </label>
             <input
               type="text"
@@ -271,13 +271,13 @@ const AgentPersonalInfo = ({ data}) => {
       <div className="col-md-12">
           <div className="text-end">
             <button type="submit" className="ud-btn btn-dark">
-              Create Agent
+              Create {create}
               <i className="fal fa-arrow-right-long" />
             </button>
           </div>
         </div>
      </form>
-     <StatusSnackbar message={"Agent Created Successfully"} state={state} status={true}/>
+     <StatusSnackbar message={`${create} Created Successfully`} state={state} status={true}/>
      </>
   );
 };

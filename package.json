@@ -33,6 +33,7 @@
     "react-bootstrap": "^2.10.7",
     "react-countup": "^6.4.2",
     "react-dom": "^18.2.0",
+    "react-icons": "^5.5.0",
     "react-intersection-observer": "^9.5.2",
     "react-modal-video": "^2.0.1",
     "react-photoswipe-gallery": "^2.2.7",
@@ -43,7 +44,8 @@
     "recharts": "^2.15.1",
     "sass": "^1.63.4",
     "styled-components": "^6.1.15",
-    "swiper": "^8.4.7"
+    "swiper": "^8.4.7",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",

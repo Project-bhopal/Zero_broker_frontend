@@ -1,18 +1,21 @@
 "use client"
 import { ApiFetchRequest, ApiPutRequest } from '@/axios/apiRequest';
 import useAxiosFetch from '@/hooks/useAxiosFetch';
+import { useUserStore } from '@/store/store';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
 function PropertyListedByMeDataTable() {
     const [requestData, setRequestData] = useState([]);
+    const [id, setId] = useState("")
     const router = useRouter();
+    const {user} = useUserStore();
   
   
-    const { data, isLoading, isError, error } = useAxiosFetch(``);
-          
-  
+    const { data, isLoading, isError, error } = useAxiosFetch(`/property/getPropertiesByAgent/${localStorage.getItem("id")}`);
+
     useEffect(() => {
         if (data) {
           setRequestData(data.data);
@@ -36,6 +39,16 @@ function PropertyListedByMeDataTable() {
       return `${day}/${month}/${year}`; // Returns DD/MM/YYYY
     }
   
+    const getStatusStyle = (status) => {
+      switch (status) {
+        case "Pending":
+          return "pending-style style1";
+        case "Approved":
+          return "pending-style style2";
+        default:
+          return "";
+      }
+    };
   
   
     return (
@@ -45,7 +58,8 @@ function PropertyListedByMeDataTable() {
             <th scope="col">Property Name</th>
             <th scope="col">Requested By</th>
             <th scope="col">Requested Date</th>
-            <th scope="col">Accepted Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Listed Date</th>
             {/* <th scope="col">Created</th>
             <th scope="col">Action</th> */}
           </tr>
@@ -55,16 +69,26 @@ function PropertyListedByMeDataTable() {
             <tr key={index}>
               <th scope="row">
                 <div className="listing-style1 dashboard-style d-xxl-flex align-items-center mb-0">
+                  <div className="list-thumb">
+                    <Image
+                      width={110}
+                      height={94}
+                      className="w-100"
+                      src={'/images/listings/list-1.jpg'}
+                      alt="property"
+                    />
+                  </div>
                   <div className="list-content py-0 p-0 mt-2 mt-xxl-0 ps-xxl-4">
                     <div className="h6 list-title">
                       <Link href={`/single-v1/${property._id}`}>
-                        {property.propertyName}
+                        {property.name}
                       </Link>
                     </div>
-                    <p className="list-text mb-0">{property.address}</p>
-                    <p className="list-text mb-0">{property.location}</p>
+                    <p className="list-text mb-0">{property.location.address}</p>
+                    <p className="list-text mb-0">{property.location.city}</p>
+                    <p className="list-text mb-0">{property.location.country}</p>
                     <div className="list-price">
-                      <a href="#">{property.area} sqft</a>
+                      <a href="#">{property.details.size.value} sqft</a>
                     </div>
                   </div>
                 </div>
@@ -72,14 +96,20 @@ function PropertyListedByMeDataTable() {
               
               <td className="vam">
               <div className="flex flex-col justify-center items-center py-5">
-                <a className="">{property.seller.fullname}</a>
-                <a className="">{property.seller.email}</a>
+                <a className="">{property.seller?.fullname}</a>
+                <a className="">{property.seller?.email}</a>
               </div>
               </td>
-              <td className="vam">{property.requestedDate}</td>
+              <td className="vam">{formatDate(property.requested_id.createdAt)}</td>
               <td className="vam">
-                <span>{property.acceptedDate}</span>
+              <span className={getStatusStyle(property.approval_status.status)}>
+                {property.approval_status.status}
+              </span>
+            </td>
+              <td className="vam">
+                <span>{formatDate(property.created_at)}</span>
               </td>
+              
               {/* <td className="vam">
                 <div className="flex gap-2">
                   <button

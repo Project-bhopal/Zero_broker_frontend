@@ -7,8 +7,12 @@ import TopFilterBar from "./TopFilterBar";
 import FeaturedListings from "./FeatuerdListings";
 import PaginationTwo from "../../PaginationTwo";
 import Image from "next/image";
+import useAxiosFetch from "@/hooks/useAxiosFetch";
+import useAxiosPost from "@/hooks/useAxiosPost";
 
-export default function PropertyFiltering() {
+export default function PropertyFiltering({showModal, setShowModal}) {
+  const [propData, setPropData] = useState([])
+  const [searchName, setSearchName] = useState("");
   const [filteredData, setFilteredData] = useState([]);
 
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
@@ -19,6 +23,14 @@ export default function PropertyFiltering() {
   const [colstyle, setColstyle] = useState(false);
   const [pageItems, setPageItems] = useState([]);
   const [pageContentTrac, setPageContentTrac] = useState([]);
+ 
+  const {data, isLoading, error, isError} = useAxiosFetch("/property/approved")
+  
+  useEffect(()=>{
+    if(data){
+      setPropData(data?.data)
+    }
+  },[data])
 
   useEffect(() => {
     setPageItems(
@@ -35,7 +47,7 @@ export default function PropertyFiltering() {
   const [propertyTypes, setPropertyTypes] = useState([]);
   const [priceRange, setPriceRange] = useState([0, 100000]);
   const [bedrooms, setBedrooms] = useState(0);
-  const [bathroms, setBathroms] = useState(0);
+  const [bathrooms, setBathrooms] = useState(0);
   const [location, setLocation] = useState("All Cities");
   const [squirefeet, setSquirefeet] = useState([]);
   const [yearBuild, setyearBuild] = useState([]);
@@ -48,23 +60,16 @@ export default function PropertyFiltering() {
     setPropertyTypes([]);
     setPriceRange([0, 100000]);
     setBedrooms(0);
-    setBathroms(0);
+    setBathrooms(0);
     setLocation("All Cities");
     setSquirefeet([]);
     setyearBuild([0, 2050]);
     setCategories([]);
     setCurrentSortingOption("Newest");
-    // document.querySelectorAll(".filterInput").forEach(function (element) {
-    //   element.value = null;
-    // });
-
-    // document.querySelectorAll(".filterSelect").forEach(function (element) {
-    //   element.value = "All Cities";
-    // });
   };
 
   const handlelistingStatus = (elm) => {
-    setListingStatus((pre) => (pre == elm ? "All" : elm));
+    setListingStatus(elm);
   };
 
   const handlepropertyTypes = (elm) => {
@@ -83,7 +88,7 @@ export default function PropertyFiltering() {
     setBedrooms(elm);
   };
   const handlebathroms = (elm) => {
-    setBathroms(elm);
+    setBathrooms(elm);
   };
   const handlelocation = (elm) => {
     console.log(elm);
@@ -118,9 +123,8 @@ export default function PropertyFiltering() {
     listingStatus,
     propertyTypes,
     resetFilter,
-
     bedrooms,
-    bathroms,
+    bathrooms,
     location,
     squirefeet,
     yearBuild,
@@ -129,136 +133,104 @@ export default function PropertyFiltering() {
     setSearchQuery,
   };
 
+
   useEffect(() => {
-    const refItems = listings.filter((elm) => {
+    const refItems = propData.filter((elm) => {
       if (listingStatus == "All") {
         return true;
       } else if (listingStatus == "Buy") {
-        return !elm.forRent;
+        return elm.details.purpose == "Sell";
       } else if (listingStatus == "Rent") {
-        return elm.forRent;
+        return elm.details.purpose == "Rent";
       }
     });
-
+    console.log(listingStatus)
+    setPageItems(refItems)
+    
     let filteredArrays = [];
 
     if (propertyTypes.length > 0) {
-      const filtered = refItems.filter((elm) =>
-        propertyTypes.includes(elm.propertyType),
-      );
-      filteredArrays = [...filteredArrays, filtered];
+      filteredArrays.push(refItems.filter((elm) =>
+        propertyTypes.includes(elm.details.property_type)));
     }
-    filteredArrays = [
-      ...filteredArrays,
-      refItems.filter((el) => el.bed >= bedrooms),
-    ];
-    filteredArrays = [
-      ...filteredArrays,
-      refItems.filter((el) => el.bath >= bathroms),
-    ];
 
-    filteredArrays = [
-      ...filteredArrays,
-      refItems.filter(
-        (el) =>
-          el.city
-            .toLocaleLowerCase()
-            .includes(searchQuery.toLocaleLowerCase()) ||
-          el.location
-            .toLocaleLowerCase()
-            .includes(searchQuery.toLocaleLowerCase()) ||
-          el.title
-            .toLocaleLowerCase()
-            .includes(searchQuery.toLocaleLowerCase()) ||
-          el.features
-            .join(" ")
-            .toLocaleLowerCase()
-            .includes(searchQuery.toLocaleLowerCase()),
-      ),
-    ];
+    filteredArrays.push(refItems.filter((el) => el.details.bedrooms >= bedrooms));
+    filteredArrays.push(refItems.filter((el) => el.details.bathrooms >= bathrooms));
 
-    filteredArrays = [
-      ...filteredArrays,
-      !categories.length
-        ? [...refItems]
-        : refItems.filter((elm) =>
-          categories.every((elem) => elm.features.includes(elem)),
-        ),
-    ];
+    filteredArrays.push(refItems.filter(
+      (el) =>
+        el.location.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        el.location.emirate.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        el.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        el.features_amenities.join(" ").toLowerCase().includes(searchQuery.toLowerCase()) ||
+        el.other_amenities.join(" ").toLowerCase().includes(searchQuery.toLowerCase())
+    ));
+
+    filteredArrays.push(!categories.length
+      ? [...refItems]
+      : refItems.filter((elm) =>
+          categories.every((elem) => elm.features_amenities.includes(elem))));
 
     if (location != "All Cities") {
-      filteredArrays = [
-        ...filteredArrays,
-        refItems.filter((el) => el.city == location),
-      ];
+      filteredArrays.push(refItems.filter((el) => el.location.city == location));
     }
 
     if (priceRange.length > 0) {
-      const filtered = refItems.filter(
+      filteredArrays.push(refItems.filter(
         (elm) =>
-          Number(elm.price.split("$")[1].split(",").join("")) >=
-          priceRange[0] &&
-          Number(elm.price.split("$")[1].split(",").join("")) <= priceRange[1],
-      );
-      filteredArrays = [...filteredArrays, filtered];
+          Number(elm.price) >= priceRange[0] &&
+          Number(elm.price) <= priceRange[1]
+      ));
     }
     if (squirefeet.length > 0 && squirefeet[1]) {
-      const filtered = refItems.filter(
-        (elm) => elm.sqft >= squirefeet[0] && elm.sqft <= squirefeet[1],
-      );
-      filteredArrays = [...filteredArrays, filtered];
+      filteredArrays.push(refItems.filter(
+        (elm) => elm.details.size.value >= squirefeet[0] && elm.details.size.value <= squirefeet[1]
+      ));
     }
     if (yearBuild.length > 0) {
-      const filtered = refItems.filter(
+      filteredArrays.push(refItems.filter(
         (elm) =>
-          elm.yearBuilding >= yearBuild[0] && elm.yearBuilding <= yearBuild[1],
-      );
-      filteredArrays = [...filteredArrays, filtered];
+          elm.building_information.year_of_completion >= yearBuild[0] &&
+          elm.building_information.year_of_completion <= yearBuild[1]
+      ));
     }
 
     const commonItems = refItems.filter((item) =>
-      filteredArrays.every((array) => array.includes(item)),
+      filteredArrays.every((array) => array.includes(item))
     );
-
     setFilteredData(commonItems);
   }, [
     listingStatus,
     propertyTypes,
     priceRange,
     bedrooms,
-    bathroms,
+    bathrooms,
     location,
     squirefeet,
     yearBuild,
     categories,
     searchQuery,
+    propData
   ]);
-
+  
   useEffect(() => {
     setPageNumber(1);
     if (currentSortingOption == "Newest") {
       const sorted = [...filteredData].sort(
-        (a, b) => a.yearBuilding - b.yearBuilding,
+        (a, b) => b.building_information.year_of_completion - a.building_information.year_of_completion
       );
       setSortedFilteredData(sorted);
     } else if (currentSortingOption.trim() == "Price Low") {
-      const sorted = [...filteredData].sort(
-        (a, b) =>
-          a.price.split("$")[1].split(",").join("") -
-          b.price.split("$")[1].split(",").join(""),
-      );
+      const sorted = [...filteredData].sort((a, b) => a.price - b.price);
       setSortedFilteredData(sorted);
     } else if (currentSortingOption.trim() == "Price High") {
-      const sorted = [...filteredData].sort(
-        (a, b) =>
-          b.price.split("$")[1].split(",").join("") -
-          a.price.split("$")[1].split(",").join(""),
-      );
+      const sorted = [...filteredData].sort((a, b) => b.price - a.price);
       setSortedFilteredData(sorted);
     } else {
       setSortedFilteredData(filteredData);
     }
   }, [filteredData, currentSortingOption]);
+
   const inputStyle = {
     width: "100%", // The width of the input field (100% of the container's width)
     padding: "10px", // Padding inside the input field
@@ -268,6 +240,29 @@ export default function PropertyFiltering() {
     fontSize: "14px", // Font size
     color: "#555", // Text color
   };
+
+  const mutation = useAxiosPost("/savedsearch", {
+    onSuccess: (details) => {
+      console.log("Search Saved successfully:", details);
+      setShowModal(false);
+    },
+    onError: (error) => {
+      console.error("Error Saving Search:", error.response.data.message);
+    },
+  })
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const firstWord = window.location.pathname.split("/")[1];
+    
+    mutation.mutate( {search_name : searchName, filters:{purpose : firstWord}})
+    
+  };
+
 
   return (
     <section className="pt0 pb90 bgc-f7">
@@ -299,7 +294,7 @@ export default function PropertyFiltering() {
         {/* End mobile filter sidebar */}
 
         <div className="row gx-xl-5">
-          <div className="col-lg-8">
+          <div className="col-lg-9">
             <div className="row align-items-center mb20">
               <TopFilterBar
                 pageContentTrac={pageContentTrac}
@@ -311,7 +306,7 @@ export default function PropertyFiltering() {
             {/* End .row */}
 
             <div className="row mt15">
-              <FeaturedListings colstyle={colstyle} data={pageItems} setIsScheduleTourModal={setIsScheduleTourModal} />
+              <FeaturedListings colstyle={colstyle} data={propData} setIsScheduleTourModal={setIsScheduleTourModal} />
             </div>
             {/* End .row */}
 
@@ -330,7 +325,7 @@ export default function PropertyFiltering() {
           {/* <div className="col-lg-4 d-none d-lg-block">
             <ListingSidebar filterFunctions={filterFunctions} />
           </div> */}
-          <div className="col-lg-4 d-none d-lg-block" style={{ paddingLeft: "0px", marginTop: "55px" }}>
+          <div className="col-lg-3 d-none d-lg-block" style={{ paddingLeft: "0px", marginTop: "-70px" }}>
             {/* Image */}
             <Image
               width={300}
@@ -502,7 +497,7 @@ export default function PropertyFiltering() {
                   </div>
                 </div>
               )}
-
+               
 
               {/* Get More Information Section */}
               {/* <div style={{ border: "1px solid #ddd", borderRadius: "15px", padding: "20px", backgroundColor: "#fff" }}>
@@ -545,6 +540,32 @@ export default function PropertyFiltering() {
         </div>
         {/* End TopFilterBar */}
       </div>
+      {showModal && (
+                  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50" onClick={handleCloseModal}>
+                    <div className="bg-white p-6 rounded-lg shadow-lg w-96" onClick={(e) => e.stopPropagation()} >
+                      <h2 className="text-lg font-semibold mb-4">Save Search</h2>
+                      <form onSubmit={handleSubmit}>
+                        <label className="block text-sm font-medium mb-2">Search Name:</label>
+                        <input
+                          type="text"
+                          name="search_name"
+                          value={searchName}
+                          onChange={(e) => setSearchName(e.target.value)}
+                          className="w-full border border-gray-300 p-2 rounded-md mb-4"
+                          required
+                        />
+                        <div className="flex justify-end gap-2">
+                          <button type="button" className="px-4 py-2 bg-[#ebebeb] rounded" onClick={handleCloseModal}>
+                            Cancel
+                          </button>
+                          <button type="submit" className="px-4 py-2 bg-[#188063] text-white rounded">
+                            Save
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                )}
       {/* End .container */}
     </section>
   );

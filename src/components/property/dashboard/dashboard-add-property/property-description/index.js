@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const Select = dynamic(() => import("react-select"), { ssr: false });
 
-const PropertyDescription = ({ setData }) => {
+const PropertyDescription = ({ setData,  }) => {
   const [saved, setSaved] = useState(false)
   const [description, setDescription] = useState({
     name: "",
@@ -15,8 +15,8 @@ const PropertyDescription = ({ setData }) => {
   });
 
   const currencyOptions = [
-    { value: "dollar", label: "Dollar" },
-    { value: "dihram", label: "Dihram" },
+    { value: "USD", label: "Dollar" },
+    { value: "AED", label: "Dirham" },
   ];
 
   const customStyles = {
@@ -53,7 +53,7 @@ const PropertyDescription = ({ setData }) => {
       <form className="form-style1" onSubmit={handleDescriptionSubmit}>
         <div className="row">
           {/* Property Name */}
-          <div className="col-sm-12">
+          <div className="col-sm-6 ">
             <div className="mb20">
               <label className="heading-color ff-heading fw600 mb10">
                 Property Name
@@ -71,7 +71,7 @@ const PropertyDescription = ({ setData }) => {
           </div>
 
           {/* Property Title */}
-          <div className="col-sm-12">
+          <div className="col-sm-6">
             <div className="mb20">
               <label className="heading-color ff-heading fw600 mb10">
                 Property Title
@@ -95,7 +95,7 @@ const PropertyDescription = ({ setData }) => {
                 Price in {"$"}
               </label>
               <input
-                type="text"
+                type="number"
                 name="price"
                 value={description.price}
                 onChange={handleInputChange}
@@ -138,12 +138,12 @@ const PropertyDescription = ({ setData }) => {
                 name="description"
                 value={description.description}
                 onChange={handleInputChange}
-                className="form-control"
                 placeholder="Property Description"
                 required
               />
             </div>
           </div>
+
         </div>
 
         {/* Submit Button */}

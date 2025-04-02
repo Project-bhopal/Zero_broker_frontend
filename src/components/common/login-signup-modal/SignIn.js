@@ -2,11 +2,11 @@
 import { usePost } from "@/hooks/usePost";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import GoogleAuth from "../google-oauth/GoogleOauth";
-import { NavLink } from "react-bootstrap";
 import Loader from "../Loader";
-import useInfo, { userContext } from "@/context/useContext";
+import { Modal } from "bootstrap";
+import { useUserStore } from "@/store/store";
 
 const SignIn = () => {
   const [show, setShow] = useState(false);
@@ -20,8 +20,9 @@ const SignIn = () => {
     password: "",
   });
   const router = useRouter();
+  const { setUser } = useUserStore();
+
   const mutation = usePost("/auth/login");
-  const {setUser} = useContext(userContext)
   const inputHandler = (e) => {
     const { name, value } = e.target;
 
@@ -46,33 +47,48 @@ const SignIn = () => {
   };
 
   const handleSubmit = (e) => {
-    
     e.preventDefault();
     setIsLoading(true);
     mutation.mutate(data, {
       onSuccess: (details) => {
+        localStorage.removeItem("id")
         console.log(details);
-        if (!details.data.isVerified) {
-          sessionStorage.setItem("e", data.email)
+        
+        setUser(details.data);
+        const modalElement = document.getElementById("loginSignupModal");
+        if (modalElement) {
+          const modalInstance = Modal.getInstance(modalElement);
+          if (modalInstance) {
+            modalInstance.hide();
+          }
+        }
 
-          setUser(details.data.full_name)
+        // Manually remove the backdrop if it remains
+        const modalBackdrops = document.querySelectorAll(".modal-backdrop");
+        modalBackdrops.forEach((backdrop) => backdrop.remove());
+        document
+          .getElementById("loginSignupModal")
+          ?.addEventListener("hidden.bs.modal", () => {
+            document.body.classList.remove("modal-open");
+            document.body.style.overflow = "";
+            document.body.style.paddingRight = "";
+            window.location.reload();
+          });
+
+        if (!details.data.isVerified) {
+          sessionStorage.setItem("e", data.email);
 
           setIsLoading(false);
           setIsEmailVerified(false);
           setError("Your Email is not Verified first verify your email");
           sessionStorage.setItem("ot", "varification");
-        } else if(details.data.isVerified) {
+        } else if (details.data.isVerified) {
           localStorage.setItem("name" , details.data.full_name)
-           router.push("/")
-        localStorage.setItem("loginSuccessfull", "true");
-        setIsLoading(false);
-        const modalElement = document.getElementById("loginmodal"); // Replace 'myModal' with your modal's ID
-        if (modalElement) {
-          const modal = bootstrap.Modal.getInstance(modalElement);
-          if (modal) {
-            modal.hide();
-          }
-        }
+          localStorage.setItem("id" , details.data.user_id)
+
+          router.push("/");
+          localStorage.setItem("loginSuccessfull", "true");
+          setIsLoading(false);
         }
         setIsLoading(false);
       },

@@ -262,7 +262,13 @@ const DashboardHeader = () => {
       },
     ];
 
-
+    const toggleDropdown = (e) => {
+      e.preventDefault();
+      e.stopPropagation(); // Prevents the event from bubbling
+      const dropdownMenu = e.currentTarget.nextElementSibling;
+      dropdownMenu.classList.toggle("show");
+    }
+  
 
   return (
     <>
@@ -328,7 +334,7 @@ const DashboardHeader = () => {
 
                     <li className=" user_setting">
                       <div className="dropdown">
-                        <a className="btn" href="#" data-bs-toggle="dropdown">
+                        <a className="btn" href="#" data-bs-toggle="dropdown" aria-expended="false" onClick={toggleDropdown}>
                           <Image
                             width={44}
                             height={44}

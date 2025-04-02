@@ -7,14 +7,9 @@ const Select = dynamic(() => import("react-select"), { ssr: false });
 const options = {
   emirate: ["Dubai", "Abu Dhabi", "Sharjah", "Ajman"],
   city: [
-    "California",
-    "Chicago",
-    "Los Angeles",
-    "Manhattan",
-    "New Jersey",
-    "New York",
+    "Dubai", "Abu Dhabi", "Sharjah", "Ajman"
   ],
-  country: ["Belgium", "France", "Kuwait", "Qatar", "Netherlands", "Germany"],
+  country: ["UAE"],
 };
 
 const customStyles = {

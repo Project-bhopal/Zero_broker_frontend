@@ -2,44 +2,47 @@
 import Image from "next/image";
 import React, { useState } from "react";
 
-const Pricing = () => {
+const TenantPricing = () => {
   const pricingPackages = [
     {
       packageTitle: "Basic",
-      price: "5000 AED",
+      price: "1500 AED",
       priceIcon: "images/icon/pricing-icon-2.svg",
       features: [
         "No Expiry of Plan",
         "Contact Upto 10",
-        "Loan Assistance",
+        "Ejari Assistance",
+        "Documents Processing",
         "24/7 Full support",
       ],
     },
     {
       packageTitle: "Intermediate ",
-      price: "7500 AED",
-      pricePerMonth: "per month",
+      price: "2000 AED",
       priceIcon: "images/icon/pricing-icon-1.svg",
       uniqueClass: "unique-class", // Add a unique class for Professional package
       features: [
         "No Expiry of Plan",
         "Contact Upto 20",
-        "Loan Assistance",
+        "Ejari Assistance",
+        "Documentation",
+        "Dedicated expert help",
+        "Viewing assistance",
         "24/7 Full support",
       ],
     },
     {
       packageTitle: "Dedicated Expert ",
-      price: "10,000 AED",
-      pricePerMonth: "per month",
+      price: "2500 AED",
       priceIcon: "images/icon/pricing-icon-3.svg",
       features: [
        "No Expiry of Plan",
-        "Contact Upto 30",
-        "Loan Assistance",
-        "Dedicated property expert",
-        "Fixing viewings and visits",
-        "Helping negotiations",
+        "Contact Unlimited",
+        "Ejari Assistance",
+        "Documentation",
+        "Dedicated expert help",
+        "Viewing assistance",
+        "Site visit assistance",
         "24/7 Full support",
       ],
     },
@@ -75,21 +78,21 @@ const Pricing = () => {
       </div> */}
       {/* End .row */}
 
-      <div className="grid gap-5 lg:grid-cols-3 md:grid-cols-2 grid-cols-1"  data-aos="fade-up" data-aos-delay="300">
+      <div className="grid gap-5 lg:grid-cols-3 md:grid-cols-2 grid-cols-1" data-aos="fade-up" data-aos-delay="300">
         {pricingPackages.map((item, index) => (
-          <div className="hover:scale-102 duration-300" key={index}>
+          <div className="hover:scale-102 duration-300 " key={index}>
             <div className={`pricing_packages flex flex-col h-[90%]`}>
-              <div className="heading">
+              <div className="heading ">
                 <h5 className={`package_title ${item.uniqueClass || ""}`}>
                   {item.packageTitle}
                 </h5>
-                <h2 className="text-[#0f8363]">
-                 {item.price}
+                <h2 className=" text-[#0f8363]">
+                  {item.price}
                 </h2>
                 <Image
                   width={60}
                   height={60}
-                  className="price-icon "
+                  className="price-icon"
                   src={item.priceIcon}
                   alt="icon"
                 />
@@ -98,11 +101,11 @@ const Pricing = () => {
                 <p className="text mb25">
                   {item.features[0]} {/* Display the first feature */}
                 </p>
-                <div className="list-style1 mb20">
+                <div className="list-style1 mb40">
                   <ul>
                     {item.features.slice(1).map((feature, featureIndex) => (
                       <li key={featureIndex} className="text-[15px] leading-4">
-                        <i className="far fa-check text-white bgc-dark fz10" />
+                        <i className="far fa-check text-white bgc-dark fz15" />
                         {feature}
                       </li>
                     ))}
@@ -124,4 +127,4 @@ const Pricing = () => {
   );
 };
 
-export default Pricing;
+export default TenantPricing;

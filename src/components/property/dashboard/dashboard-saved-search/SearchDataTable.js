@@ -1,4 +1,6 @@
 "use client";
+import useAxiosFetch from "@/hooks/useAxiosFetch";
+import Link from "next/link";
 import React from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
@@ -50,29 +52,32 @@ const listingData = [
 ];
 
 const SearchDataTable = () => {
+  const {data, isLoading , error , isError} = useAxiosFetch("/searches")
+  console.log(data)
   return (
     <table className="table-style3 table at-savesearch">
       <thead className="t-head">
         <tr>
-          <th scope="col">Listing title</th>
+          <th scope="col">Search Name</th>
           <th scope="col">Date Created</th>
           <th scope="col">Action</th>
         </tr>
       </thead>
       <tbody className="t-body">
-        {listingData.map((listing, index) => (
+        {data?.searches?.map((listing, index) => (
           <tr key={index}>
-            <th scope="row">{listing.title}</th>
+            <th scope="row">{listing.search_name}</th>
             <td>{listing.date}</td>
             <td>
               <div className="d-flex">
-                <button
+                <Link 
+                href={`/${listing?.purpose || 'rent'}/properties`}
                   className="icon"
                   style={{ border: "none" }}
                   data-tooltip-id={`full_screen-${listing.id}`}
                 >
                   <span className="flaticon-fullscreen-1" />
-                </button>
+                </Link>
                 <button
                   className="icon"
                   style={{ border: "none" }}
@@ -91,7 +96,7 @@ const SearchDataTable = () => {
                 <ReactTooltip
                   id={`full_screen-${listing.id}`}
                   place="top"
-                  content="Full Screen"
+                  content="Go to Search"
                 />
                 <ReactTooltip
                   id={`edit-${listing.id}`}

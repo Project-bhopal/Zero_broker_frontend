@@ -5,17 +5,19 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
-function RequestedAcceptedDataTable() {
+function RequestsPendingDataTable() {
     const [requestData, setRequestData] = useState([]);
     const router = useRouter();
   
   
-    const { data, isLoading, isError, error } = useAxiosFetch("/requestproperty/accepted-agents");
+    const { data, isLoading, isError, error } = useAxiosFetch("/requestproperty/my-requests");
           
   
     useEffect(() => {
-        if (data) {
-          setRequestData(data.data);
+        if (Array.isArray(data?.data)) {
+          const pendingItems = data.data.filter(item => item.status === "Pending");
+          setRequestData(pendingItems);
+          console.log(pendingItems)
         }
       }, [data]);
     
@@ -48,7 +50,7 @@ function RequestedAcceptedDataTable() {
             <th scope="col">Property Name</th>
             <th scope="col">Requested Date</th>
             <th scope="col">Accepted Date</th>
-            <th scope="col">Accepted By</th>
+            <th scope="col">Status</th>
             {/* <th scope="col">Created</th>
             <th scope="col">Action</th> */}
           </tr>
@@ -75,13 +77,10 @@ function RequestedAcceptedDataTable() {
               
               <td className="vam">{formatDate(property?.createdAt)}</td>
               <td className="vam">
-                <span>{formatDate(property.acceptedAt)}</span>
+                <span>{formatDate(property.assignedAgent?.acceptedAt)}</span>
               </td>
               <td className="vam">
-              <div className="flex flex-col justify-center items-center py-5">
-                <a className="">{property.assignedAgent?.fullname}</a>
-                <a className="">{property.assignedAgent?.email}</a>
-              </div>
+                <p className='w-fit rounded-full text-sm text-amber-600 py-1 px-2 bg-amber-100'>{property.status}</p>
               </td>
               {/* <td className="vam">
                 <div className="flex gap-2">
@@ -106,4 +105,4 @@ function RequestedAcceptedDataTable() {
     );
   }
 
-export default RequestedAcceptedDataTable
+export default RequestsPendingDataTable

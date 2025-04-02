@@ -7,8 +7,9 @@ import PriceRange from "../../sidebar/PriceRange";
 import Bedroom from "../../sidebar/Bedroom";
 import Bathroom from "../../sidebar/Bathroom";
 import ListingStatus from "../../sidebar/ListingStatus";
+import MoreFilters from "../../sidebar/MoreFilters";
 
-const TopFilterBar2 = ({ filterFunctions }) => {
+const  TopFilterBar2 = ({ filterFunctions }) => {
   const [showDropdown, setShowDropdown] = useState(null)
   const [selectedFilters, setSelectedFilters] = useState({
     listingStatus: "",
@@ -47,18 +48,18 @@ const TopFilterBar2 = ({ filterFunctions }) => {
       {/* Search Bar */}
       <li className="list-inline-item position-relative">
         <div
-          className="d-flex align-items-center mb15"
+          className="d-flex align-items-center md:w-[525px] w-full "
           style={{
             backgroundColor: "var(--styleguide-color-neutral-01, #f7f7f7)",
             borderRadius: "5px",
             cursor: "text",
             padding: "0.8rem 1.2rem",
-            width: "100%",
-            maxWidth: "600px",
+            // width: "525px",
+            // maxWidth: "600px",
             marginBottom: "1rem",
           }}
         >
-          <i className="flaticon-search me-2" style={{ fontSize: "1.2rem" }} />
+          <i className="flaticon-maps me-2" style={{ fontSize: "1.2rem" }} />
           <input
             type="text"
             placeholder="City, community or building"
@@ -70,7 +71,9 @@ const TopFilterBar2 = ({ filterFunctions }) => {
               fontSize: "1rem",
             }}
           />
+
         </div>
+        
       </li>
 
       {/* Listing Status Dropdown */}
@@ -228,7 +231,7 @@ const TopFilterBar2 = ({ filterFunctions }) => {
       </li>
 
       {/* More Filters */}
-      <li className="list-inline-item">
+      {/* <li className="list-inline-item">
         <button
           type="button"
           className="open-btn mb15"
@@ -238,6 +241,39 @@ const TopFilterBar2 = ({ filterFunctions }) => {
         >
           <i className="flaticon-settings me-2" /> More Filter
         </button>
+      </li> */}
+
+      <li className="list-inline-item position-relative">
+        <button
+          type="button"
+          className="open-btn mb15 dropdown-toggle"
+          style={{borderRadius : '5px'}}
+          data-bs-toggle="dropdown"
+          data-bs-auto-close="outside"
+          id="moreFilterDropdown"
+          onClick={()=> toggleDropdown("moreFilterDropdown")}
+        >
+          More Filters <i className="flaticon-settings ms-2" />
+        </button>
+        <div className={`dropdown-menu dd3 ${showDropdown === "moreFilterDropdown" ? "show" : ""}`}>
+          <div className="widget-wrapper bdrb1 pb25 mb0 pl20 pr20">
+            <div className="range-slider-style1">
+              <MoreFilters
+                filterFunctions={filterFunctions}
+                handleFilterChange={handleFilterChange}
+              />
+            </div>
+          </div>
+          <div className="text-end mt10 pr10">
+            <button
+              type="button"
+              className="done-btn ud-btn btn-thm drop_btn3"
+              onClick={() => handleDoneClick("moreFilterDropdown")}
+            >
+              Done
+            </button>
+          </div>
+        </div>
       </li>
 
       {/* Find Button */}

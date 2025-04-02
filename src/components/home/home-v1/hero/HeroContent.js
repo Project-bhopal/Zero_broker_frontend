@@ -82,7 +82,7 @@ const HeroContent = () => {
               <button
                 className={` font-medium  py-2 px-4 ${
                   activeTab === tab.id
-                    ? " text-[#0f8363] bg-[#b3ffe995] "
+                    ? " bg-[#0f8363] text-white"
                     : "text-gray-500"
                 }`}
                 onClick={() => handleTabClick(tab.id)}
@@ -170,6 +170,7 @@ const HeroContent = () => {
                   data-bs-toggle="dropdown"
                   data-bs-auto-close="outside"
                   id="bedsBathsDropdown"
+                  onClick={()=>{setShowDropdown("bedsBathsDropdown")}}
                 >
                   Beds / Baths
                 </button>

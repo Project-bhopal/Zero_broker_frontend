@@ -7,12 +7,12 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 const api_url = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-function RequestsDataTable() {
+function RequestsDataTable({setShowTable}) {
   const [requestData, setRequestData] = useState([]);
   const router = useRouter();
 
  
-    const { data, isLoading, isError, error } = useAxiosFetch("/property/pending");
+    const { data, isLoading, isError, error } = useAxiosFetch("/requestproperty/pending");
  
 
   useEffect(() => {
@@ -39,11 +39,12 @@ function RequestsDataTable() {
   }
 
   async function handleAcceptClick(id) {
-    const response = await ApiPutRequest(`/property/accept/${id}`)
-    console.log(response.data.status)
+    const response = await ApiPutRequest(`/requestproperty/accept/${id}`)
+    // console.log(response.data.status)
     if(response.data.status == "success"){
-      // router.refresh();
-      window.location.reload(); 
+      setShowTable("Accepted")
+      window.location.reload();
+      
     }
   }
 
@@ -56,7 +57,7 @@ function RequestsDataTable() {
           <th scope="col">Requested By</th>
           <th scope="col">Property Type</th>
           <th scope="col">Purpose</th>
-          <th scope="col">Created</th>
+          <th scope="col">Requested</th>
           <th scope="col">Action</th>
         </tr>
       </thead>

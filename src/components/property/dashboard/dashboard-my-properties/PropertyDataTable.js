@@ -7,48 +7,48 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 const propertyData = [
   {
     _id: 1,
-    title: "Equestrian Family Home",
+    title: "Samana Lake Views",
     imageSrc: "/images/listings/list-1.jpg",
-    location: "California City, CA, USA",
-    price: "$14,000/mo",
-    datePublished: "December 31, 2022",
-    status: "Pending",
-  },
-  {
-    _id: 2,
-    title: "Luxury villa in Rego Park",
-    imageSrc: "/images/listings/list-2.jpg",
-    location: "California City, CA, USA",
-    price: "$14,000/mo",
-    datePublished: "December 31, 2022",
+    location: "Dubai Production City (IMPZ)",
+    price: "$1,99,900",
+    datePublished: "24/03/2025",
     status: "Published",
   },
   {
+    _id: 2,
+    title: "Forest City Tower",
+    imageSrc: "/images/listings/list-2.jpg",
+    location: "Majan, Dubai",
+    price: "$1,24,080",
+    datePublished: "24/03/2025",
+    status: "Pending",
+  },
+  {
     _id: 3,
-    title: "Villa on Hollywood Boulevard",
+    title: "Palatium Residences",
     imageSrc: "/images/listings/list-3.jpg",
-    location: "California City, CA, USA",
-    price: "$14,000/mo",
-    datePublished: "December 31, 2022",
-    status: "Processing",
+    location: " JVC District 14, Jumeirah Village Circle (JVC)",
+    price: "$1,12,900",
+    datePublished: "23/03/2025",
+    status: "Pending",
   },
   {
     _id: 4,
-    title: "Equestrian Family Home",
+    title: "Guzel Towers Block B",
     imageSrc: "/images/listings/list-4.jpg",
-    location: "California City, CA, USA",
-    price: "$14,000/mo",
-    datePublished: "December 31, 2022",
+    location: "Guzel Towers, JVT District 1, Dubai",
+    price: "$1,00,000",
+    datePublished: "25/03/2025",
     status: "Pending",
   },
   {
     _id: 5,
-    title: "Luxury villa in Rego Park",
+    title: "Cotier House by Imtiaz",
     imageSrc: "/images/listings/list-5.jpg",
-    location: "California City, CA, USA",
-    price: "$14,000/mo",
-    datePublished: "December 31, 2022",
-    status: "Published",
+    location: "Dubai Islands, Dubai",
+    price: "$80,890",
+    datePublished: "23/2/03/2025",
+    status: "Pending",
   },
 ];
 
@@ -120,7 +120,7 @@ const PropertyDataTable = () => {
                   <span className="fas fa-pen fa" />
                 </Link>
                 <Link
-                  href={`/dashboard/request-to-agent/${property._id}`}
+                  href={`/dashboard/seller/request-to-agent/${property._id}`}
                   className="icon"
                   style={{ border: "none" }}
                   data-tooltip-id={`delete-${property._id}`}

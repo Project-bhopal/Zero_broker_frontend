@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 export default function VerifyEmail() {
   const [email, setEmail] = useState("");
   const [isValid, setIsValid] = useState("");
-  const [user, setUser] = useState({});
+  
   const [state, setState] = useState({
     open: false,
     vertical: "top",
@@ -21,9 +21,6 @@ export default function VerifyEmail() {
   const router = useRouter();
   const mutation = usePost("/auth/generate-otp");
 
-  useEffect(() => {
-    setUser(JSON.parse(sessionStorage.getItem("user")));
-  }, []);
 
   const handleInputChange = (e) => {
     const newEmail = e.target.value;

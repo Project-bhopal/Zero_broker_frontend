@@ -10,7 +10,7 @@ function RequestedAcceptedByMeDataTable() {
     const router = useRouter();
   
   
-    const { data, isLoading, isError, error } = useAxiosFetch("/property/accepted-by-me");
+    const { data, isLoading, isError, error } = useAxiosFetch("/requestproperty/accepted-by-me");
           
   
     useEffect(() => {
@@ -77,14 +77,14 @@ function RequestedAcceptedByMeDataTable() {
                 <a className="">{property.seller.email}</a>
               </div>
               </td>
-              <td className="vam">{property.requestedDate}</td>
+              <td className="vam">{formatDate(property.createdAt)}</td>
               <td className="vam">
-                <span>{property.acceptedDate}</span>
+                <span>{formatDate(property.acceptedAt )}</span>
               </td>
               <td className="vam">
                 <span>
                   <Link
-                  href={"/dashboard/agent/add-property"}
+                  href={`/dashboard/agent/add-property/${property.request_id}`}
                   className="py-2 px-4 hover:bg-[#0f8363] border-1 border-[#0f8363] text-[#0f8363] hover:text-white font-semibold rounded-xl"
                   style={{
                     backgroundColor: '#0f8363',

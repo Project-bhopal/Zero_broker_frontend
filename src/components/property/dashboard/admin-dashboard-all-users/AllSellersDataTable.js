@@ -4,51 +4,46 @@ import Link from "next/link";
 import React from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
-const propertyData = [
+const sellers = [
   {
     _id: 1,
-    title: "Equestrian Family Home",
-    imageSrc: "/images/listings/list-1.jpg",
-    location: "California City, CA, USA",
-    price: "$14,000/mo",
-    datePublished: "December 31, 2022",
-    status: "Pending",
+    fullname: "hariom Seller",
+    email: "hariraykhere.com@gmail.com",
+    role:"Seller",
+    mobile: "8269281819",
+    createdAt: "02/03/2025",
   },
   {
-    _id: 2,
-    title: "Luxury villa in Rego Park",
-    imageSrc: "/images/listings/list-2.jpg",
-    location: "California City, CA, USA",
-    price: "$14,000/mo",
-    datePublished: "December 31, 2022",
-    status: "Published",
+    _id: 1,
+    fullname: "Jhon Seller",
+    email: "jhon@gmail.com",
+    role:"Seller",
+    mobile: "6091412609",
+    createdAt: "13/03/2025",
   },
   {
-    _id: 3,
-    title: "Villa on Hollywood Boulevard",
-    imageSrc: "/images/listings/list-3.jpg",
-    location: "California City, CA, USA",
-    price: "$14,000/mo",
-    datePublished: "December 31, 2022",
-    status: "Processing",
+    _id: 1,
+    fullname: "abhi Seller",
+    email: "abhi@gmail.com",
+    role:"Seller",
+    mobile: "7849687548",
+    createdAt: "15/03/2025",
   },
   {
-    _id: 4,
-    title: "Equestrian Family Home",
-    imageSrc: "/images/listings/list-4.jpg",
-    location: "California City, CA, USA",
-    price: "$14,000/mo",
-    datePublished: "December 31, 2022",
-    status: "Pending",
+    _id: 1,
+    fullname: "abhi Seller",
+    email: "abhi11@gmail.com",
+    role:"Seller",
+    mobile: "7849187529",
+    createdAt: "15/03/2025",
   },
   {
-    _id: 5,
-    title: "Luxury villa in Rego Park",
-    imageSrc: "/images/listings/list-5.jpg",
-    location: "California City, CA, USA",
-    price: "$14,000/mo",
-    datePublished: "December 31, 2022",
-    status: "Published",
+    _id: 1,
+    fullname: "abhi Seller",
+    email: "abhi22@gmail.com",
+    role:"Seller",
+    mobile: "7849187129",
+    createdAt: "15/03/2025",
   },
 ];
 
@@ -66,22 +61,33 @@ const getStatusStyle = (status) => {
 };
 
 const AllSellersDataTable = () => {
+  function formatDate(dateString) {
+    if (!dateString) return "Invalid Date"; // Handle empty or undefined input
 
+    const date = new Date(dateString);
+    if (isNaN(date)) return "Invalid Date"; // Handle invalid date formats
+
+    const day = String(date.getDate()).padStart(2, "0"); // Ensure two-digit day
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Ensure two-digit month
+    const year = date.getFullYear();
+
+    return `${day}/${month}/${year}`; // Returns DD/MM/YYYY
+  }
     
   return (
     <table className="table-style3 table at-savesearch">
       <thead className="t-head">
         <tr>
-          <th scope="col">Listing title</th>
-          <th scope="col">Date Published</th>
-          <th scope="col">Status</th>
-          <th scope="col">View</th>
+        <th scope="col">Name</th>
+          <th scope="col">Contacts</th>
+          <th scope="col">Role</th>
+          <th scope="col">Date Created</th>
           <th scope="col">Action</th>
         </tr>
       </thead>
       <tbody className="t-body">
-        {propertyData.map((property) => (
-          <tr key={property._id}>
+        {sellers.map((agent) => (
+          <tr key={agent._id}>
             <th scope="row">
               <div className="listing-style1 dashboard-style d-xxl-flex align-items-center mb-0">
                 <div className="list-thumb">
@@ -89,54 +95,49 @@ const AllSellersDataTable = () => {
                     width={110}
                     height={94}
                     className="w-100"
-                    src={property.imageSrc}
-                    alt="property"
+                    src={agent.imageSrc}
+                    alt="agent"
                   />
                 </div>
                 <div className="list-content py-0 p-0 mt-2 mt-xxl-0 ps-xxl-4">
-                  <div className="h6 list-title">
-                    <Link href={`/single-v1/${property.id}`}>{property.title}</Link>
-                  </div>
-                  <p className="list-text mb-0">{property.location}</p>
-                  <div className="list-price">
-                    <a href="#">{property.price}</a>
-                  </div>
+                    <Link href={`/single-v1/${agent._id}`}>{agent.fullname}</Link>
                 </div>
               </div>
             </th>
-            <td className="vam">{property.datePublished}</td>
             <td className="vam">
-              <span className={getStatusStyle(property.status)}>
-                {property.status}
+              <span className={getStatusStyle(agent?.status)}>
+              <p className="list-text mb-0">{agent.email}</p>
+              <p href="#">{agent.mobile}</p>
               </span>
             </td>
-            <td className="vam">{property.datePublished}</td>
+            <td className="vam">{agent.role}</td>
+            <td className="vam">{agent.createdAt}</td>
             <td className="vam">
               <div className="d-flex">
                 <Link
-                  href={`/dashboard/seller/request-to-agent/${property._id}`}
+                  href={`/dashboard/seller/request-to-agent/${agent._id}`}
                   className="icon"
                   style={{ border: "none" }}
-                  data-tooltip-id={`edit-${property._id}`}
+                  data-tooltip-id={`edit-${agent._id}`}
                 >
                   <span className="fas fa-pen fa" />
                 </Link>
-                <Link
-                  href={`/dashboard/request-to-agent/${property._id}`}
+                <p
                   className="icon"
                   style={{ border: "none" }}
-                  data-tooltip-id={`delete-${property._id}`}
+                  data-tooltip-id={`delete-${agent._id}`}
+                  onClick={()=>{handleAgentDeleteClick(agent._id)}}
                 >
                   <span className="flaticon-bin" />
-                </Link>
+                </p>
 
                 <ReactTooltip
-                  id={`edit-${property._id}`}
+                  id={`edit-${agent._id}`}
                   place="top"
                   content="Edit"
                 />
                 <ReactTooltip
-                  id={`delete-${property._id}`}
+                  id={`delete-${agent._id}`}
                   place="top"
                   content="Delete"
                 />

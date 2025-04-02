@@ -26,7 +26,7 @@ const customStyles = {
 };
 
 const AgentsPropertyRequests = () => {
-  const [status, setStatus] = useState(null);
+
   const [agentsRequests, setRequests] = useState([]);
   const [message, setMessage] = useState("Agent deleted Successfully");
   const [selectedValue, setSelectedValue] = useState("Pending"); // Default value
@@ -82,7 +82,7 @@ const AgentsPropertyRequests = () => {
                     <p className="text">We are glad to see you again!</p>
                   </div>
                 </div>
-                <div className="col-2 justify-self-end">
+                <div className="sm:col-3 justify-self-start">
                   <div className="mb20">
                     <label className="heading-color ff-heading fw600 mb10">
                       Status

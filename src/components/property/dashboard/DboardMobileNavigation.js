@@ -170,11 +170,6 @@ const DboardMobileNavigation = () => {
       title: "MANAGE LISTINGS",
       items: [
         {
-          href: "/dashboard/agent/add-property",
-          icon: "flaticon-new-tab",
-          text: "Add New Property",
-        },
-        {
           href: "/dashboard/agent/property-listed-by-me",
           icon: "flaticon-home",
           text: "Listed by Me",

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropertyDescription from "./property-description";
 import UploadMedia from "./upload-media";
 import LocationField from "./LocationField";
@@ -10,11 +10,15 @@ import useAxiosPost from "@/hooks/useAxiosPost";
 import StatusSnackbar from "@/components/Snackbar/Snackbar";
 import { useRouter } from "next/navigation";
 
-const AddPropertyTabContent = () => {
-  const [data, setData] = useState({});
+const AddPropertyTabContent = ({params}) => {
+  const [data, setData] = useState({
+    requested_id : params.id,
+    developer_notes : {}
+  });
   const [error, setError] = useState('')
   const [tags, setTags] = useState("")
   const [tagsArray, setTagsArray] = useState([])
+  const [status, setStatus] = useState(null)
   const [state, setState] = useState({
       open: false,
       vertical: "top",
@@ -26,67 +30,41 @@ const AddPropertyTabContent = () => {
     onSuccess: (details) => {
       console.log("Property created successfully:", details);
       setState((prev) =>({...prev, open: true}))
+      setStatus(true)
       router.push("/dashboard/agent/property-listed-by-me")
     },
     onError: (error) => {
       console.error("Error creating Property:", error.response.data.message);
       setError(error.response.data.message)
+      setStatus(false)
+      setState((prev) =>({...prev, open: true}))
+
     },
   })
 
   const handletagsChange = (e) => {
-    setTags(e.target.value);
-    setTagsArray(
-      e.target.value.split(",")
-      .map((item) => item.trim()) // Trim spaces
-      .filter(Boolean)
-    );
+    const newTags = e.target.value;
+    const newTagsArray = newTags
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean);
+  
+    setTags(newTags);
+    setTagsArray(newTagsArray);
     
-    setData((prev)=>({...prev, developer_notes : {...developer_notes, tags : tagsArray}}))
+    setData((prev) => ({
+      ...prev,
+      developer_notes: {
+        ...prev.developer_notes,
+        tags: newTagsArray,
+      },
+    }));
   };
 
   const handlePropertySubmit = () => {
-    const formData = new FormData();
-  
-    // Append primitive fields and handle nested objects/arrays
-    Object.entries(data).forEach(([key, value]) => {
-      if (Array.isArray(value)) {
-        // Append array elements separately
-        value.forEach((item, index) => {
-          formData.append(`${key}[${index}]`, item);
-        });
-      } else if (typeof value === "object" && value !== null) {
-        // If it's a nested object, stringify it
-        formData.append(key, JSON.stringify(value));
-      } else {
-        formData.append(key, value);
-      }
-    });
-  
-    // Append files from `developer_notes`
-    if (data.developer_notes?.images) {
-      data.developer_notes.images.forEach((image, index) => {
-        formData.append(`images[${index}]`, image);
-      });
-    }
-  
-    if (data.developer_notes?.videos) {
-      data.developer_notes.videos.forEach((video, index) => {
-        formData.append(`videos[${index}]`, video);
-      });
-    }
-  
-    // Ensure virtual tour availability is stored as a string value
-    if (data.developer_notes?.virtual_tour_available) {
-      formData.append(
-        "virtual_tour_available",
-        data.developer_notes.virtual_tour_available.value
-      );
-    }
-  
-    console.log([...formData.entries()]); // Debugging output
-  
-    mutation.mutate(formData);
+    console.log(data)
+
+    mutation.mutate(data);
   };
   
 
@@ -197,7 +175,6 @@ const AddPropertyTabContent = () => {
             />
           </div>
         </div>
-        {/* End tab for Property Description */}
 
         <div
           className="tab-pane fade"
@@ -206,12 +183,13 @@ const AddPropertyTabContent = () => {
           aria-labelledby="nav-item2-tab"
         >
           <UploadMedia
+          data={data}
             setData={
               setData
             }
           />
         </div>
-        {/* End tab for Upload photos of your property */}
+        
 
         <div
           className="tab-pane fade"
@@ -228,7 +206,7 @@ const AddPropertyTabContent = () => {
             />
           </div>
         </div>
-        {/* End tab for Listing Location */}
+        
 
         <div
           className="tab-pane fade"
@@ -245,7 +223,7 @@ const AddPropertyTabContent = () => {
             />
           </div>
         </div>
-        {/* End tab for Listing Details */}
+        
         <div
           className="tab-pane fade"
           id="nav-item5"
@@ -261,7 +239,7 @@ const AddPropertyTabContent = () => {
             />
           </div>
         </div>
-        {/* End tab for Listing Details */}
+        
 
         <div
           className="tab-pane fade"
@@ -280,7 +258,7 @@ const AddPropertyTabContent = () => {
             </div>
           </div>
         </div>
-        {/* End tab for Select Amenities */}
+        
         
         <div
           className="tab-pane fade"
@@ -317,9 +295,9 @@ const AddPropertyTabContent = () => {
             </div>
           </div>
         </div>
-        {/* End tab for Select Amenities */}
+        
       </div>
-      <StatusSnackbar message={"Property Created Successfully"} state={state}/>
+      <StatusSnackbar message={"Property Created Successfully"} state={state} status={status}/>
     </>
   );
 };

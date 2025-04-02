@@ -1,5 +1,6 @@
 "use client";
 import { usePost } from "@/hooks/usePost";
+import { useUserStore } from "@/store/store";
 import { Box, Snackbar } from "@mui/material";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Image from "next/image";
@@ -15,9 +16,6 @@ export default function CreateNewPassword() {
   const [validationError, setValidationError] = useState("");
   const [confirmValidationError, setConfirmValidationError] = useState("");
   const [passwordMatch, setPasswordMatch] = useState(null);
-  const [user, setUser] = useState({
-    email:""
-  });
   const [email, setEmail] = useState("")
   const [state, setState] = useState({
     open: false,
@@ -27,11 +25,10 @@ export default function CreateNewPassword() {
 
   const router = useRouter();
   const mutation = usePost("/auth/reset-password");
-
+  const {user} = useUserStore();
   useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem("user"));
-    setUser(user);
-    const email = sessionStorage.getItem("e");
+
+    const email = user.email;
     setEmail(email)
   }, []);
 

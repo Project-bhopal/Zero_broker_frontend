@@ -1,20 +1,15 @@
 "use client";
 import MainMenu from "@/components/common/MainMenu";
-import SidebarPanel from "@/components/common/sidebar-panel";
 import LoginSignupModal from "@/components/common/login-signup-modal";
-import Image from "next/image";
 import Link from "next/link";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { pageRoutes } from "@/utilis/common";
 import Cookies from "js-cookie";
-import useInfo, { userContext } from "@/context/useContext";
-import useAxiosFetch from "@/hooks/useAxiosFetch";
 
 const Header = () => {
   const [navbar, setNavbar] = useState(false);
   const [islogin, setIsLogin] = useState(false)
   const [user, setUser] = useState(false)
-
   // const {data, isLoading, error, isError} = useAxiosFetch("/profile/me")
   
   const changeBackground = () => {
@@ -29,7 +24,6 @@ const Header = () => {
     const islogin = Cookies.get('accessToken')
     setIsLogin(islogin)
     setUser(localStorage.getItem("name"))
-    // setIsLogin(islogin)
     window.addEventListener("scroll", changeBackground);
     return () => {
       window.removeEventListener("scroll", changeBackground);
