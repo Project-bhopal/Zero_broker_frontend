@@ -24,7 +24,7 @@ const ListingsFavourites = () => {
         <h3>No items available.</h3>
       ) : (
         favoriteListings.map((listing) => (
-          <div className="col-md-6 col-lg-4 col-xl-3" key={listing.id}>
+          <div className="col-md-6 col-lg-4" key={listing.id}>
             <div className="listing-style1 style2">
               <div className="list-thumb">
                 <Image
@@ -60,8 +60,8 @@ const ListingsFavourites = () => {
                   <Link href={`/single-v3/${listing.id}`}>{listing.title}</Link>
                 </h6>
                 <p className="list-text">{listing.location}</p>
-                <div className="list-meta d-flex align-items-center">
-                  <a href="#">
+                <div className="list-meta flex flex-wrap gap-1">
+                  <a href="#" className="text-nowrap">
                     <span className="flaticon-bed" /> {listing.bed} bed
                   </a>
                   <a href="#">

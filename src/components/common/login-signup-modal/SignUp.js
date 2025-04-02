@@ -8,6 +8,8 @@ import GoogleAuth from "../google-oauth/GoogleOauth";
 import Cookies from "js-cookie";
 import WelcomeModal from "../WelcomeModal";
 import AnimatedModal from "../AnimatedModal";
+import { Modal } from "bootstrap";
+import { useUserStore } from "@/store/store";
 
 const SignUp = () => {
   const [showModal, setShowModal] = useState(false);
@@ -33,13 +35,33 @@ const SignUp = () => {
   const pathname = usePathname();
   const mutation = usePost("/auth/signup");
   const mutation1 = usePost("/auth/generate-otp");
+  const {setUser} = useUserStore();
 
   useEffect(() => {
+  
     if (pathname === "/register") {
       const token = Cookies.get("accessToken");
       const firstVisit = localStorage.getItem("firstVisit");
       const role = localStorage.getItem("role");
       localStorage.clear()
+
+      const modalElement = document.getElementById("loginSignupModal");
+      if (modalElement) {
+        const modalInstance =  Modal.getInstance(modalElement);
+        if (modalInstance) {
+          modalInstance.hide();
+          
+        }
+      }
+        // Manually remove the backdrop if it remains
+        const modalBackdrops = document.querySelectorAll(".modal-backdrop");
+        modalBackdrops.forEach((backdrop) => backdrop.remove());
+      document.getElementById("loginSignupModal")?.addEventListener("hidden.bs.modal", () => {
+        document.body.classList.remove("modal-open");
+        document.body.style.overflow = "";
+        document.body.style.paddingRight = "";
+      });
+
       if (!token && !firstVisit && !role) {
         setTimeout(() => {
           setShowModal(true);
@@ -96,8 +118,8 @@ const SignUp = () => {
         onSuccess: (details) => {
           sessionStorage.removeItem("user", "ot");
           setState({ ...state, open: true });
-
-          sessionStorage.setItem("user", JSON.stringify(details.data));
+          setUser(details.data)
+          // sessionStorage.setItem("user", JSON.stringify(details.data));
           sessionStorage.setItem("ot", "varification");
           mutation1.mutate(
             { email: data.email, otp_type: "varification" },
@@ -105,6 +127,7 @@ const SignUp = () => {
               onSuccess: (details) => {
                 if (details) {
                   router.push("/verification/verify-otp");
+                          
                 }
               },
               onError: (error) => {

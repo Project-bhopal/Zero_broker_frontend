@@ -5,8 +5,25 @@ import Link from "next/link";
 import { useRouter } from 'next/navigation';
 import DefaultHeader from "@/components/common/DefaultHeader";
 import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, WhatsappShareButton, EmailShareButton, PinterestShareButton } from "react-share";
+import { Modal } from "bootstrap";
+
+const images = [
+    "/images/listings/demoBanglow.jpg",
+    "/images/listings/demoBanglow2.jpg",
+    "/images/listings/demoBanglow3.jpg",
+    "/images/listings/demoBanglow.jpg",
+    "/images/listings/demoBanglow2.jpg"
+]
 
 const PropertyDetails = () => {
+    const [selectedIndex, setSelectedIndex] = useState(0);
+
+    const openModal = (index) => {
+      setSelectedIndex(index);
+      const modal = new Modal(document.getElementById("imageModal"));
+      modal.show();
+    };
+
     const [scrollPosition, setScrollPosition] = useState(0);
     const [translateY, setTranslateY] = useState(0);
     const [isSaved, setIsSaved] = useState(false);
@@ -230,8 +247,9 @@ const PropertyDetails = () => {
                         borderRadius: "10px",
                         objectFit: "cover",
                     }}
-                    src="/images/listings/demoBanglow.jpg"
+                    src={images[0]}
                     alt="listings"
+                    onClick={() => openModal(0)}
                 />
 
                 <div style={{ flex: "1", display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -243,8 +261,9 @@ const PropertyDetails = () => {
                             borderRadius: "8px",
                             objectFit: "cover",
                         }}
-                        src="/images/listings/demoBanglow2.jpg"
+                        src={images[1]}
                         alt="listings"
+                        onClick={() => openModal(1)}
                     />
                     <Image
                         width={500}
@@ -254,12 +273,13 @@ const PropertyDetails = () => {
                             borderRadius: "8px",
                             objectFit: "cover",
                         }}
-                        src="/images/listings/demoBanglow3.jpg"
+                        src={images[2]}
                         alt="listings"
+                        onClick={() => openModal(2)}
                     />
                 </div>
 
-                {/* <div style={{ flex: "1", display: "flex", flexDirection: "column", gap: "10px" }}>
+                <div style={{ flex: "1", display: "flex", flexDirection: "column", gap: "10px" }}>
                     <Image
                         width={400}
                         height={200}
@@ -268,8 +288,9 @@ const PropertyDetails = () => {
                             borderRadius: "8px",
                             objectFit: "cover",
                         }}
-                        src="/images/listings/demoBanglow.jpg"
+                        src={images[3]}
                         alt="listings"
+                        onClick={() => openModal(3)}
                     />
                     <Image
                         width={400}
@@ -279,12 +300,45 @@ const PropertyDetails = () => {
                             borderRadius: "8px",
                             objectFit: "cover",
                         }}
-                        src="/images/listings/demoBanglow3.jpg"
+                        src={images[4]}
                         alt="listings"
+                        onClick={() => openModal(4)}
                     />
-                </div> */}
+                </div>
             </div>
-
+            
+            {/* Modal with Carousel */}
+      <div className="modal fade w-100" id="imageModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content bg-transparent shadow-none border-none  w-full">
+            <div className="">
+              <button type="button"  data-bs-dismiss="modal" className="px-3 py-2 bg-[#000000b9] rounded text-white"> Back to Property Details</button>
+            </div>
+            <div className="modal-body">
+            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                  <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+              <div id="carouselExample" className="carousel slide" data-bs-ride="carousel">
+                <div className="carousel-inner">
+                  {images.map((src, index) => (
+                    <div
+                      key={index}
+                      className={`carousel-item  object-cover ${index === selectedIndex ? "active" : ""}`}
+                    >
+                      <Image src={src} alt={`Image ${index + 1}`} width={500} height={300} className="d-block  justify-self-center" />
+                    </div>
+                  ))}
+                </div>
+                {/* Carousel Controls */}
+              </div>
+           
+                <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                  <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
             <div className="property-details-1" id={"description"}>
                 <div className="price">AED 21,500,000</div>

@@ -1,7 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const Select = dynamic(() => import("react-select"), { ssr: false });
 
@@ -26,6 +26,14 @@ const VideoOptionField = ({ setVideos }) => {
     setUploaded(false);
   };
 
+  useEffect(() => {
+    if (uploadedVideos.length > 0) {
+      const videoFilesArray = uploadedVideos.map(({ file }) => file);
+      setVideos(videoFilesArray);
+      console.log(videoFilesArray);
+    }
+  }, [uploadedVideos]);
+
   const handleDrop = (event) => {
     event.preventDefault();
     handleUpload(event.dataTransfer.files);
@@ -43,10 +51,11 @@ const VideoOptionField = ({ setVideos }) => {
   };
 
   const handleSubmit = () => {
-    setVideos(uploadedVideos); // Pass uploaded video files
+    const videoFilesArray = uploadedVideos.map(({ file }) => file); // Extract only files
+    setVideos(videoFilesArray); 
+    console.log(videoFilesArray); // Debugging to ensure correct values
     setUploaded(true);
   };
-
   return (
     <>
       <div>

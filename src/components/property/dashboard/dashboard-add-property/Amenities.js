@@ -62,7 +62,7 @@ const Amenities = ({setData}) => {
     .filter(Boolean);
     console.log("Selected Amenities:", selectedAmenities);
     console.log("other Amenities:", otherAmenitiesArray);
-    setData((prev)=>({...prev, features_amenities: selectedAmenities, otherAmenitiesArray}))
+    setData((prev)=>({...prev, features_amenities: selectedAmenities, other_amenities : otherAmenitiesArray}))
     setSaved(true)
   };
 

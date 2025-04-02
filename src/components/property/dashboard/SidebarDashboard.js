@@ -51,14 +51,14 @@ const SidebarDashboard = () => {
           text: "Saved Search",
         },
         {
+          href: "/dashboard/user/wallet",
+          icon: "flaticon-review",
+          text: "Wallet",
+        },
+        {
           href: "/my-reviews",
           icon: "flaticon-review",
           text: "Reviews",
-        },
-        {
-          href: "/dashboard/user/payments",
-          icon: "flaticon-review",
-          text: "Payments",
         },
         {
           href: "/dashboard/user/subcription",
@@ -66,10 +66,11 @@ const SidebarDashboard = () => {
           text: "Subcription",
         },
         {
-          href: "/dashboard/user/wallet",
+          href: "/dashboard/user/payments",
           icon: "flaticon-review",
-          text: "Wallet",
+          text: "History  ",
         },
+        
       ],
     },
     {
@@ -124,15 +125,10 @@ const SidebarDashboard = () => {
           text: "Request to add new Property",
         },
         {
-          href: "/dashboard/seller/requests-accepted-by-agents",
+          href: "/dashboard/seller/my-requests",
           icon: "flaticon-protection",
-          text: "Requests accepted by Agents",
+          text: "My Requests",
         },
-        // {
-        //   href: "/dashboard/seller/my-requests",
-        //   icon: "flaticon-protection",
-        //   text: "My Requests",
-        // },
         {
           href: "/dashboard-reviews",
           icon: "flaticon-review",
@@ -150,7 +146,7 @@ const SidebarDashboard = () => {
         },
       ],
     },
-  ];
+  ];  
 
   const agentsidebarItems = [
     {
@@ -176,11 +172,6 @@ const SidebarDashboard = () => {
     {
       title: "MANAGE LISTINGS",
       items: [
-        {
-          href: "/dashboard/agent/add-property",
-          icon: "flaticon-new-tab",
-          text: "Add New Property",
-        },
         {
           href: "/dashboard/agent/property-listed-by-me",
           icon: "flaticon-home",
@@ -210,56 +201,56 @@ const SidebarDashboard = () => {
     },
   ];
   const adminsidebarItems = [
-    {
-      title: "MAIN",
-      items: [
-        {
-          href: "/dashboard/home",
-          icon: "flaticon-discovery",
-          text: "Dashboard",
-        },
-        {
-          href: "/dashboard/my-profile",
-          icon: "flaticon-user",
-          text: "My Profile",
-        },
-        {
-          href: "/dashboard/message",
-          icon: "flaticon-chat-1",
-          text: "Message",
-        },
-      ],
-    },
-    {
-      title: "MANAGE LISTINGS",
-      items: [
-        {
-          href: "/dashboard/admin/agent-request",
-          icon: "flaticon-new-tab",
-          text: "Agent Requests",
-        },
-        {
-          href: "/dashboard/admin/create-agent",
-          icon: "flaticon-new-tab",
-          text: "Create Agent",
-        },
-        {
-          href: "/dashboard/admin/all-users",
-          icon: "flaticon-user",
-          text: "All Users",
-        },
-      ],
-    },
-    {
-      title: "MANAGE ACCOUNT",
-      items: [
-        {
-          href: "/login",
-          icon: "flaticon-logout",
-          text: "Logout",
-        },
-      ],
-    },
+      {
+        title: "MAIN",
+        items: [
+          {
+            href: "/dashboard/home",
+            icon: "flaticon-discovery",
+            text: "Dashboard",
+          },
+          {
+            href: "/dashboard/my-profile",
+            icon: "flaticon-user",
+            text: "My Profile",
+          },
+          {
+            href: "/dashboard/message",
+            icon: "flaticon-chat-1",
+            text: "Message",
+          },
+        ],
+      },
+      {
+        title: "MANAGE LISTINGS",
+        items: [
+          {
+            href: "/dashboard/admin/agent-request",
+            icon: "flaticon-new-tab",
+            text: "Agent Requests",
+          },
+          {
+            href: "/dashboard/admin/create-agent",
+            icon: "flaticon-user-1",
+            text: "Create",
+          },
+          {
+            href: "/dashboard/admin/all-users",
+            icon: "flaticon-user",
+            text: "All Users",
+          },
+        ],
+      },
+      {
+        title: "MANAGE ACCOUNT",
+        items: [
+          {
+            href: "/login",
+            icon: "flaticon-logout",
+            text: "Logout",
+          },
+        ],
+      },
   ];
 
   return (

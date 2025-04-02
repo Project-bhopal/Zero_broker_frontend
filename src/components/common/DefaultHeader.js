@@ -114,10 +114,10 @@ const DefaultHeader = () => {
 
   const sellermenuItems = [
     {
-      title: `MAIN`,
+      title: "MAIN",
       items: [
         {
-          href: "/dashboard-home",
+          href: "/dashboard/home",
           icon: "flaticon-discovery",
           text: "Dashboard",
         },
@@ -127,7 +127,7 @@ const DefaultHeader = () => {
           text: "My Profile",
         },
         {
-          href: "/dashboard/message",
+          href: "/dashboard-message",
           icon: "flaticon-chat-1",
           text: "Message",
         },
@@ -137,9 +137,19 @@ const DefaultHeader = () => {
       title: "MANAGE LISTINGS",
       items: [
         {
-          href: "/dashboard-my-properties",
+          href: "/dashboard/seller/my-properties",
           icon: "flaticon-home",
-          text: "My Properties",
+          text: "My Listed Properties",
+        }, 
+        {
+          href: "/dashboard/seller/request-to-add-new-property",
+          icon: "flaticon-upload",
+          text: "Request to add new Property",
+        },
+        {
+          href: "/dashboard/seller/my-requests",
+          icon: "flaticon-protection",
+          text: "My Requests",
         },
         {
           href: "/dashboard-reviews",
@@ -162,10 +172,63 @@ const DefaultHeader = () => {
 
   const agentmenuItems = [
     {
-      title: `MAIN`,
+      title: "MAIN",
       items: [
         {
-          href: "/dashboard-home",
+          href: "/dashboard/home",
+          icon: "flaticon-discovery",
+          text: "Dashboard",
+        },
+        {
+          href: "/dashboard/my-profile",
+          icon: "flaticon-user",
+          text: "My Profile",
+        },
+        {
+          href: "/dashboard-message",
+          icon: "flaticon-chat-1",
+          text: "Message",
+        },
+      ],
+    },
+    {
+      title: "MANAGE LISTINGS",
+      items: [
+        {
+          href: "/dashboard/agent/property-listed-by-me",
+          icon: "flaticon-home",
+          text: "Listed by Me",
+        },
+        {
+          href: "/dashboard/agent/requests",
+          icon: "flaticon-clock",
+          text: "Requests",
+        },
+        {
+          href: "my-reviews",
+          icon: "flaticon-review",
+          text: "Reviews",
+        },
+      ],
+    },
+    {
+      title: "MANAGE ACCOUNT",
+      items: [
+        {
+          href: "/login",
+          icon: "flaticon-logout",
+          text: "Logout",
+        },
+      ],
+    },
+  ];
+
+  const adminmenuItems = [
+    {
+      title: "MAIN",
+      items: [
+        {
+          href: "/dashboard/home",
           icon: "flaticon-discovery",
           text: "Dashboard",
         },
@@ -185,24 +248,19 @@ const DefaultHeader = () => {
       title: "MANAGE LISTINGS",
       items: [
         {
-          href: "/dashboard-add-property",
+          href: "/dashboard/admin/agent-request",
           icon: "flaticon-new-tab",
-          text: "Add New Property",
+          text: "Agent Requests",
         },
         {
-          href: "/dashboard-my-properties",
-          icon: "flaticon-home",
-          text: "My Properties",
+          href: "/dashboard/admin/create-agent",
+          icon: "flaticon-new-tab",
+          text: "Create Agent",
         },
         {
-          href: "/dashboard-request-to-add-property",
-          icon: "flaticon-home",
-          text: "Requests",
-        },
-        {
-          href: "/dashboard-reviews",
-          icon: "flaticon-review",
-          text: "Reviews",
+          href: "/dashboard/admin/all-users",
+          icon: "flaticon-user",
+          text: "All Users",
         },
       ],
     },
@@ -216,7 +274,15 @@ const DefaultHeader = () => {
         },
       ],
     },
+    
   ];
+
+  const toggleDropdown = (e) => {
+    e.preventDefault();
+    e.stopPropagation(); // Prevents the event from bubbling
+    const dropdownMenu = e.currentTarget.nextElementSibling;
+    dropdownMenu.classList.toggle("show");
+  }
 
   return (
     <>
@@ -232,14 +298,14 @@ const DefaultHeader = () => {
                 <div className="row align-items-center justify-content-between">
                   <div className="col-auto">
                     <div className="d-flex align-items-center justify-content-between">
-                      <div className="logos mr40">
+                      <div className="logos mr35">
                         <Link
                           className="header-logo logo1"
                           href={pageRoutes.home}
                         >
                           <img
                             className="h-20"
-                            src="/images/logoBlack.png"
+                            src="/images/logoBlack2.png"
                             alt="Header Logo"
                           />
                         </Link>
@@ -282,9 +348,9 @@ const DefaultHeader = () => {
                             </li>
                             {/* End notification icon */}
         
-                            <li className=" user_setting">
+                            <li className="user_setting">
                               <div className="dropdown">
-                                <a className="btn" href="#" data-bs-toggle="dropdown">
+                                <a className="btn" href="#" data-bs-toggle="dropdown"  aria-expended="false" onClick={toggleDropdown}>
                                   <Image
                                     width={44}
                                     height={44}
@@ -341,6 +407,29 @@ const DefaultHeader = () => {
                                       </div>
                                     ))}
                                     {role === "agent"&&agentmenuItems.map((section, sectionIndex) => (
+                                      <div key={sectionIndex}>
+                                        <p
+                                          className={`fz15 fw400 ff-heading ${
+                                            sectionIndex === 0 ? "mb20" : "mt30"
+                                          }`}
+                                        >
+                                          {section.title}
+                                        </p>
+                                        {section.items.map((item, itemIndex) => (
+                                          <Link
+                                            key={itemIndex}
+                                            className={`dropdown-item ${
+                                              pathname == item.href ? "-is-active" : ""
+                                            } `}
+                                            href={item.href}
+                                          >
+                                            <i className={`${item.icon} mr10`} />
+                                            {item.text}
+                                          </Link>
+                                        ))}
+                                      </div>
+                                    ))}
+                                    {role === "admin"&&adminmenuItems.map((section, sectionIndex) => (
                                       <div key={sectionIndex}>
                                         <p
                                           className={`fz15 fw400 ff-heading ${

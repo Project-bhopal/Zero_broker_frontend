@@ -7,8 +7,8 @@ const api_url = process.env.NEXT_PUBLIC_API_BASE_URL;
 
  function useAxiosDelete (url) {
   return useMutation({
-    mutationFn: async (id) => {
-      const response = await ApiDeleteRequest(`${api_url}${url}${id}`);
+    mutationFn: async () => {
+      const response = await ApiDeleteRequest(`${api_url}${url}`);
       return response;
     },
   });

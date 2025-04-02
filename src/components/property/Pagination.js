@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-const Pagination = () => {
+const   Pagination = () => {
   const totalPages = 8; // Replace this with your actual total number of pages
   const [currentPage, setCurrentPage] = useState(1); // Initialize the current page state to 2 (or any other default active page)
 
@@ -63,9 +63,9 @@ const Pagination = () => {
           </span>
         </li>
       </ul>
-      <p className="mt10 pagination_page_count text-center">
+      {/* <p className="mt10 pagination_page_count text-center">
         1-8 of 300+ property available
-      </p>
+      </p> */}
     </div>
   );
 };

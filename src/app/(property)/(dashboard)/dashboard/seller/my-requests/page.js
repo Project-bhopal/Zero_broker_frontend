@@ -1,17 +1,25 @@
+"use client"
 import DashboardHeader from "@/components/common/DashboardHeader";
 import MobileMenu from "@/components/common/mobile-menu";
 import Pagination from "@/components/property/Pagination";
 import Footer from "@/components/property/dashboard/Footer";
 import SidebarDashboard from "@/components/property/dashboard/SidebarDashboard";
 import FilterHeader from "../../../../../../components/property/dashboard/dashboard-my-properties/FilterHeader";
-import PropertyDataTable from "@/components/property/dashboard/dashboard-my-properties/PropertyDataTable";
 import DboardMobileNavigation from "@/components/property/dashboard/DboardMobileNavigation";
+import RequestedAcceptedDataTable from "@/components/property/dashboard/dashboard-requests-accepted-by-agents/RequestedAcceptedDataTable";
+import { useState } from "react";
+import RequestsPendingDataTable from "@/components/property/dashboard/seller-pending-requests/RequestsPendingDataTable";
 
-export const metadata = {
-  title: "Dashboard Properties || ZeroBroker",
-};
 
-const DashboardMyProperties = () => {
+
+const DashboardRequestsAcceptedByAgent = () => {
+  const [selectedValue, setSelectedValue] = useState("Pending");
+  const handleChange = (selectedOption) => {
+    setSelectedValue(selectedOption.value);
+  };
+
+  
+
   return (
     <>
       {/* Main Header Nav */}
@@ -41,33 +49,22 @@ const DashboardMyProperties = () => {
               <div className="row align-items-center pb40">
                 <div className="col-xxl-3">
                   <div className="dashboard_title_area">
-                    <h2>My Properties</h2>
+                    <h2>My Requests</h2>
                     <p className="text">We are glad to see you again!</p>
                   </div>
                 </div>
-                <div className="col-xxl-9"></div>
-              </div>
-              {/* End .row */}
-              {/* <FilterHeader show={false}/> */}
-              <div className="item1 mb15 col-3 justify-self-end">
-                <div className="search_area">
-                  <input
-                    type="text"
-                    className="form-control bdrs12"
-                    placeholder="Property Name ..."
-                    required
-                  />
-                  <label>
-                    <span className="flaticon-search" />
-                  </label>
+                <div className="col-xxl-9">
+                  <FilterHeader show={true} handleChange={(selectedOption)=>{handleChange(selectedOption)}} selectedValue={selectedValue}/>
                 </div>
               </div>
+              {/* End .row */}
+
               <div className="row">
                 <div className="col-xl-12">
                   <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                     <div className="packages_table table-responsive">
-                      <PropertyDataTable />
-
+                      {selectedValue === "Accepted"&&<RequestedAcceptedDataTable />}
+                      {selectedValue === "Pending"&& <RequestsPendingDataTable/>}
                       <div className="mt30">
                         <Pagination />
                       </div>
@@ -89,4 +86,4 @@ const DashboardMyProperties = () => {
   );
 };
 
-export default DashboardMyProperties;
+export default DashboardRequestsAcceptedByAgent;

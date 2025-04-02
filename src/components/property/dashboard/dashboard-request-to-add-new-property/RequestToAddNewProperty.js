@@ -68,11 +68,11 @@ function RequestToAddNewProperty() {
         setErrors((prev) => ({ ...prev, [name]: selectedOption ? "" : "This field is required" }));
       };
 
-      const mutation = useAxiosPost("/property/create", {
+      const mutation = useAxiosPost("/requestproperty/create", {
         onSuccess: (data) => {
           console.log("Request created successfully:", data);
           setState((prev) =>({...prev, open: true}))
-          router.push("/dashboard/seller/my-properties")
+          router.push("/dashboard/seller/my-requests")
         },
         onError: (error) => {
           console.error("Error creating property:", error);

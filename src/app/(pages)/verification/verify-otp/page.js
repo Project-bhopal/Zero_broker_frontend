@@ -1,11 +1,11 @@
 "use client";
 import { usePost } from "@/hooks/usePost";
+import { useUserStore } from "@/store/store";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 
 function VerifyOTP() {
   const [otp, setOtp] = useState(new Array(6).fill(""));
-  const [user, setUser] = useState({});
   const [email, setEmail] = useState("")
   const [resendOtp, setResendOtp] = useState(false)
   const [isVerified, setIsVerified] = useState(false);
@@ -18,14 +18,12 @@ function VerifyOTP() {
   const mutation2 = usePost("/auth/generate-otp")
   const router = useRouter();
   const inputRef = useRef(null);
-
+  const {user} = useUserStore();
   useEffect(()=>{
     const email = sessionStorage.getItem("e");
-    const user = JSON.parse(sessionStorage.getItem("user"));
     const ot = sessionStorage.getItem("ot");
     setEmail(email || user?.email)
     setOt(ot)
-    setUser(user)
   },[])
 
 
@@ -40,7 +38,7 @@ function VerifyOTP() {
 
 
   const handleResendOtp = () => {
-    const user = JSON.parse(sessionStorage.getItem("user"))
+      
     
     
     setIsResendEnabled(false);

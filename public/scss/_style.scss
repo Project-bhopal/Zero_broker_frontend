@@ -1103,9 +1103,8 @@ li {
 .listing-style1 .list-meta a {
     font-family: var(--title-font-family);
     font-size: 15px;
-    margin-right: 24px;
     font-weight: bold;
-    padding: 8px 15px;
+    padding: 8px 10px;
     border-radius: 10px;
     background-color: #f0f0f0;
     color: var(--primary-color)
@@ -1116,6 +1115,7 @@ li {
 @media (max-width: 320px) {
     .listing-style1 .list-meta a {
         margin-right: 15px;
+        font-size: 11px;
     }
 }
 .listing-style1 .list-meta span {
@@ -1144,6 +1144,7 @@ li {
 .listing-style1 .list-meta2 a {
     background-color: #ffffff;
     color: #0f8363;
+    font-size: 18px;
     border-radius: 6px;
     height: 35px;
     line-height: 40px;
@@ -1159,10 +1160,10 @@ li {
     color: var(--headings-color);
 }
 .listing-style1 .for-what {
-    font-size: 13px;
+    font-size: 15px;
     color: var(--headings-color);
     font-family: var(--title-font-family);
-    font-weight: 400;
+    font-weight: 500;
 }
 .listing-style1 hr {
     background-color: #dddddd;
@@ -5896,7 +5897,7 @@ textarea:focus {
     border: 1px solid #dddddd;
     border-radius: 8px;
     margin-bottom: 30px;
-    padding: 50px;
+    padding: 30px;
     position: relative;
     -webkit-transition: all 0.4s ease;
     -o-transition: all 0.4s ease;
@@ -7180,7 +7181,7 @@ header.menu-home10.sticky .ace-responsive-menu .visible_list a.list-item:before 
 header.nav-homepage-style {
     background-color: transparent;
     border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-    padding: 20px 0;
+    padding: 12px 0;
     position: fixed;
     width: 100%;
     z-index: 3;

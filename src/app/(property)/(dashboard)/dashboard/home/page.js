@@ -85,18 +85,13 @@ const DashboardHome = () => {
                     <RecentActivities />
                   </div>
                 </div> */}
-                {/* End .col-xl-4 */}
               </div>
-              {/* End .row */}
             </div>
-            {/* End .dashboard__content */}
 
             <Footer />
           </div>
-          {/* End .dashboard__main */}
         </div>
       </div>
-      {/* dashboard_content_wrapper */}
     </>
   );
 };

@@ -61,7 +61,7 @@ const DashboardRequests = () => {
                   <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                     <div className="packages_table table-responsive">
                       {showTable === "Pending"&&(
-                        <RequestsDataTable />
+                        <RequestsDataTable setShowTable={setShowTable}/>
                       )}  
                       {showTable === "Accepted"&&(
                         <RequestedAcceptedByMeDataTable/>

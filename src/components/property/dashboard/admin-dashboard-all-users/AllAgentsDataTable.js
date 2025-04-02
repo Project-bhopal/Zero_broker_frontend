@@ -81,6 +81,19 @@ const AllAgentsDataTable = ({agents}) => {
     const router = useRouter();
     const deleteAgentMutation = useAxiosDelete(`/agents/delete/`)
 
+    function formatDate(dateString) {
+      if (!dateString) return "Invalid Date"; // Handle empty or undefined input
+  
+      const date = new Date(dateString);
+      if (isNaN(date)) return "Invalid Date"; // Handle invalid date formats
+  
+      const day = String(date.getDate()).padStart(2, "0"); // Ensure two-digit day
+      const month = String(date.getMonth() + 1).padStart(2, "0"); // Ensure two-digit month
+      const year = date.getFullYear();
+  
+      return `${day}/${month}/${year}`; // Returns DD/MM/YYYY
+    }
+
     const handleAgentDeleteClick = async(id) =>{
       deleteAgentMutation.mutate(id,{
         onSuccess : (details )=>{
@@ -139,7 +152,7 @@ const AllAgentsDataTable = ({agents}) => {
               </span>
             </td>
             <td className="vam">{agent.role}</td>
-            <td className="vam">{agent.createdAt}</td>
+            <td className="vam">{formatDate(agent.createdAt)}</td>
             <td className="vam">
               <div className="d-flex">
                 <Link

@@ -54,7 +54,7 @@ export default function RootLayout({ children }) {
     // setShow(true);
     const token = Cookies.get("accessToken");
     const firstVisit = localStorage.getItem("firstVisit");
-    const role = localStorage.getItem("role");
+    
     const cookieRole = Cookies.get("role")
   
     if(cookieRole){

@@ -1,6 +1,6 @@
 "use client";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 
 const UploadPhotoGallery = ({setImages}) => {
@@ -22,7 +22,7 @@ const UploadPhotoGallery = ({setImages}) => {
     }
     setUploaded(false)
   };
-
+  
   const handleDrop = (event) => {
     event.preventDefault();
     handleUpload(event.dataTransfer.files);
@@ -43,10 +43,13 @@ const UploadPhotoGallery = ({setImages}) => {
     setUploaded(false)
   };
 
-  const handleSubmit =  () => {
-    setImages(uploadedImages)
-    setUploaded(true)
+  const handleSubmit = () => {
+    const filesArray = uploadedImages.map(({ file }) => file); // Extract only file objects
+    setImages([...filesArray]); 
+    console.log(filesArray); // Debugging to ensure correct values
+    setUploaded(true);
   };
+
 
   return (
     <>
@@ -110,7 +113,7 @@ const UploadPhotoGallery = ({setImages}) => {
           </div>
         ))}
       {uploadedImages.length !== 0 &&<div className="flex justify-end">
-          <button  disabled={uploadedImages.length === 0} className={`ud-btn ${uploaded ? "btn-thm" : "btn-white2"} duration-200 flex`} onClick={()=>handleSubmit()}>
+          <button type="button" disabled={uploadedImages.length === 0} className={`ud-btn ${uploaded ? "btn-thm" : "btn-white2"} duration-200 flex`} onClick={(e)=>{e.stopPropagation(); handleSubmit()}}>
            {uploaded?<>Saved <i className="fa fa-check-circle rotate-45"></i></>: <> Save Images </>}
           </button>
         </div>}

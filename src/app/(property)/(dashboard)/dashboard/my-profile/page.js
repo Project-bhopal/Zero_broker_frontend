@@ -57,7 +57,8 @@ const DashboardMyProfile = () => {
 
   
   const handleSubmit = async () => {
-    const userData = {...formData.userProfile, ...formData.personalInfo}
+    const { fullname, mobile, email, role, ...filteredPersonalInfo } = formData.personalInfo;
+    const userData = {...formData.userProfile, ...filteredPersonalInfo}
     console.log(userData)
     try {
       const response = await ApiPutRequest("/profile/update", userData);

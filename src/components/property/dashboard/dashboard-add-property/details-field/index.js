@@ -14,14 +14,13 @@
       bedrooms :"",
       bathrooms:"",
       size :{
-        unite : "square feet",
-        value:""
+        unite : "sqft",
+        value:''
       },
       completion_status :"",
       furnishing :"",
       ownership :"",
       usage :"",
-      floor_number : "",
       parking_available : ''
     })
 
@@ -63,13 +62,28 @@
     
       const handleChange = (e) => {
         const { name, value } = e.target;
-        setDetails((prev) => ({
-          ...prev,
-          [name]: value,
-        }));
-        setSaved(false)
-      };
+    
+        setDetails((prev) => {
+            if (name === "size") {
+                return {
+                    ...prev,
+                    size: {
+                        ...prev.size,
+                        value: Number(value), 
+                        unite : "sqft"
+                    },
+                };
+            }
+            return {
+                ...prev,
+                [name]: value,
+            };
+        });
+    
+        setSaved(false);
+    };
 
+    
       const handleSelectChange = (selectedOption, { name }) => {
         setDetails((prev) => ({
           ...prev,
@@ -182,22 +196,7 @@
           </div>
           {/* End .col-4 */}
 
-          <div className="col-sm-6 col-xl-4">
-            <div className="mb20">
-              <label className="heading-color ff-heading fw600 mb10">
-                Floor Number
-              </label>
-              <input
-                type="text"
-                name="floor_number"
-                value={details.floor_number}
-                className="form-control"
-                onChange={handleChange} 
-                placeholder="Floor Number eg 02..."
-              />
-            </div>
-          </div>
-          {/* End .col-4 */}  
+ 
 
           <div className="col-sm-6 col-xl-4">
             <div className="mb20">
