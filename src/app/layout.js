@@ -23,7 +23,7 @@ if (typeof window !== "undefined") {
 import ProtectedRoute from "@/components/hoc/ProtectedRoute";
 import DefaultHeader from "@/components/common/DefaultHeader";
 import { UserContextProvider } from "@/context/useContext";
-
+import loader from "../../public/images/preloader.gif"
 // if (typeof window !== "undefined") {
 //   import("bootstrap");
 // }
@@ -67,9 +67,9 @@ export default function RootLayout({ children }) {
       setIsToken(false)
     }
     
-    if (!token && !publicRoutes.includes(pathname)) {
-      router.push("/login");
-    }
+    // if (!token && !publicRoutes.includes(pathname)) {
+    //   router.push("/login");
+    // }
     if (!isToken && !firstVisit && !role) {
       setTimeout(() => {
         setShowModal(true);
@@ -92,8 +92,11 @@ export default function RootLayout({ children }) {
     return (
       <>
         <html>
-          <body>
-            <div>Loading...</div>
+          <body className="body bg-black">
+            <div className="flex items-center justify-center min-h-screen bg-[#ffffff7f]">
+              {/* <h1 className="text-white">Loading...</h1> */}
+              <img src="/images/preloader.gif"/>
+            </div>
           </body>
         </html>
       </>

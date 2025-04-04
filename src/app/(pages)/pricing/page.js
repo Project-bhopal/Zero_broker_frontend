@@ -1,15 +1,27 @@
+"use client"
 import CallToActions from "@/components/common/CallToActions";
 import DefaultHeader from "@/components/common/DefaultHeader";
 import Footer from "@/components/common/default-footer";
 import MobileMenu from "@/components/common/mobile-menu";
 import Pricing from "@/components/pages/pricing/Pricing";
 import TenantPricing from "@/components/pages/pricing/TenantPricing";
+import useAxiosFetch from "@/hooks/useAxiosFetch";
+import { useEffect, useState } from "react";
 
-export const metadata = {
-  title: "Pricing  || ZeroBroker - Real Estate NextJS Template",
-};
 
 const PricingPlan = () => {
+  const [buyerPlans, setBuyerPlans] = useState([])
+  const [tenantPlans, setTenantPlans] = useState([])
+
+    const { data, error, isError, isLoading } = useAxiosFetch("/plans");
+    useEffect(()=>{
+      console.log(data)
+      const buyerPlans = data?.plans?.filter(plan => plan.category === "buy");
+      const tenantPlans = data?.plans?.filter(plan => plan.category === "rent");
+
+      setBuyerPlans(buyerPlans);
+      setTenantPlans(tenantPlans);
+    },[data])
   return (
     <>
       {/* Main Header Nav */}
@@ -28,7 +40,7 @@ const PricingPlan = () => {
               <div className="breadcumb-style1">
                 <h2 className="title">Plans</h2>
                 <div className="breadcumb-list">
-                  <a href="#">Home</a>
+                  <a href="/">Home</a>
                   <a href="#">Plans</a>
                 </div>
               </div>
@@ -50,7 +62,7 @@ const PricingPlan = () => {
             </div>
           </div>
           {/* End .row */}
-          <Pricing />
+          <Pricing buyerPlans={buyerPlans}/>
         </div>
         {/* End .container */}
       </section>
@@ -67,7 +79,7 @@ const PricingPlan = () => {
             </div>
           </div>
           {/* End .row */}
-          <TenantPricing />
+          <TenantPricing tenantPlans={tenantPlans}/>
         </div>
         {/* End .container */}
       </section>

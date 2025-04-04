@@ -9,6 +9,7 @@ import PaginationTwo from "../../PaginationTwo";
 import Image from "next/image";
 import useAxiosFetch from "@/hooks/useAxiosFetch";
 import useAxiosPost from "@/hooks/useAxiosPost";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function PropertyFiltering({showModal, setShowModal}) {
   const [propData, setPropData] = useState([])
@@ -31,6 +32,8 @@ export default function PropertyFiltering({showModal, setShowModal}) {
       setPropData(data?.data)
     }
   },[data])
+ 
+
 
   useEffect(() => {
     setPageItems(
@@ -241,7 +244,7 @@ export default function PropertyFiltering({showModal, setShowModal}) {
     color: "#555", // Text color
   };
 
-  const mutation = useAxiosPost("/savedsearch", {
+  const mutation = useAxiosPost("/savefilter", {
     onSuccess: (details) => {
       console.log("Search Saved successfully:", details);
       setShowModal(false);
@@ -259,7 +262,7 @@ export default function PropertyFiltering({showModal, setShowModal}) {
     e.preventDefault();
     const firstWord = window.location.pathname.split("/")[1];
     
-    mutation.mutate( {search_name : searchName, filters:{purpose : firstWord}})
+    mutation.mutate( {filterName : searchName, })
     
   };
 

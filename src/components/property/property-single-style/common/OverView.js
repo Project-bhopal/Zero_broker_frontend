@@ -1,41 +1,37 @@
 import listings from "@/data/listings";
+import { usePropertyStore } from "@/store/store";
 import React from "react";
 
 
-const OverView = ({id}) => {
-  const data = listings.filter((elm) => elm.id == id)[0] || listings[0];
+const OverView = () => {
+  const {property}= usePropertyStore();
+
   const overviewData = [
     {
       icon: "flaticon-bed",
       label: "Bedroom",
-      value: data.bed,
+      value: property?.details?.bedrooms,
     },
     {
       icon: "flaticon-shower",
       label: "Bath",
-      value: data.bath,
+      value: property?.details?.bathrooms,
     },
     {
       icon: "flaticon-event",
       label: "Year Built",
-      value: data.yearBuilding,
-    },
-    {
-      icon: "flaticon-garage",
-      label: "Garage",
-      value: "2",
-      xs: true,
+      value: property?.building_information?.year_of_completion,
     },
     {
       icon: "flaticon-expand",
       label: "Sqft",
-      value: data.sqft,
+      value: property?.details?.size?.value,
       xs: true,
     },
     {
       icon: "flaticon-home-1",
       label: "Property Type",
-      value: data.propertyType,
+      value: property?.details?.property_type,
     },
   ];
   

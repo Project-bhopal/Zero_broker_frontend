@@ -1,10 +1,11 @@
 "use client";
+import { usePropertyStore } from "@/store/store";
 import React, { useState } from "react";
 // import ModalVideo from "react-modal-video";
 
 const PropertyVideo = () => {
   const [isOpen, setOpen] = useState(false);
-
+  const {property} = usePropertyStore();
   return (
     <>
       {/* <ModalVideo

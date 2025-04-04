@@ -1,49 +1,51 @@
+import { usePropertyStore } from "@/store/store";
 import React from "react";
 
 const PropertyDetails = () => {
+  const {property} = usePropertyStore();
   const columns = [
     [
-      {
-        label: "Property ID",
-        value: "RT48",
-      },
+      // {
+      //   label: "Property ID",
+      //   value: "RT48",
+      // },
       {
         label: "Price",
-        value: "$252,000",
+        value: `${property?.currency} ${property?.price}`,
       },
       {
         label: "Property Size",
-        value: "1500 Sq Ft",
+        value: `${property?.details?.size?.value}`,
       },
       {
         label: "Bathrooms",
-        value: "3",
+        value: `${property?.details?.bathrooms}`,
       },
       {
         label: "Bedrooms",
-        value: "2",
+        value: `${property?.details?.bedrooms}`,
       },
     ],
     [
-      {
-        label: "Garage",
-        value: "2",
-      },
-      {
-        label: "Garage Size",
-        value: "200 SqFt",
-      },
+      // {
+      //   label: "Garage",
+      //   value: "2",
+      // },
+      // {
+      //   label: "Garage Size",
+      //   value: "200 SqFt",
+      // },
       {
         label: "Year Built",
-        value: "2022",
+        value: `${property?.building_information?.year_of_completion}`,
       },
       {
         label: "Property Type",
-        value: "Apartment",
+        value: `${property?.details?.property_type}`,
       },
       {
         label: "Property Status",
-        value: "For Sale",
+        value: `For ${property?.details?.purpose}`,
       },
     ],
   ];

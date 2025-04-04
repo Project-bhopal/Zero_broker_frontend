@@ -1,102 +1,118 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import useAxiosFetch from "@/hooks/useAxiosFetch";
+import useAxiosPost from "@/hooks/useAxiosPost";
 
-const Pricing = () => {
-  const pricingPackages = [
-    {
-      packageTitle: "Basic",
-      price: "5000 AED",
-      priceIcon: "images/icon/pricing-icon-2.svg",
-      features: [
-        "No Expiry of Plan",
-        "Contact Upto 10",
-        "Loan Assistance",
-        "24/7 Full support",
-      ],
-    },
-    {
-      packageTitle: "Intermediate ",
-      price: "7500 AED",
-      pricePerMonth: "per month",
-      priceIcon: "images/icon/pricing-icon-1.svg",
-      uniqueClass: "unique-class", // Add a unique class for Professional package
-      features: [
-        "No Expiry of Plan",
-        "Contact Upto 20",
-        "Loan Assistance",
-        "24/7 Full support",
-      ],
-    },
-    {
-      packageTitle: "Dedicated Expert ",
-      price: "10,000 AED",
-      pricePerMonth: "per month",
-      priceIcon: "images/icon/pricing-icon-3.svg",
-      features: [
-       "No Expiry of Plan",
-        "Contact Upto 30",
-        "Loan Assistance",
-        "Dedicated property expert",
-        "Fixing viewings and visits",
-        "Helping negotiations",
-        "24/7 Full support",
-      ],
-    },
-  ];
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+);
 
-  const [isYearlyBilling, setIsYearlyBilling] = useState(false);
+// const pricingPackages = [
+//   {
+//     packageTitle: "Basic",
+//     price: "5000 AED",
+//     priceIcon: "images/icon/pricing-icon-2.svg",
+//     features: [
+//       "No Expiry of Plan",
+//       "Contact Upto 10",
+//       "Loan Assistance",
+//       "24/7 Full support",
+//     ],
+//   },
+//   {
+//     packageTitle: "Intermediate ",
+//     price: "7500 AED",
+//     pricePerMonth: "per month",
+//     priceIcon: "images/icon/pricing-icon-1.svg",
+//     uniqueClass: "unique-class", // Add a unique class for Professional package
+//     features: [
+//       "No Expiry of Plan",
+//       "Contact Upto 20",
+//       "Loan Assistance",
+//       "24/7 Full support",
+//     ],
+//   },
+//   {
+//     packageTitle: "Dedicated Expert ",
+//     price: "10,000 AED",
+//     pricePerMonth: "per month",
+//     priceIcon: "images/icon/pricing-icon-3.svg",
+//     features: [
+//       "No Expiry of Plan",
+//       "Contact Upto 30",
+//       "Loan Assistance",
+//       "Dedicated property expert",
+//       "Fixing viewings and visits",
+//       "Helping negotiations",
+//       "24/7 Full support",
+//     ],
+//   },
+// ];
 
-  const handleBillingToggle = () => {
-    setIsYearlyBilling((prevIsYearlyBilling) => !prevIsYearlyBilling);
+
+const Pricing = ({buyerPlans}) => {
+  const [loadingPlanId, setLoadingPlanId] = useState(null);
+
+  const mutation = useAxiosPost("/createPlan");
+
+  const handleCheckout = async (id) => {
+    setLoadingPlanId(id);
+    const stripe = await stripePromise;
+
+    mutation.mutate(
+      { id },
+      {
+        onSuccess: async (details) => {
+          setLoadingPlanId(null);
+          const sessionId = details.data.sessionId;
+          console.log(details);
+          if (sessionId) {
+            const { error } = await stripe.redirectToCheckout({ sessionId });
+
+            if (error) {
+              console.error("Stripe Checkout Error:", error);
+            }
+          }
+        },
+        onError: (error) => {
+          console.error("Error creating Plan:", error.response?.data?.message);
+          setLoadingPlanId(null);
+        },
+        onSettled: () => {
+          setLoadingPlanId(null);
+        },
+      }
+    );
   };
 
   return (
     <>
-      {/* <div className="row" data-aos="fade-up" data-aos-delay="200">
-        <div className="col-lg-12">
-          <div className="pricing_packages_top d-flex align-items-center justify-content-center mb60">
-            <div className="toggle-btn">
-              <span className="pricing_save1 ff-heading">Billed Monthly</span>
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  id="checkbox"
-                  checked={isYearlyBilling}
-                  onChange={handleBillingToggle}
-                />
-                <span className="pricing_table_switch_slide round" />
-              </label>
-              <span className="pricing_save2 ff-heading">Billed Yearly</span>
-              <span className="pricing_save3">Save 20%</span>
-            </div>
-          </div>
-        </div>
-      </div> */}
-      {/* End .row */}
-
-      <div className="grid gap-5 lg:grid-cols-3 md:grid-cols-2 grid-cols-1"  data-aos="fade-up" data-aos-delay="300">
-        {pricingPackages.map((item, index) => (
+      <div
+        className="grid gap-5 lg:grid-cols-3 md:grid-cols-2 grid-cols-1"
+        data-aos="fade-up"
+        data-aos-delay="300"
+      >
+        {buyerPlans?.map((item, index) => (
           <div className="hover:scale-102 duration-300" key={index}>
             <div className={`pricing_packages flex flex-col h-[90%]`}>
               <div className="heading">
                 <h5 className={`package_title ${item.uniqueClass || ""}`}>
-                  {item.packageTitle}
+                  {item?.name}
                 </h5>
-                <h2 className="text-[#0f8363]">
-                 {item.price}
-                </h2>
+                <h2 className="text-[#0f8363]">AED {item?.price}</h2>
                 <Image
                   width={60}
                   height={60}
                   className="price-icon "
-                  src={item.priceIcon}
+                  src={`images/icon/pricing-icon-${item.name == "Basic Plan" ? "2": item.name == "Intermediate Plan" ? "1" : "3"}.svg`}
                   alt="icon"
                 />
               </div>
               <div className="details flex flex-col justify-between h-full">
                 <p className="text mb25">
-                  {item.features[0]} {/* Display the first feature */}
+                  Contacts Credit <span className="font-semibold">{item.contacts}</span> {/* Display the first feature */}
                 </p>
                 <div className="list-style1 mb20">
                   <ul>
@@ -109,10 +125,17 @@ const Pricing = () => {
                   </ul>
                 </div>
                 <div className="d-grid ">
-                  <a href="#" className="ud-btn btn-thm-border text-thm">
+                  {/* <a href="#" className="ud-btn btn-thm-border text-thm">
                     Buy
                     <i className="fal fa-arrow-right-long" />
-                  </a>
+                  </a> */}
+                  <button
+                    onClick={() => handleCheckout(item._id)}
+                    className="ud-btn btn-thm-border text-thm"
+                    disabled={loadingPlanId === item._id}
+                  >
+                    {loadingPlanId === item._id ? "Processing..." : "Choose Plan"}
+                  </button>
                 </div>
               </div>
             </div>

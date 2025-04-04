@@ -3,7 +3,7 @@ const pageRoutes = {
   propertys: "/propertys",
   propertyDetails: "/property-details",
   buy: {
-    properties: "/buy/properties",
+    properties: "/buy/properties/2bedrooms-apartment/uae",
   },
   rent: {
     propertyForRent: "/rent/properties",
@@ -11,3 +11,4 @@ const pageRoutes = {
 };
 
 export { pageRoutes };
+
