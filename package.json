@@ -17,6 +17,7 @@
     "@popperjs/core": "^2.11.8",
     "@react-google-maps/api": "^2.19.2",
     "@react-oauth/google": "^0.12.1",
+    "@stripe/stripe-js": "^7.0.0",
     "@tailwindcss/postcss": "^4.0.7",
     "@tanstack/react-query": "^5.66.7",
     "aos": "^2.3.4",

@@ -1,4 +1,4 @@
-"use client"
+
 import DashboardHeader from "@/components/common/DashboardHeader";
 import MobileMenu from "@/components/common/mobile-menu";
 import DboardMobileNavigation from "@/components/property/dashboard/DboardMobileNavigation";
@@ -7,9 +7,9 @@ import SidebarDashboard from "@/components/property/dashboard/SidebarDashboard";
 import AddPropertyTabContent from "@/components/property/dashboard/dashboard-add-property";
 import { useRouter } from "next/navigation";
 
-// export const metadata = {
-//   title: "Dashboard Add Property || ZeroBroker - Real Estate NextJS Template",
-// };
+export const metadata = {
+  title: "Dashboard Add Property || ZeroBroker - Real Estate NextJS Template",
+};
 
 const DashboardAddProperty = ({params}) => {
   

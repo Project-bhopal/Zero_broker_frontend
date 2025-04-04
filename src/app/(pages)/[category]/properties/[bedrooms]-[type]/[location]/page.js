@@ -7,7 +7,7 @@ import PropertyFiltering from "@/components/listing/grid-view/grid-full-1-col-v1
 import TopFilterBar2 from "@/components/listing/map-style/map-v1/TopFilterBar2";
 import listings from "@/data/listings";
 import useAxiosFetch from "@/hooks/useAxiosFetch";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const locations = [
@@ -51,6 +51,36 @@ const Commercial = () => {
       setPropData(data?.data);
     }
   }, [data]);
+
+   const router = useRouter();
+    const searchParams = useSearchParams();
+    const [filters, setFilters] = useState({
+      purpose: searchParams.get("purpose") || "property",
+      type: searchParams.get("type") || "property",
+      bedrooms: searchParams.get("bedrooms") || "2-bedroom",
+      location: searchParams.get("location") || "uae",
+      baths: searchParams.get("baths_in") || "3",
+    });
+    
+      const handleFilterChange = (key, value) => {
+        const newFilters = { ...filters, [key]: value };
+        setFilters(newFilters);
+    
+        const params = new URLSearchParams();
+        Object.entries(newFilters).forEach(([k, v]) => {
+          if (v) params.set(k, v); // Add only non-empty values
+        });
+    
+         // Dynamically construct the URL path
+        const purpose = newFilters.purpose ? `${newFilters.purpose}` : "";
+        const bedrooms = newFilters.bedrooms ? `${newFilters.bedrooms}-` : "";
+        const type = newFilters.type ? newFilters.type : "property";
+        const location = newFilters.location ? newFilters.location : "uae";
+
+        const urlPath = `/${purpose}/${bedrooms}${type}/${location}/?${params.toString()}`;
+        
+        router.replace(urlPath);
+      };
 
   useEffect(() => {
     setPageItems(
@@ -100,9 +130,11 @@ const Commercial = () => {
 
   const handlelistingStatus = (elm) => {
     setListingStatus((pre) => (pre == elm ? "All" : elm));
+    handleFilterChange("purpose", elm)
   };
   const handlepropertyTypes = (elm) => {
     setPropertyTypes((pre) => (pre == elm ? "All" : elm));
+    handleFilterChange("type", elm)
   };
 
   // const handlepropertyTypes = (elm) => {
