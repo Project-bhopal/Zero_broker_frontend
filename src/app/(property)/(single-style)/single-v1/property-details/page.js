@@ -27,10 +27,10 @@ import React, { useEffect, useState } from "react";
 import MortgageCalculator from "@/components/property/property-single-style/common/MortgageCalculator";
 import WalkScore from "@/components/property/property-single-style/common/WalkScore";
 import useAxiosFetch from "@/hooks/useAxiosFetch";
-import { usePropertyStore } from "@/store/store";
 
 function PropertyDetail({params}) {
-    const {property, setProperty} = usePropertyStore();
+    const [property, setProperty] = useState({})
+
     const { data, isLoading, error, isError } = useAxiosFetch(`/property/propertyById/${params.id}`)
     
     useEffect(()=>{

@@ -24,6 +24,11 @@ import ProtectedRoute from "@/components/hoc/ProtectedRoute";
 import DefaultHeader from "@/components/common/DefaultHeader";
 import { UserContextProvider } from "@/context/useContext";
 import loader from "../../public/images/preloader.gif"
+import useAxiosFetch from "@/hooks/useAxiosFetch";
+import { usePropertyStore } from "@/store/store";
+import axios from "axios";
+const api_url = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 // if (typeof window !== "undefined") {
 //   import("bootstrap");
 // }
@@ -65,6 +70,7 @@ export default function RootLayout({ children }) {
       setIsToken(true);
     } else {
       setIsToken(false)
+      return
     }
     
     // if (!token && !publicRoutes.includes(pathname)) {
@@ -87,6 +93,14 @@ export default function RootLayout({ children }) {
   //     router.push("/");
   //   }
   // },[isToken])
+  const {setProperties} = usePropertyStore()
+  useEffect( ()=>{
+    const fetchProperty = async()=>{
+      const resposne = await axios.get(`${api_url}/property/approved`)
+      setProperties(resposne.data.data);
+    }
+    fetchProperty();
+  },[])
 
   if (isToken === null ) {
     return (

@@ -26,8 +26,8 @@ const Blog = () => {
               <a className="tag" href="#">
                 {blog.tag}
               </a>
-              <h6 className="title mt-1">
-                <Link href={`/blogs/${blog.id}`}>{blog.title}</Link>
+              <h6 className=" mt-1">
+                <Link href={`/blogs/${blog.id}`} className="text-black">{blog.title}</Link>
               </h6>
             </div>
           </div>

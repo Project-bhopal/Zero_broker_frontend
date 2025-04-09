@@ -33,7 +33,7 @@ const About = () => {
                 ))}
               </ul>
             </div>
-            <Link href={pageRoutes.propertys} className="ud-btn btn-white2">
+            <Link href={pageRoutes.propertys} className="ud-btn btn-thm2">
               Learn More<i className="fal fa-arrow-right-long"></i>
             </Link>
           </div>

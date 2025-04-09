@@ -23,7 +23,7 @@ const Hero = () => {
       {/* End Hero content */}
 
       {/* <!-- Advance Feature Modal Start --> */}
-      <div className="advance-feature-modal">
+      {/* <div className="advance-feature-modal">
         <div
           className="modal fade"
           id="advanceSeachModal"
@@ -33,7 +33,7 @@ const Hero = () => {
         >
           <AdvanceFilterModal />
         </div>
-      </div>
+      </div> */}
       {/* <!-- Advance Feature Modal End --> */}
     </>
   );

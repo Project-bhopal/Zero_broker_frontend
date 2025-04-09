@@ -1,35 +1,72 @@
 "use client";
-import React, { useState } from "react";
-import Slider from "rc-slider";
-import "rc-slider/assets/index.css";
+import React, { useState, useEffect } from "react";
 
 const PriceRange = ({ filterFunctions, handleFilterChange }) => {
-  const defaultRange = [20, 70987]; // Default price range
-  const priceRange = filterFunctions?.priceRange || defaultRange; // Fallback for undefined
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
 
-  const [price, setPrice] = useState(priceRange);
+  // Debounce min price
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (minPrice !== "") {
+        filterFunctions?.handlepriceRange?.(minPrice);
+        handleFilterChange("min_price", minPrice);
+      }
+    }, 500);
 
-  // Price range handler
-  const handleOnChange = (value) => {
-    setPrice(value);
-    filterFunctions?.handlepriceRange?.(value);
-    handleFilterChange("priceRange", value)
+    return () => clearTimeout(timeout);
+  }, [minPrice]);
+
+  // Debounce max price
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (maxPrice !== "") {
+        filterFunctions?.handlepriceRange?.(maxPrice);
+        handleFilterChange("max_price", maxPrice);
+      }
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [maxPrice]);
+
+  // Input change handler
+  const handleOnChange = (event) => {
+    const { name, value } = event.target;
+    if (name === "min_price") {
+      setMinPrice(value);
+    } else if (name === "max_price") {
+      setMaxPrice(value);
+    }
   };
 
   return (
     <div className="range-wrapper">
-      <Slider
-        range
-        max={100000}
-        min={0}
-        defaultValue={priceRange} // Use validated `priceRange`
-        onChange={handleOnChange}
-        id="slider"
-      />
-      <div className="d-flex align-items-center">
-        <span id="slider-range-value1">${price[0]}</span>
-        <i className="fa-sharp fa-solid fa-minus mx-2 dark-color icon" />
-        <span id="slider-range-value2">${price[1]}</span>
+      <div className="d-flex align-items-center justify-content-between gap-1">
+        <div className="form-style1">
+          <input
+            type="number"
+            className="form-control filterInput"
+            name="min_price"
+            onChange={handleOnChange}
+            placeholder="Min."
+            min={0}
+            id="minPrice"
+            value={minPrice}
+          />
+        </div>
+        <span className="dark-color">-</span>
+        <div className="form-style1">
+          <input
+            type="number"
+            className="form-control filterInput"
+            placeholder="Max"
+            name="max_price"
+            id="maxPrice"
+            max={1000000}
+            onChange={handleOnChange}
+            value={maxPrice}
+          />
+        </div>
       </div>
     </div>
   );

@@ -1,13 +1,14 @@
 'use client'
 
-import React from "react";
+import React, { useState } from "react";
 
 const ListingStatus = ({filterFunctions, handleFilterChange}) => {
+  const [purpose, setPurpose] = useState()
   const options = [
-    { id: "flexRadioDefault4", label: "All" , defaultChecked: true },
-    { id: "flexRadioDefault1", label: "Buy" },
-    { id: "flexRadioDefault2", label: "Rent", },
-    { id: "flexRadioDefault3", label: "Commercial", },
+    { id: "flexRadioDefault4", label: "All" , value:"properties", defaultChecked: true },
+    { id: "flexRadioDefault1", label: "Buy", value :"for-sale" },
+    { id: "flexRadioDefault2", label: "Rent", value:"for-rent" },
+    { id: "flexRadioDefault3", label: "Commercial", value :"commmercial" },
 
   ];
   return (
@@ -24,7 +25,7 @@ const ListingStatus = ({filterFunctions, handleFilterChange}) => {
             type="radio"
             checked={filterFunctions?.listingStatus == option.label}
             
-            onChange={()=>{filterFunctions.handlelistingStatus(option.label); handleFilterChange("listingStatus", option.label)}}         
+            onChange={()=>{filterFunctions.handlelistingStatus(option.label); handleFilterChange("listingStatus", option.value)}}         
           />
           <label className="form-check-label" htmlFor={option.id} style={{fontSize : "16px"}}>
             {option.label}

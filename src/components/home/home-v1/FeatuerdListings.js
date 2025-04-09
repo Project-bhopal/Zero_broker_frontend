@@ -7,27 +7,31 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import { pageRoutes } from "@/utilis/common";
 import { useRouter } from "next/navigation";
+import { usePropertyStore } from "@/store/store";
 
 const FeaturedListings = () => {
+  const { properties } = usePropertyStore();
+
   const listings = [
     {
       id: 1,
       image: "/images/listings/g1-1.jpg",
       slug: "new-pro",
       title: "Equestrian Family Home",
-      city: 'New York', location: "New York City, CA, USA",
+      city: "New York",
+      location: "New York City, CA, USA",
       bed: "1",
       bath: "2",
       sqft: 1200,
       price: "$14,000",
       forRent: false,
       tags: ["house", "office"],
-      propertyType: 'Houses', yearBuilding: 2018,
+      propertyType: "Houses",
+      yearBuilding: 2018,
       featured: true,
       lat: 40.7279707552121,
       long: -74.07152705896405,
       features: [
-
         "Air Conditioning",
         "Lawn",
         "TV Cable",
@@ -37,16 +41,16 @@ const FeaturedListings = () => {
         "Lake view",
         "Wine cellar",
         "Front yard",
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
     {
-
       id: 2,
       image: "/images/listings/g1-2.jpg",
       slug: "new-pro",
       title: "Luxury villa in Rego Park",
-      city: 'Los Angeles', location: "Los Angeles City, CA, USA",
+      city: "Los Angeles",
+      location: "Los Angeles City, CA, USA",
 
       lat: 34.1738017565271,
       long: -118.34227408812067,
@@ -54,7 +58,8 @@ const FeaturedListings = () => {
       bath: "1",
       sqft: 1300,
       price: "$82,000",
-      propertyType: 'Houses', yearBuilding: 2017,
+      propertyType: "Houses",
+      yearBuilding: 2017,
       forRent: true,
 
       tags: ["house", "villa", "apartments"],
@@ -69,7 +74,7 @@ const FeaturedListings = () => {
         "Lake view",
         "Wine cellar",
         "Front yard",
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
     {
@@ -77,7 +82,8 @@ const FeaturedListings = () => {
       image: "/images/listings/g1-3.jpg",
       slug: "new-pro",
       title: "Equestrian Family Home",
-      city: 'Texas', location: "Texas City, CA, USA",
+      city: "Texas",
+      location: "Texas City, CA, USA",
 
       lat: 29.38690953884771,
       long: -94.91651439187791,
@@ -85,7 +91,8 @@ const FeaturedListings = () => {
       bath: "3",
       sqft: 1000,
       price: "$14,000",
-      propertyType: 'Apartments', yearBuilding: 2019,
+      propertyType: "Apartments",
+      yearBuilding: 2019,
       forRent: false,
       tags: ["house", "apartments", "house"],
       features: [
@@ -99,7 +106,7 @@ const FeaturedListings = () => {
         "Lake view",
         "Wine cellar",
         "Front yard",
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
     {
@@ -107,7 +114,8 @@ const FeaturedListings = () => {
       image: "/images/listings/g1-4.jpg",
       slug: "new-pro",
       title: "Luxury villa in Rego Park",
-      city: 'New Jersey', location: "New Jersey City, CA, USA",
+      city: "New Jersey",
+      location: "New Jersey City, CA, USA",
       lat: 39.62158564223682,
       long: -80.15625432727268,
 
@@ -116,7 +124,8 @@ const FeaturedListings = () => {
       sqft: 1200,
       price: "$82,000",
       forRent: true,
-      propertyType: 'Villa', yearBuilding: 2017,
+      propertyType: "Villa",
+      yearBuilding: 2017,
       tags: ["villa", "apartments", "house"],
       featured: true,
       features: [
@@ -130,7 +139,7 @@ const FeaturedListings = () => {
         "Lake view",
         "Wine cellar",
         "Front yard",
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
     {
@@ -138,14 +147,16 @@ const FeaturedListings = () => {
       image: "/images/listings/g1-1.jpg",
       slug: "new-pro",
       title: "Equestrian Family Home",
-      city: 'San Diego', location: "San Diego City, CA, USA",
+      city: "San Diego",
+      location: "San Diego City, CA, USA",
 
       lat: 32.71210927454257,
       long: -117.1392712537564,
       bed: "5",
       bath: "4",
       sqft: 900,
-      propertyType: 'Office', yearBuilding: 2016,
+      propertyType: "Office",
+      yearBuilding: 2016,
       price: "$14,000",
       forRent: false,
       tags: ["villa", "office"],
@@ -160,7 +171,7 @@ const FeaturedListings = () => {
         "Washer",
         "Lake view",
 
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
     {
@@ -168,14 +179,16 @@ const FeaturedListings = () => {
       image: "/images/listings/g1-2.jpg",
       slug: "new-pro",
       title: "Luxury villa in Rego Park",
-      city: 'California', location: "California City, CA, USA",
+      city: "California",
+      location: "California City, CA, USA",
       lat: 32.740991655365605,
       long: -117.12965821740703,
       bed: "6",
       bath: "4",
       sqft: 1200,
       price: "$82,000",
-      propertyType: 'Houses', yearBuilding: 2017,
+      propertyType: "Houses",
+      yearBuilding: 2017,
       forRent: true,
       tags: ["house", "villa", "office"],
       featured: true,
@@ -190,7 +203,6 @@ const FeaturedListings = () => {
         "Washer",
         "Lake view",
         "Wine cellar",
-
       ],
     },
     {
@@ -198,7 +210,8 @@ const FeaturedListings = () => {
       image: "/images/listings/g1-3.jpg",
       slug: "new-pro",
       title: "Equestrian Family Home",
-      city: 'San Francisco', location: "San Francisco City, CA, USA",
+      city: "San Francisco",
+      location: "San Francisco City, CA, USA",
       lat: 32.740991655365605,
       long: -117.12965821740703,
       bed: "3",
@@ -206,10 +219,10 @@ const FeaturedListings = () => {
       sqft: 1212,
       price: "$14,000",
       forRent: false,
-      propertyType: 'Apartments', yearBuilding: 2020,
+      propertyType: "Apartments",
+      yearBuilding: 2020,
       tags: ["house", "apartments"],
       features: [
-
         "Lawn",
         "TV Cable",
         "Dryer",
@@ -218,7 +231,7 @@ const FeaturedListings = () => {
         "Lake view",
         "Wine cellar",
         "Front yard",
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
     {
@@ -226,12 +239,14 @@ const FeaturedListings = () => {
       image: "/images/listings/g1-4.jpg",
       slug: "new-pro",
       title: "Luxury villa in Rego Park",
-      city: 'New York', location: "New York City, CA, USA",
+      city: "New York",
+      location: "New York City, CA, USA",
       lat: 40.7279707552121,
       long: -74.07152705896405,
       bed: "4",
       bath: "4",
-      propertyType: 'Office', yearBuilding: 2020,
+      propertyType: "Office",
+      yearBuilding: 2020,
       sqft: 1200,
       price: "$82,000",
       forRent: true,
@@ -246,7 +261,7 @@ const FeaturedListings = () => {
         "Lake view",
         "Wine cellar",
         "Front yard",
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
     {
@@ -254,7 +269,8 @@ const FeaturedListings = () => {
       image: "/images/listings/g4-9.jpg",
       slug: "new-pro",
       title: "Luxury villa in Rego Park",
-      city: 'Los Angeles', location: "Los Angeles City, CA, USA",
+      city: "Los Angeles",
+      location: "Los Angeles City, CA, USA",
       lat: 32.740991655365605,
       long: -117.12965821740703,
       bed: "2",
@@ -262,7 +278,8 @@ const FeaturedListings = () => {
       sqft: 1200,
       price: "$82,000",
       forRent: true,
-      propertyType: 'Villa', yearBuilding: 2017,
+      propertyType: "Villa",
+      yearBuilding: 2017,
       tags: ["house", "office"],
       features: [
         "Attic",
@@ -273,7 +290,7 @@ const FeaturedListings = () => {
         "Lake view",
         "Wine cellar",
         "Front yard",
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
     {
@@ -281,7 +298,8 @@ const FeaturedListings = () => {
       image: "/images/listings/g4-10.jpg",
       slug: "new-pro",
       title: "Luxury villa in Rego Park",
-      city: 'New Jersey', location: "New Jersey City, CA, USA",
+      city: "New Jersey",
+      location: "New Jersey City, CA, USA",
       lat: 39.62158564223682,
       long: -75.15625432727268,
       bed: "1",
@@ -291,7 +309,8 @@ const FeaturedListings = () => {
       forRent: true,
       tags: ["house", "office"],
       featured: true,
-      propertyType: 'Apartments', yearBuilding: 2021,
+      propertyType: "Apartments",
+      yearBuilding: 2021,
       features: [
         "Attic",
         "Basketball court",
@@ -302,7 +321,6 @@ const FeaturedListings = () => {
         "Outdoor Shower",
         "Washer",
         "Lake view",
-
       ],
     },
     {
@@ -310,18 +328,19 @@ const FeaturedListings = () => {
       image: "/images/listings/g4-11.jpg",
       slug: "new-pro",
       title: "Luxury villa in Rego Park",
-      city: 'California', location: "California City, CA, USA",
+      city: "California",
+      location: "California City, CA, USA",
       lat: 32.740991655365605,
       long: -117.12965821740703,
       bed: "5",
-      propertyType: 'Houses', yearBuilding: 2021,
+      propertyType: "Houses",
+      yearBuilding: 2021,
       bath: "4",
       sqft: 1100,
       price: "$92,000",
       forRent: true,
       tags: ["house", "office"],
       features: [
-
         "Lawn",
         "TV Cable",
         "Dryer",
@@ -330,7 +349,7 @@ const FeaturedListings = () => {
         "Lake view",
         "Wine cellar",
         "Front yard",
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
     {
@@ -338,18 +357,19 @@ const FeaturedListings = () => {
       image: "/images/listings/g4-12.jpg",
       slug: "new-pro",
       title: "Luxury villa in Rego Park",
-      city: 'San Diego', location: "San Diego City, CA, USA",
+      city: "San Diego",
+      location: "San Diego City, CA, USA",
       lat: 32.740991655365605,
       long: -117.12965821740703,
       bed: "6",
       bath: "7",
       sqft: 1400,
       price: "$92,000",
-      propertyType: 'Office', yearBuilding: 2022,
+      propertyType: "Office",
+      yearBuilding: 2022,
       forRent: true,
       tags: ["house", "office"],
       features: [
-
         "Air Conditioning",
         "Lawn",
         "TV Cable",
@@ -359,7 +379,7 @@ const FeaturedListings = () => {
         "Lake view",
         "Wine cellar",
         "Front yard",
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
     {
@@ -367,14 +387,16 @@ const FeaturedListings = () => {
       image: "/images/listings/xl-5.jpg",
       slug: "new-pro",
       title: "Luxury villa in Rego Park",
-      city: 'San Francisco', location: "San Francisco City, CA, USA",
+      city: "San Francisco",
+      location: "San Francisco City, CA, USA",
 
       lat: 32.740991655365605,
       long: -117.12965821740703,
       bed: "1",
       bath: "1",
       sqft: 1000,
-      propertyType: 'Villa', yearBuilding: 2022,
+      propertyType: "Villa",
+      yearBuilding: 2022,
       price: "$92,000",
       forRent: true,
       featured: true,
@@ -388,7 +410,7 @@ const FeaturedListings = () => {
         "Lake view",
         "Wine cellar",
         "Front yard",
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
     {
@@ -396,7 +418,8 @@ const FeaturedListings = () => {
       image: "/images/listings/xl-7.jpg",
       slug: "new-pro",
       title: "Luxury villa in Rego Park",
-      city: 'California', location: "California City, CA, USA",
+      city: "California",
+      location: "California City, CA, USA",
       lat: 32.740991655365605,
       long: -117.12965821740703,
       bed: "7",
@@ -404,7 +427,8 @@ const FeaturedListings = () => {
       sqft: 1020,
       price: "$82,000",
       forRent: true,
-      propertyType: 'Apartments', yearBuilding: 2023,
+      propertyType: "Apartments",
+      yearBuilding: 2023,
       tags: ["house", "office"],
       features: [
         "Attic",
@@ -416,7 +440,7 @@ const FeaturedListings = () => {
         "Lake view",
         "Wine cellar",
         "Front yard",
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
     {
@@ -424,14 +448,16 @@ const FeaturedListings = () => {
       image: "/images/listings/xl-6.jpg",
       slug: "new-pro",
       title: "Luxury villa in Rego Park",
-      city: 'California', location: "California City, CA, USA",
+      city: "California",
+      location: "California City, CA, USA",
       lat: 32.740991655365605,
       long: -117.12965821740703,
       bed: "8",
       bath: "6",
       sqft: 1200,
       price: "$82,000",
-      propertyType: 'Office', yearBuilding: 2023,
+      propertyType: "Office",
+      yearBuilding: 2023,
       forRent: true,
       featured: true,
       tags: ["house", "office"],
@@ -446,7 +472,7 @@ const FeaturedListings = () => {
         "Lake view",
         "Wine cellar",
         "Front yard",
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
     {
@@ -454,7 +480,8 @@ const FeaturedListings = () => {
       image: "/images/listings/xl-5.jpg",
       slug: "new-pro",
       title: "Luxury villa in Rego Park",
-      city: 'New York', location: "New York City, CA, USA",
+      city: "New York",
+      location: "New York City, CA, USA",
       lat: 40.7279707552121,
       long: -74.07152705896405,
       bed: "2",
@@ -463,7 +490,8 @@ const FeaturedListings = () => {
       price: "$82,000",
       forRent: true,
       tags: ["house", "office"],
-      propertyType: 'Houses', yearBuilding: 2018,
+      propertyType: "Houses",
+      yearBuilding: 2018,
       features: [
         "Attic",
         "Basketball court",
@@ -475,7 +503,6 @@ const FeaturedListings = () => {
         "Washer",
         "Lake view",
         "Wine cellar",
-
       ],
     },
     {
@@ -483,7 +510,8 @@ const FeaturedListings = () => {
       image: "/images/listings/map-h-1.jpg",
       slug: "new-pro",
       title: "Luxury villa in Rego Park",
-      city: 'Texas', location: "Texas City, CA, USA",
+      city: "Texas",
+      location: "Texas City, CA, USA",
 
       lat: 29.38690953884771,
       long: -94.91651439187791,
@@ -493,7 +521,8 @@ const FeaturedListings = () => {
       price: "$82,000",
       forRent: true,
       tags: ["house", "office"],
-      propertyType: 'Villa', yearBuilding: 2018,
+      propertyType: "Villa",
+      yearBuilding: 2018,
       features: [
         "Attic",
         "Basketball court",
@@ -505,7 +534,7 @@ const FeaturedListings = () => {
         "Lake view",
         "Wine cellar",
         "Front yard",
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
     {
@@ -513,7 +542,8 @@ const FeaturedListings = () => {
       image: "/images/listings/map-h-2.jpg",
       slug: "new-pro",
       title: "Luxury villa in Rego Park",
-      city: 'California', location: "California City, CA, USA",
+      city: "California",
+      location: "California City, CA, USA",
       lat: 32.740991655365605,
       long: -117.12965821740703,
       bed: "4",
@@ -521,7 +551,8 @@ const FeaturedListings = () => {
       sqft: 1200,
       price: "$82,000",
       featured: true,
-      propertyType: 'Office', yearBuilding: 2019,
+      propertyType: "Office",
+      yearBuilding: 2019,
       forRent: false,
       tags: ["house", "office"],
       features: [
@@ -534,7 +565,7 @@ const FeaturedListings = () => {
         "Lake view",
         "Wine cellar",
         "Front yard",
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
     {
@@ -542,14 +573,16 @@ const FeaturedListings = () => {
       image: "/images/listings/map-h-3.jpg",
       slug: "new-pro",
       title: "Luxury villa in Rego Park",
-      city: 'Los Angeles', location: "Los Angeles City, CA, USA",
+      city: "Los Angeles",
+      location: "Los Angeles City, CA, USA",
       lat: 32.740991655365605,
       long: -117.12965821740703,
       bed: "5",
       bath: "4",
       sqft: 1350,
       price: "$82,000",
-      propertyType: 'Apartments', yearBuilding: 2018,
+      propertyType: "Apartments",
+      yearBuilding: 2018,
       forRent: true,
       tags: ["house", "office"],
       features: [
@@ -563,7 +596,7 @@ const FeaturedListings = () => {
         "Washer",
         "Lake view",
 
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
     {
@@ -571,7 +604,8 @@ const FeaturedListings = () => {
       image: "/images/listings/map-h-4.jpg",
       slug: "new-pro",
       title: "Luxury villa in Rego Park",
-      city: 'California', location: "California City, CA, USA",
+      city: "California",
+      location: "California City, CA, USA",
       lat: 32.740991655365605,
       long: -117.12965821740703,
       bed: "6",
@@ -579,7 +613,8 @@ const FeaturedListings = () => {
       sqft: 1400,
       price: "$82,000",
       forRent: false,
-      propertyType: 'Houses', yearBuilding: 2019,
+      propertyType: "Houses",
+      yearBuilding: 2019,
       tags: ["house", "office"],
       features: [
         "Attic",
@@ -592,7 +627,7 @@ const FeaturedListings = () => {
         "Washer",
         "Lake view",
 
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
     {
@@ -600,7 +635,8 @@ const FeaturedListings = () => {
       image: "/images/listings/map-h-5.jpg",
       slug: "new-pro",
       title: "Luxury villa in Rego Park",
-      city: 'New York', location: "New York City, CA, USA",
+      city: "New York",
+      location: "New York City, CA, USA",
       lat: 40.7279707552121,
       long: -74.07152705896405,
       bed: "7",
@@ -608,7 +644,8 @@ const FeaturedListings = () => {
       sqft: 1200,
       price: "$92,000",
       forRent: true,
-      propertyType: 'Office', yearBuilding: 2020,
+      propertyType: "Office",
+      yearBuilding: 2020,
       tags: ["house", "office"],
       features: [
         "Attic",
@@ -621,7 +658,7 @@ const FeaturedListings = () => {
         "Washer",
         "Lake view",
 
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
     {
@@ -629,7 +666,8 @@ const FeaturedListings = () => {
       image: "/images/listings/map-h-6.jpg",
       slug: "new-pro",
       title: "Luxury villa in Rego Park",
-      city: 'California', location: "California City, CA, USA",
+      city: "California",
+      location: "California City, CA, USA",
       lat: 32.740991655365605,
       long: -117.12965821740703,
       bed: "2",
@@ -638,7 +676,8 @@ const FeaturedListings = () => {
       price: "$82,000",
       forRent: true,
       featured: true,
-      propertyType: 'Villa', yearBuilding: 2021,
+      propertyType: "Villa",
+      yearBuilding: 2021,
       tags: ["house", "office"],
       features: [
         "Attic",
@@ -651,7 +690,7 @@ const FeaturedListings = () => {
         "Washer",
 
         "Front yard",
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
     {
@@ -659,7 +698,8 @@ const FeaturedListings = () => {
       image: "/images/listings/map-h-7.jpg",
       slug: "new-pro",
       title: "Luxury villa in Rego Park",
-      city: 'New Jersey', location: "New Jersey City, CA, USA",
+      city: "New Jersey",
+      location: "New Jersey City, CA, USA",
       lat: 39.62158564223682,
       long: -75.15625432727268,
       bed: "3",
@@ -668,7 +708,8 @@ const FeaturedListings = () => {
       price: "$82,000",
       forRent: false,
       featured: true,
-      propertyType: 'Apartments', yearBuilding: 2017,
+      propertyType: "Apartments",
+      yearBuilding: 2017,
       tags: ["house", "office"],
       features: [
         "Attic",
@@ -682,7 +723,7 @@ const FeaturedListings = () => {
         "Lake view",
         "Wine cellar",
         "Front yard",
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
     {
@@ -690,7 +731,8 @@ const FeaturedListings = () => {
       image: "/images/listings/map-h-8.jpg",
       slug: "new-pro",
       title: "Luxury villa in Rego Park",
-      city: 'Los Angeles', location: "Los Angeles City, CA, USA",
+      city: "Los Angeles",
+      location: "Los Angeles City, CA, USA",
       lat: 32.740991655365605,
       long: -117.12965821740703,
       bed: "4",
@@ -698,7 +740,8 @@ const FeaturedListings = () => {
       sqft: 1200,
       price: "$82,000",
       forRent: true,
-      propertyType: 'Houses', yearBuilding: 2016,
+      propertyType: "Houses",
+      yearBuilding: 2016,
       tags: ["house", "office"],
       features: [
         "Attic",
@@ -711,7 +754,7 @@ const FeaturedListings = () => {
         "Lake view",
         "Wine cellar",
         "Front yard",
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
     {
@@ -719,14 +762,16 @@ const FeaturedListings = () => {
       image: "/images/listings/map-h-9.jpg",
       slug: "new-pro",
       title: "Luxury villa in Rego Park",
-      city: 'California', location: "California City, CA, USA",
+      city: "California",
+      location: "California City, CA, USA",
       lat: 32.740991655365605,
       long: -117.12965821740703,
       bed: "1",
       bath: "1",
       sqft: 1000,
       price: "$92,000",
-      propertyType: 'Office', yearBuilding: 2016,
+      propertyType: "Office",
+      yearBuilding: 2016,
       forRent: true,
       tags: ["house", "office"],
       features: [
@@ -740,15 +785,16 @@ const FeaturedListings = () => {
         "Lake view",
         "Wine cellar",
         "Front yard",
-        "Refrigerator"
+        "Refrigerator",
       ],
     },
   ];
-  const router = useRouter()
+  const router = useRouter();
   return (
     <>
       <Swiper
         spaceBetween={30}
+        className="items-stretch"
         modules={[Navigation, Pagination]}
         navigation={{
           nextEl: ".featured-next__active",
@@ -774,20 +820,24 @@ const FeaturedListings = () => {
           },
         }}
       >
-        {listings.slice(0, 4).map((listing) => (
-          <SwiperSlide key={listing.id}>
-            <div className="item" onClick={() => router.push("/property-details/dt")}>
+        {properties.slice(0, 4).map((listing) => (
+          <SwiperSlide key={listing.id} className=" ">
+            <Link
+              href={`/single-v1/${listing._id}`}
+              className="item"
+              onClick={() => router.push("/property-details/dt")}
+            >
               <div className="listing-style1">
-                <div className="list-thumb">
+                <div className="list-thumb w-[100%] h-[248px]">
                   <Image
                     width={382}
                     height={248}
-                    className="w-100 h-100 cover"
-                    src={listing.image}
+                    className="w-100 h-100 object-cover"
+                    src={listing.developer_notes.images[0]}
                     alt="listings"
                   />
                   <div className="sale-sticker-wrap">
-                    {!listing.forRent && (
+                    {listing.details.purpose == "Sell" && (
                       <div className="list-tag fz12">
                         <span className="flaticon-electricity me-2" />
                         FEATURED
@@ -796,28 +846,34 @@ const FeaturedListings = () => {
                   </div>
 
                   <div className="list-price">
-                    {listing.price} / <span>mo</span>
+                   AED {listing.price} <span></span>
                   </div>
                 </div>
                 <div className="list-content">
-                  <h6 className="list-title">
-                    <Link href={`${pageRoutes.propertyDetails}/${listing.slug}`}>{listing.title}</Link>
+                  <h6 className="fz18  min-w-[50px] text-nowrap truncate">
+                    <a
+                      className="text-[#0f8363]"
+                      style={{ color: "#0f8363" }}
+                      href={`/single-v2/${listing._id}`}
+                    >
+                      {listing.name}
+                    </a>
                   </h6>
-                  <p className="list-text">{listing.location}</p>
-                  <div className="list-meta d-flex align-items-center">
+                  <p className="list-text">{listing.location.address}</p>
+                  <div className="list-meta d-flex align-items-center gap-1">
                     <a href="#">
-                      <span className="flaticon-bed" /> {listing.bed} bed
+                      <span className="flaticon-bed" /> {listing.details.bedrooms} bed
                     </a>
                     <a href="#">
-                      <span className="flaticon-shower" /> {listing.bath} bath
+                      <span className="flaticon-shower" /> {listing.details.bathrooms} bath
                     </a>
                     <a href="#">
-                      <span className="flaticon-expand" /> {listing.sqft} sqft
+                      <span className="flaticon-expand" /> {listing.details.size.value} sqft
                     </a>
                   </div>
                   <hr className="mt-2 mb-2" />
                   <div className="list-meta2 d-flex justify-content-between align-items-center">
-                    <span className="for-what">For Rent</span>
+                    <span className="for-what">For {listing.details.purpose}</span>
                     <div className="icons d-flex align-items-center">
                       <a href="#">
                         <span className="flaticon-fullscreen" />
@@ -832,7 +888,7 @@ const FeaturedListings = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>

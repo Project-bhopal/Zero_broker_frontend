@@ -1102,9 +1102,9 @@ li {
 }
 .listing-style1 .list-meta a {
     font-family: var(--title-font-family);
-    font-size: 15px;
+    font-size: 13px;
     font-weight: bold;
-    padding: 8px 10px;
+    padding: 8px 6px;
     border-radius: 10px;
     background-color: #f0f0f0;
     color: var(--primary-color)
@@ -3158,7 +3158,7 @@ li {
     // background-image: url(../images/zero-broker/hero_home.jpeg);
     background-position: center center;
     background-repeat: no-repeat;
-    position: relative;
+    // position: relative;
 }
 .home-banner-style1 .home-style1 {
     -webkit-box-align: center;
@@ -3167,7 +3167,7 @@ li {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    height: 860px;
+    height: 100%;
     // background-color: #0000007d;
 }
 @media (max-width: 767px) {
@@ -4928,9 +4928,9 @@ section {
     transition: all 0.4s ease;
 }
 .iconbox-style1 .icon {
-    background-color: #ffffff;
+    background-color: #169e77;
     border-radius: 50%;
-    color: var(--headings-color);
+    color: white;
     display: block;
     font-size: 30px;
     height: 70px;
@@ -4961,7 +4961,9 @@ section {
     color: #ffffff;
 }
 .iconbox-style1:hover .icon {
-    background-color: rgba(255, 255, 255, 0.1);
+    // background-color: rgba(255, 255, 255, 0.1);
+    background-color: white;
+    color : var(--primary-color);
 }
 .iconbox-style1.dark-style {
     background-color: var(--primary-color);

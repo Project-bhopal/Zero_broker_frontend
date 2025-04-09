@@ -252,6 +252,53 @@ const SidebarDashboard = () => {
         ],
       },
   ];
+  const driversidebarItems = [
+      {
+        title: "MAIN",
+        items: [
+          {
+            href: "/dashboard/my-profile",
+            icon: "flaticon-user",
+            text: "My Profile",
+          },
+          {
+            href: "/dashboard/message",
+            icon: "flaticon-chat-1",
+            text: "Message",
+          },
+        ],
+      },
+      {
+        title: "MANAGE LISTINGS",
+        items: [
+          {
+            href: "/dashboard/driver/add-media/1",
+            icon: "flaticon-new-tab",
+            text: "Add Media",
+          }, 
+          {
+            href: "/dashboard/driver/uploaded-media",
+            icon: "flaticon-clock",
+            text: "Uploaded Media",
+          }, 
+          {
+            href: "/dashboard/driver/assigned-properties",
+            icon: "flaticon-home",
+            text: "Assigned Properties",
+          }, 
+        ],
+      },
+      {
+        title: "MANAGE ACCOUNT",
+        items: [
+          {
+            href: "/login",
+            icon: "flaticon-logout",
+            text: "Logout",
+          },
+        ],
+      },
+  ];
 
   return (
     <div className="dashboard__sidebar d-none d-lg-block">
@@ -329,6 +376,30 @@ const SidebarDashboard = () => {
           </div>
         ))}
         {role === "admin"&&adminsidebarItems.map((section, sectionIndex) => (
+          <div key={sectionIndex}>
+            <p
+              className={`fz15 fw400 ff-heading ${
+                sectionIndex === 0 ? "mt-0" : "mt30"
+              }`}
+            >
+              {section.title}
+            </p>
+            {section.items.map((item, itemIndex) => (
+              <div key={itemIndex} className="sidebar_list_item">
+                <Link
+                  href={item.href}
+                  className={`items-center   ${
+                    pathname == item.href ? "-is-active" : ""
+                  } `}
+                >
+                  <i className={`${item.icon} mr15`} />
+                  {item.text}
+                </Link>
+              </div>
+            ))}
+          </div>
+        ))}
+        {role === "driver"&&driversidebarItems.map((section, sectionIndex) => (
           <div key={sectionIndex}>
             <p
               className={`fz15 fw400 ff-heading ${

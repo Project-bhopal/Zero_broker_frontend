@@ -9,7 +9,7 @@ import Bathroom from "../../sidebar/Bathroom";
 import ListingStatus from "../../sidebar/ListingStatus";
 import MoreFilters from "../../sidebar/MoreFilters";
 
-const  TopFilterBar2 = ({ filterFunctions }) => {
+const  TopFilterBar2 = ({ filterFunctions, handleFilterChange }) => {
   const [showDropdown, setShowDropdown] = useState(null)
   const [selectedFilters, setSelectedFilters] = useState({
     listingStatus: "",
@@ -25,13 +25,13 @@ const  TopFilterBar2 = ({ filterFunctions }) => {
   };
 
 
-  const handleFilterChange = (filterName, value) => {
-    console.log(filterName + ":" + value)
-    setSelectedFilters((prevState) => ({
-      ...prevState,
-      [filterName]: value,
-    }));
-  };
+  // const handleFilterChange = (filterName, value) => {
+  //   console.log(filterName + ":" + value)
+  //   setSelectedFilters((prevState) => ({
+  //     ...prevState,
+  //     [filterName]: value,
+  //   }));
+  // };
 
 
   const handleDoneClick = () => {
@@ -165,7 +165,7 @@ const  TopFilterBar2 = ({ filterFunctions }) => {
         </button>
         <div className={`dropdown-menu dd3 ${showDropdown === "priceRangeDropdown" ? "show" : ""}`}>
           <div className="widget-wrapper bdrb1 pb25 mb0 pl20 pr20">
-            <h6 className="list-title">Price Range</h6>
+            <h6 className="list-title">Price (AED)</h6>
             <div className="range-slider-style1">
               <PriceRange
                 filterFunctions={filterFunctions}
@@ -196,7 +196,7 @@ const  TopFilterBar2 = ({ filterFunctions }) => {
           id="bedsBathsDropdown"
           onClick={()=> toggleDropdown("bedsBathsDropdown")}
         >
-          Beds / Baths <i className="fa fa-angle-down ms-2" />
+         {filterFunctions?.bedrooms !== 0 ? filterFunctions.bedrooms : ""} Beds / {filterFunctions?.bathrooms !== 0 ? filterFunctions.bathrooms : ""} Baths <i className="fa fa-angle-down ms-2" />
         </button>
         <div className={`dropdown-menu dd4 pb20 ${showDropdown === "bedsBathsDropdown" ? "show" : ""}`}>
           <div className="widget-wrapper pl20 pr20">

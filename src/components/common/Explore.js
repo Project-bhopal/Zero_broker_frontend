@@ -27,7 +27,7 @@ const Explore = () => {
       title: "Rent a property",
       text: "Nullam sollicitudin blandit eros eu pretium. Nullam maximus ultricies auctor.",
       linkText: "Find a rental",
-      url: "/pricing",
+      url: "/rent/properties",
     },
   ];
 
@@ -47,7 +47,7 @@ const Explore = () => {
             <div className="iconbox-content">
               <h4 className="title">{item.title}</h4>
               <p className="text">{item.text}</p>
-              <Link href={item.url} className="ud-btn btn-white">
+              <Link href={item.url} className="ud-btn btn-thm3">
                 {item.linkText}
                 <i className="fal fa-arrow-right-long" />
               </Link>

@@ -9,7 +9,7 @@ const Select = dynamic(() => import("react-select"), { ssr: false });
 const HeroContent = () => {
   const [showDropdown, setShowDropdown] = useState(null);
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState("buy");
+  const [activeTab, setActiveTab] = useState("for-sale");
   const [bedrooms, setBedrooms] = useState(0);
   const [bathroms, setBathroms] = useState(0);
   const [selectedFilters, setSelectedFilters] = useState({
@@ -30,8 +30,8 @@ const HeroContent = () => {
   };
 
   const tabs = [
-    { id: "buy", label: "Buy" },
-    { id: "rent", label: "Rent" },
+    { id: "for-sale", label: "Buy" },
+    { id: "for-rent", label: "Rent" },
   ];
 
   const structureTypeOptions = [
@@ -123,20 +123,21 @@ const HeroContent = () => {
 
                   <div className="col-md-4 col-lg-3">
                     <div className="d-flex align-items-center justify-content-start justify-content-md-center mt-3 mt-md-0">
-                      <button
+                      {/* <button
                         className="advance-search-btn"
                         type="button"
                         data-bs-toggle="modal"
                         data-bs-target="#advanceSeachModal"
                       >
                         <span className="flaticon-settings" /> Advanced
-                      </button>
+                      </button> */}
                       <button
-                        className="advance-search-icon ud-btn btn-thm ms-4"
-                        onClick={() => router.push("/map-v1")}
+                        className="w-full bg-[#0f8363] bdrs12 text-white rounded-2xl py-[13px] px-0 flex items-center justify-center gap-2"
+                        onClick={() => router.push(`/${activeTab}/propeties/uae`)}
                         type="button"
                       >
-                        <span className="flaticon-search" />
+                        <span className="flaticon-search font-semibold mb-[-5px]" />
+                        <span className="font-semibold text-lg">Search</span>
                       </button>
                     </div>
                   </div>

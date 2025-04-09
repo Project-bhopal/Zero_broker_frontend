@@ -6,8 +6,8 @@ const useUserStore = create((set) => ({
 }));
 
 const usePropertyStore = create((set) => ({
-  property: {},
-  setProperty: (newProperty) => set({ property: newProperty }),
+  properties: [],
+  setProperties: (newProperty) => set({ properties: newProperty }),
 }));
 
 export  {useUserStore, usePropertyStore};
