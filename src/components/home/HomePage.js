@@ -23,7 +23,6 @@ export const metadata = {
 const Home_V1 = () => {
   return (
     <>
-
       {/* Main Header Nav */}
       <Header />
       {/* End Main Header Nav */}
@@ -33,15 +32,25 @@ const Home_V1 = () => {
       {/* End Mobile Nav  */}
 
       {/* Home Banner Style V1 */}
-      <section 
-      className="home-banner-style1 p0" 
-       style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url('/images/background/homePageBanner.jpg')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
+      <section
+        className="home-banner-style1 p0 overflow-hidden rounded-b-4xl "
+        // style={{
+        //   backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url('/images/background/homePageBanner.jpg')`,
+        //   backgroundSize: "cover",
+        //   backgroundPosition: "center",
+        // }}
       >
-        <div className="home-style1">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="relative w-full h-full object-cover z-[-1]"
+        >
+          <source src="/video/videoplayback.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div className="home-style1 absolute top-0 left-0 w-full h-full bg-black/50 z-0">
           <div className="container">
             <div className="row">
               <div className="col-xl-11 mx-auto">
@@ -134,7 +143,7 @@ const Home_V1 = () => {
               data-aos-delay="300"
             >
               <div className="main-title text-center">
-                <h2 className="title">See How Realton Can Help</h2>
+                <h2 className="title">See How ZeroBroker Can Help</h2>
                 <p className="paragraph">
                   Aliquam lacinia diam quis lacus euismod
                 </p>
@@ -151,7 +160,7 @@ const Home_V1 = () => {
       {/* End Explore Apartment */}
 
       {/* Featured Listings */}
-      <section className="bgc-f7">
+      <section className="bgc-f7 rounded-4xl mx-5">
         <div className="container">
           <div className="row align-items-center" data-aos="fade-up">
             <div className="col-lg-9">
@@ -164,7 +173,7 @@ const Home_V1 = () => {
             </div>
             <div className="col-lg-3">
               <div className="text-start text-lg-end mb-3">
-                <Link className="ud-btn2" href={"/all-properties"}>
+                <Link className="ud-btn btn-thm2" href={"/all-properties"}>
                   See All Properties
                   <i className="fal fa-arrow-right-long" />
                 </Link>
@@ -175,7 +184,7 @@ const Home_V1 = () => {
 
           <div className="row">
             <div className="col-lg-12" data-aos="fade-up" data-aos-delay="200">
-              <div className="feature-listing-slider">
+              <div className="feature-listing-slider ">
                 <FeaturedListings />
               </div>
             </div>
@@ -205,8 +214,8 @@ const Home_V1 = () => {
             <div className="col-lg-3">
               <div className="text-start text-lg-end mb-3">
                 {/* <Link className="ud-btn2" href={pageRoutes.propertys}> */}
-                  See All Cities
-                  <i className="fal fa-arrow-right-long" />
+                See All Cities
+                <i className="fal fa-arrow-right-long" />
                 {/* </Link> */}
               </div>
             </div>
@@ -248,7 +257,7 @@ const Home_V1 = () => {
                 data-aos="fade-up"
                 data-aos-delay="300"
               >
-                <h2 className="title">People Love Living with Realton</h2>
+                <h2 className="title">People Love Living with ZeroBroker</h2>
                 <p className="paragraph">
                   Aliquam lacinia diam quis lacus euismod
                 </p>

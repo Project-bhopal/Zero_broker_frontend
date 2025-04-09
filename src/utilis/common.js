@@ -3,11 +3,12 @@ const pageRoutes = {
   propertys: "/propertys",
   propertyDetails: "/property-details",
   buy: {
-    properties: "/buy/properties/2bedrooms-apartment/uae",
+    properties: "/for-sale/properties/uae",
   },
   rent: {
-    propertyForRent: "/rent/properties",
+    propertyForRent: "/for-rent/properties/uae",
   },
+  newProjects : "/new-projects/uae"
 };
 
 export { pageRoutes };

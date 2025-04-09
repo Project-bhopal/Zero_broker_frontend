@@ -75,7 +75,7 @@ const MainMenu = ({ navbar }) => {
     },
     {
       name: "New projects",
-      url: "/",
+      url: pageRoutes.newProjects,
       submenu: false,
     },
     {

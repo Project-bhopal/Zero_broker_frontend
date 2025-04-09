@@ -10,8 +10,9 @@ import Image from "next/image";
 import useAxiosFetch from "@/hooks/useAxiosFetch";
 import useAxiosPost from "@/hooks/useAxiosPost";
 import { useRouter, useSearchParams } from "next/navigation";
+import { usePropertyStore } from "@/store/store";
 
-export default function PropertyFiltering({showModal, setShowModal}) {
+export default function PropertyFiltering({showModal, setShowModal, handleFilterChange}) {
   const [propData, setPropData] = useState([])
   const [searchName, setSearchName] = useState("");
   const [filteredData, setFilteredData] = useState([]);
@@ -25,13 +26,13 @@ export default function PropertyFiltering({showModal, setShowModal}) {
   const [pageItems, setPageItems] = useState([]);
   const [pageContentTrac, setPageContentTrac] = useState([]);
  
-  const {data, isLoading, error, isError} = useAxiosFetch("/property/approved")
-  
+  const {properties} = usePropertyStore();
+
   useEffect(()=>{
-    if(data){
-      setPropData(data?.data)
+    if(properties){
+      setPropData(properties)
     }
-  },[data])
+  },[properties])
  
 
 
@@ -142,7 +143,7 @@ export default function PropertyFiltering({showModal, setShowModal}) {
       if (listingStatus == "All") {
         return true;
       } else if (listingStatus == "Buy") {
-        return elm.details.purpose == "Sell";
+        return elm.details.purpose == "Sell ";
       } else if (listingStatus == "Rent") {
         return elm.details.purpose == "Rent";
       }
@@ -291,7 +292,7 @@ export default function PropertyFiltering({showModal, setShowModal}) {
             ></button>
           </div>
           <div className="offcanvas-body p-0">
-            <ListingSidebar filterFunctions={filterFunctions} />
+            <ListingSidebar filterFunctions={filterFunctions} handleFilterChange={handleFilterChange}/>
           </div>
         </div>
         {/* End mobile filter sidebar */}

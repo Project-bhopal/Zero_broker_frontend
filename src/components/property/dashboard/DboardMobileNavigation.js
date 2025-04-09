@@ -250,6 +250,58 @@ const DboardMobileNavigation = () => {
       ],
     },
   ];
+  const driversidebarItems = [
+    {
+      title: "MAIN",
+      items: [
+        {
+          href: "/dashboard/home",
+          icon: "flaticon-discovery",
+          text: "Dashboard",
+        },
+        {
+          href: "/my-profile",
+          icon: "flaticon-user",
+          text: "My Profile",
+        },
+        {
+          href: "/dashboard/message",
+          icon: "flaticon-chat-1",
+          text: "Message",
+        },
+      ],
+    },
+    {
+      title: "MANAGE LISTINGS",
+      items: [
+        {
+          href: "/dashboard/admin/agent-request",
+          icon: "flaticon-new-tab",
+          text: "Agent Requests",
+        },
+        {
+          href: "/dashboard/admin/create-agent",
+          icon: "flaticon-new-tab",
+          text: "Create Agent",
+        },
+        {
+          href: "/dashboard/admin/all-users",
+          icon: "flaticon-user",
+          text: "All Users",
+        },
+      ],
+    },
+    {
+      title: "MANAGE ACCOUNT",
+      items: [
+        {
+          href: "/login",
+          icon: "flaticon-logout",
+          text: "Logout",
+        },
+      ],
+    },
+  ];
 
   return (
     <div className="dashboard_navigationbar d-block d-lg-none">

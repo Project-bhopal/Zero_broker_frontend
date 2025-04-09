@@ -262,6 +262,54 @@ const DashboardHeader = () => {
       },
     ];
 
+    const drivermenuItems = [
+      {
+        title: "MAIN",
+        items: [
+          {
+            href: "/dashboard/my-profile",
+            icon: "flaticon-user",
+            text: "My Profile",
+          },
+          {
+            href: "/dashboard/message",
+            icon: "flaticon-chat-1",
+            text: "Message",
+          },
+        ],
+      },
+      {
+        title: "MANAGE LISTINGS",
+        items: [
+          // {
+          //   href: "/dashboard/driver/add-media",
+          //   icon: "flaticon-new-tab",
+          //   text: "Add Media",
+          // }, 
+          {
+            href: "/dashboard/driver/uploaded-media",
+            icon: "flaticon-clock",
+            text: "Uploaded Media",
+          }, 
+          {
+            href: "/dashboard/driver/uploaded-media",
+            icon: "flaticon-home",
+            text: "Assigned Properties",
+          }, 
+        ],
+      },
+      {
+        title: "MANAGE ACCOUNT",
+        items: [
+          {
+            href: "/login",
+            icon: "flaticon-logout",
+            text: "Logout",
+          },
+        ],
+      },
+    ];
+
     const toggleDropdown = (e) => {
       e.preventDefault();
       e.stopPropagation(); // Prevents the event from bubbling
@@ -414,6 +462,29 @@ const DashboardHeader = () => {
                               </div>
                             ))}
                             {role === "admin"&&adminmenuItems.map((section, sectionIndex) => (
+                              <div key={sectionIndex}>
+                                <p
+                                  className={`fz15 fw400 ff-heading ${
+                                    sectionIndex === 0 ? "mb20" : "mt30"
+                                  }`}
+                                >
+                                  {section.title}
+                                </p>
+                                {section.items.map((item, itemIndex) => (
+                                  <Link
+                                    key={itemIndex}
+                                    className={`dropdown-item ${
+                                      pathname == item.href ? "-is-active" : ""
+                                    } `}
+                                    href={item.href}
+                                  >
+                                    <i className={`${item.icon} mr10`} />
+                                    {item.text}
+                                  </Link>
+                                ))}
+                              </div>
+                            ))}
+                            {role === "driver"&&drivermenuItems.map((section, sectionIndex) => (
                               <div key={sectionIndex}>
                                 <p
                                   className={`fz15 fw400 ff-heading ${

@@ -16,4 +16,9 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #0F8363;
   }
+
+  ::selection {
+    background-color: #0F8363; /* highlight color */
+    color: white; /* text color when selected */
+  }
   

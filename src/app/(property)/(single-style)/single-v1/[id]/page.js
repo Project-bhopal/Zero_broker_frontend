@@ -1,7 +1,7 @@
 import PropertyDetail from "../property-details/page";
 
 export const metadata = {
-  title: "Property Single V1 || ZeroBroker - Real Estate NextJS Template",
+  title: "Property Details || ZeroBroker",
 };
 
 const SingleV1 = ({params}) => {

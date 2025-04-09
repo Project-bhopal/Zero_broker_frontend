@@ -29,15 +29,15 @@ const PopularListings = ({data = listings }) => {
         }}
       >
         {data.slice(0, 8).map((listing) => (
-          <SwiperSlide key={listing.id}>
-            <div className="item">
+          <SwiperSlide key={listing._id}>
+            <Link href={`/single-v1/${listing._id}`} className="item">
               <div className="listing-style1">
-                <div className="list-thumb">
+                <div className="list-thumb w-[100%] h-[228px]">
                   <Image
                     width={382}
                     height={248}
-                    className="w-100 h-100 cover"
-                    src={listing.image}
+                    className="w-100 h-100 object-cover"
+                    src={listing.developer_notes.images[0]}
                     alt="listings"
                   />
                   <div className="sale-sticker-wrap">
@@ -50,28 +50,34 @@ const PopularListings = ({data = listings }) => {
                   </div>
 
                   <div className="list-price">
-                    {listing.price} / <span>mo</span>
+                   AED {listing.price} <span></span>
                   </div>
                 </div>
                 <div className="list-content">
-                  <h6 className="list-title">
-                    <Link href={`${pageRoutes.propertyDetails}/${listing.id}`}>{listing.title}</Link>
+                <h6 className="fz18 min-w-[50px] text-nowrap truncate">
+                    <a
+                      className="text-[#0f8363]"
+                      style={{ color: "#0f8363" }}
+                      href={`/single-v2/${listing._id}`}
+                    >
+                      {listing.name}
+                    </a>
                   </h6>
-                  <p className="list-text">{listing.location}</p>
-                  <div className="list-meta d-flex align-items-center">
+                  <p className="list-text">{listing.location.address}</p>
+                  <div className="list-meta d-flex align-items-center gap-2">
                     <a href="#">
-                      <span className="flaticon-bed" /> {listing.bed} bed
+                      <span className="flaticon-bed" /> {listing.details.bedrooms} bed
                     </a>
                     <a href="#">
-                      <span className="flaticon-shower" /> {listing.bath} bath
+                      <span className="flaticon-shower" /> {listing.details.bathrooms} bath
                     </a>
                     <a href="#">
-                      <span className="flaticon-expand" /> {listing.sqft} sqft
+                      <span className="flaticon-expand" /> {listing.details.size.value} sqft
                     </a>
                   </div>
                   <hr className="mt-2 mb-2" />
                   <div className="list-meta2 d-flex justify-content-between align-items-center">
-                    <span className="for-what">For Rent</span>
+                    <span className="for-what">For {listing.details.purpose}</span>
                     <div className="icons d-flex align-items-center">
                       <a href="#">
                         <span className="flaticon-fullscreen" />
@@ -86,7 +92,7 @@ const PopularListings = ({data = listings }) => {
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>
