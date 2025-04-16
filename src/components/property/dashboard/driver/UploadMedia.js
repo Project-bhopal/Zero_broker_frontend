@@ -1,128 +1,129 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import UploadPhotoGallery from "../dashboard-add-property/upload-media/UploadPhotoGallery";
-import VideoOptionField from "../dashboard-add-property/upload-media/VideoOptionFiled";
 import PhotoUpload from "./PhotoUpload";
 import VideoUpload from "./VideoUpload";
-const Select = dynamic(() => import('react-select'), { ssr: false });
-
+import MapPin from "./MapPin";
 
 const UploadMedia = () => {
-  const [saved, setSaved] = useState(false)
-  const [images, setImages] = useState([])
-  const [videos, setVideos] = useState([])
+  const [saved, setSaved] = useState(false);
+  const [images, setImages] = useState([]);
+  const [videos, setVideos] = useState([]);
+  const [locations, setLocations] = useState({
+    latitude: null,
+    longitude: null,
+  });
   const [files, setFiles] = useState({
-    images : [],
-    videos : [],
-    virtual_tour_available : false
-  })
+    images: [],
+    videos: [],
+    virtual_tour_available: false,
+  });
 
-  const virtualTourOptions = [
-    { value: 'true', label: "Yes" },
-    { value: 'false', label: "No" },
-  ];
-  const customStyles = {
-    option: (styles, { isFocused, isSelected, isHovered }) => {
-      return {
-        ...styles,
-        backgroundColor: isSelected
-          ? "#0f8363"
-          : isHovered
-          ? "#ebfff9"
-          : isFocused
-          ? "#ebfff9"
-          : undefined,
-      };
-    },
-  };
-  useEffect(()=>{
-    setFiles((prev) =>({...prev, images, videos, virtual_tour_available : files.virtual_tour_available}))
-  },[images, videos])
+  useEffect(() => {
+    setFiles((prev) => ({
+      ...prev,
+      images,
+      videos,
+    }));
+  }, [images, videos]);
 
-  const handleSelectChange = (selectedOption) => {
-
-    setFiles((prev) => ({ ...prev, virtual_tour_available: selectedOption}));
-    setSaved(false)
-  };
-  
-
-
-
-  const handleFilesSubmit = (e) =>{
+  const handleFilesSubmit = (e) => {
     e.preventDefault();
-
     if (!files) {
       console.error("Files object is missing.");
       return;
     }
-  
 
-    const selectOption = files?.virtual_tour_available?.value || false
-    // setData((prev)=>({...prev, developer_notes : { ...files, virtual_tour_available : selectOption}}))
+    setSaved(true);
+    console.log("files :", files);
+  };
 
-    setSaved(true)
-    console.log("files :",files)
+  const handleChange = (e) =>{
+    const {name, value} = e.target;
+    setLocations((prev) => ({...prev, [name] : value}))
   }
-  
-  
+
   return (
     <div className="ps-widget bgc-white bdrs12 p30 bg-[#ebfff9] overflow-hidden position-relative">
       <h4 className="title fz17 mb30">Upload photos of your property</h4>
       <form className="form-style1" onSubmit={handleFilesSubmit}>
         <div className="row">
           <div className="col-lg-12">
-            <PhotoUpload setImages={setImages}/>
+            <PhotoUpload setImages={setImages} />
           </div>
         </div>
         {/* End col-12 */}
 
         <div className="row">
-          <h4 className="title fz17 mb30">Upload videos of your property <>{"(required*)"}</></h4>
+          <h4 className="title fz17 mb30">
+            Upload videos of your property <>{"(required*)"}</>
+          </h4>
           <div className="col-lg-12">
-            <VideoUpload setVideos={setVideos}/>
+            <VideoUpload setVideos={setVideos} />
           </div>
         </div>
         {/* End .row */}
-        <div className="row">
-        <div className="col-sm-6 col-xl-4">
-          <div className="mb30">
-            <label className="heading-color ff-heading fw600 mb10">
-              Latitude
+        <div className="col-sm-12">
+          <div className="mb20 mt30">
+            <label className="heading-color ff-heading fw600 mb30">
+              Place the listing pin on the map
             </label>
-            <input
-              type="text"
-              name="latitude"
-              // value={location.latitude}
-              // onChange={handleChange}
-              className="form-control"
-              placeholder="Latitude"
-            />
+            <MapPin setLocations={setLocations} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-6 col-xl-4">
+            <div className="mb30">
+              <label className="heading-color ff-heading fw600 mb10">
+                Latitude
+              </label>
+              <input
+                type="text"
+                name="latitude"
+                value={locations.latitude}
+                onChange={handleChange}
+                className="form-control"
+                placeholder="Latitude"
+              />
+            </div>
+          </div>
+
+          <div className="col-sm-6 col-xl-4">
+            <div className="mb30">
+              <label className="heading-color ff-heading fw600 mb10">
+                Longitude
+              </label>
+              <input
+                type="text"
+                name="longitude"
+                value={locations.longitude}
+                onChange={handleChange}
+                className="form-control"
+                placeholder="Longitude"
+              />
+            </div>
           </div>
         </div>
 
-        <div className="col-sm-6 col-xl-4">
-          <div className="mb30">
-            <label className="heading-color ff-heading fw600 mb10">
-              Longitude
-            </label>
-            <input
-              type="text"
-              name="longitude"
-              // value={location.longitude}
-              // onChange={handleChange}
-              className="form-control"
-              placeholder="Longitude"
-            />
+        {images.length !== 0 && videos.length !== 0 && (
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              disabled={saved}
+              className={`ud-btn ${
+                saved ? "btn-thm" : "btn-white2"
+              } duration-200 flex`}
+            >
+              {saved ? (
+                <>
+                  Files Saved<i className="fa fa-check-circle rotate-45"></i>
+                </>
+              ) : (
+                <> Save Files </>
+              )}
+            </button>
           </div>
-        </div>
-      </div>
-        
-        {images.length !== 0 && videos.length !== 0 &&(<div className="flex justify-end">
-          <button type="submit" disabled={saved} className={`ud-btn ${saved ? "btn-thm" : "btn-white2"} duration-200 flex`}>
-           {saved?<>Files Saved<i className="fa fa-check-circle rotate-45"></i></>: <> Save Files </>}
-          </button>
-        </div>)}
+        )}
       </form>
     </div>
   );

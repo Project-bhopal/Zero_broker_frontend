@@ -52,7 +52,7 @@ const listingData = [
 ];
 
 const SearchDataTable = () => {
-  const {data, isLoading , error , isError} = useAxiosFetch("/searches")
+  const {data, isLoading , error , isError} = useAxiosFetch("/myfilter")
   console.log(data)
   return (
     <table className="table-style3 table at-savesearch">
@@ -64,7 +64,7 @@ const SearchDataTable = () => {
         </tr>
       </thead>
       <tbody className="t-body">
-        {data?.searches?.map((listing, index) => (
+        {data?.data?.searches?.map((listing, index) => (
           <tr key={index}>
             <th scope="row">{listing.search_name}</th>
             <td>{listing.date}</td>

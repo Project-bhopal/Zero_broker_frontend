@@ -175,11 +175,7 @@ const DashboardHeader = () => {
       {
         title: "MANAGE LISTINGS",
         items: [
-          {
-            href: "/dashboard/agent/add-property",
-            icon: "flaticon-new-tab",
-            text: "Add New Property",
-          },
+          
           {
             href: "/dashboard/agent/property-listed-by-me",
             icon: "flaticon-home",
@@ -188,7 +184,17 @@ const DashboardHeader = () => {
           {
             href: "/dashboard/agent/requests",
             icon: "flaticon-clock",
-            text: "Requests",
+            text: "Seller's Requests",
+          },
+          {
+            href: "/dashboard/agent/drivers-requests",
+            icon: "flaticon-clock",
+            text: "Driver's Requests",
+          },
+          {
+            href: "/dashboard/agent/create-driver",
+            icon: "flaticon-user",
+            text: "Create Driver",
           },
           {
             href: "my-reviews",

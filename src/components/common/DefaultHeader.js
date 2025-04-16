@@ -74,14 +74,14 @@ const DefaultHeader = () => {
           text: "Saved Search",
         },
         {
+          href: "/dashboard/user/wallet",
+          icon: "flaticon-review",
+          text: "Wallet",
+        },
+        {
           href: "/my-reviews",
           icon: "flaticon-review",
           text: "Reviews",
-        },
-        {
-          href: "/dashboard/user/payments",
-          icon: "flaticon-review",
-          text: "Payments",
         },
         {
           href: "/dashboard/user/subcription",
@@ -89,9 +89,9 @@ const DefaultHeader = () => {
           text: "Subcription",
         },
         {
-          href: "/dashboard/user/wallet",
+          href: "/dashboard/user/payments",
           icon: "flaticon-review",
-          text: "Wallet",
+          text: "History",
         },
       ],
     },
@@ -202,7 +202,17 @@ const DefaultHeader = () => {
         {
           href: "/dashboard/agent/requests",
           icon: "flaticon-clock",
-          text: "Requests",
+          text: "Seller's Requests",
+        },
+        {
+          href: "/dashboard/agent/drivers-requests",
+          icon: "flaticon-clock",
+          text: "Driver's Requests",
+        },
+        {
+          href: "/dashboard/agent/create-driver",
+          icon: "flaticon-user",
+          text: "Create Driver",
         },
         {
           href: "my-reviews",
@@ -254,8 +264,8 @@ const DefaultHeader = () => {
         },
         {
           href: "/dashboard/admin/create-agent",
-          icon: "flaticon-new-tab",
-          text: "Create Agent",
+          icon: "flaticon-user-1",
+          text: "Create",
         },
         {
           href: "/dashboard/admin/all-users",
@@ -276,6 +286,54 @@ const DefaultHeader = () => {
     },
     
   ];
+
+  const drivermenuItems = [
+    {
+      title: "MAIN",
+      items: [
+        {
+          href: "/dashboard/my-profile",
+          icon: "flaticon-user",
+          text: "My Profile",
+        },
+        {
+          href: "/dashboard/message",
+          icon: "flaticon-chat-1",
+          text: "Message",
+        },
+      ],
+    },
+    {
+      title: "MANAGE LISTINGS",
+      items: [
+        {
+          href: "/dashboard/driver/add-media/1",
+          icon: "flaticon-new-tab",
+          text: "Add Media",
+        }, 
+        {
+          href: "/dashboard/driver/uploaded-media",
+          icon: "flaticon-clock",
+          text: "Uploaded Media",
+        }, 
+        {
+          href: "/dashboard/driver/assigned-properties",
+          icon: "flaticon-home",
+          text: "Assigned Properties",
+        }, 
+      ],
+    },
+    {
+      title: "MANAGE ACCOUNT",
+      items: [
+        {
+          href: "/login",
+          icon: "flaticon-logout",
+          text: "Logout",
+        },
+      ],
+    },
+];
 
   const toggleDropdown = (e) => {
     e.preventDefault();
@@ -430,6 +488,29 @@ const DefaultHeader = () => {
                                       </div>
                                     ))}
                                     {role === "admin"&&adminmenuItems.map((section, sectionIndex) => (
+                                      <div key={sectionIndex}>
+                                        <p
+                                          className={`fz15 fw400 ff-heading ${
+                                            sectionIndex === 0 ? "mb20" : "mt30"
+                                          }`}
+                                        >
+                                          {section.title}
+                                        </p>
+                                        {section.items.map((item, itemIndex) => (
+                                          <Link
+                                            key={itemIndex}
+                                            className={`dropdown-item ${
+                                              pathname == item.href ? "-is-active" : ""
+                                            } `}
+                                            href={item.href}
+                                          >
+                                            <i className={`${item.icon} mr10`} />
+                                            {item.text}
+                                          </Link>
+                                        ))}
+                                      </div>
+                                    ))}
+                                    {role === "admin"&&drivermenuItems.map((section, sectionIndex) => (
                                       <div key={sectionIndex}>
                                         <p
                                           className={`fz15 fw400 ff-heading ${

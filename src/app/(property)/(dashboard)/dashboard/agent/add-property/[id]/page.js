@@ -7,9 +7,6 @@ import SidebarDashboard from "@/components/property/dashboard/SidebarDashboard";
 import AddPropertyTabContent from "@/components/property/dashboard/dashboard-add-property";
 import { useRouter } from "next/navigation";
 
-export const metadata = {
-  title: "Dashboard Add Property || ZeroBroker - Real Estate NextJS Template",
-};
 
 const DashboardAddProperty = ({params}) => {
   

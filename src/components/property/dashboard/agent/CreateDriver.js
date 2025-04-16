@@ -6,10 +6,11 @@ import Snackbar from "@/components/Snackbar/Snackbar";
 import StatusSnackbar from "@/components/Snackbar/Snackbar";
 import useAxiosPost from "@/hooks/useAxiosPost";
 
-const AgentPersonalInfo = ({ create, data, role}) => {
+const CreateDriver = ({ create, data}) => {
   const [uploadedImage, setUploadedImage] = useState(null);
   const [show, setShow] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
+  const [status, setStatus] = useState(true)
   const [errors, setErrors] = useState({});
   const [error, setError] = useState("")
   const [state, setState] = useState({
@@ -24,7 +25,7 @@ const AgentPersonalInfo = ({ create, data, role}) => {
     mobile : "",
     password : "",
     confirmPassword : "",
-    role : role
+    role : create
   });
 
 
@@ -100,6 +101,7 @@ const AgentPersonalInfo = ({ create, data, role}) => {
     onError: (error) => {
       console.error("Error creating agent:", error.response.data.message);
       setError(error.response.data.message)
+      setStatus(false)
     },
   })
 
@@ -109,7 +111,7 @@ const AgentPersonalInfo = ({ create, data, role}) => {
     if (validateForm()) {
       const { confirmPassword, ...dataToSubmit} = localData; // Exclude confirmPassword
 
-      mutation.mutate({...dataToSubmit , role : role})
+      mutation.mutate({...dataToSubmit , role : "driver"})
     }
   };
 
@@ -277,9 +279,9 @@ const AgentPersonalInfo = ({ create, data, role}) => {
           </div>
         </div>
      </form>
-     <StatusSnackbar message={`${create} Created Successfully`} state={state} status={true}/>
+     <StatusSnackbar message={`${create} Created Successfully`} state={state} status={status}/>
      </>
   );
 };
 
-export default AgentPersonalInfo;
+export default CreateDriver;

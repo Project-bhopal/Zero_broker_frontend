@@ -33,7 +33,7 @@ const Location = ({filterFunctions}) => {
 
   return (
     <Select
-                key={Date.now()}
+      key={Date.now()}
       defaultValue={[locationOptions[0]]}
       name="colors"
       styles={customStyles}
@@ -41,7 +41,7 @@ const Location = ({filterFunctions}) => {
       className="select-custom"
       classNamePrefix="select"
       required
-      value={{value:filterFunctions.location,label:filterFunctions.location}}
+      value={{value:filterFunctions?.location,label:filterFunctions?.location}}
       onChange={(e)=>filterFunctions?.handlelocation(e.value)}
     />
   );

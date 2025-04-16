@@ -30,7 +30,7 @@ const OtherFeatures = ({filterFunctions}) => {
           {featuresLeftColumn.map((feature, index) => (
             <label className="custom_checkbox" key={index}>
               {feature.label}
-              <input checked={filterFunctions?.categories.includes(feature.label)}
+              <input checked={filterFunctions?.categories?.includes(feature.label)}
              type="checkbox" onChange={()=>filterFunctions?.handlecategories(feature.label)}  />
               <span className="checkmark" />
             </label>

@@ -12,7 +12,7 @@ const PropertyGallery = ({ Images }) => {
         <div className="col-sm-9">
           <div className="sp-img-content mb15-md">
             <div className="popup-img preview-img-1 sp-img">
-              <Item original={Images[0]} thumbnail={Images[0]} width={810} height={510}>
+              <Item original={Images[0]} thumbnail={Images[0]} width={810} height={500}>
                 {({ ref, open }) => (
                   <Image
                     src={Images[0]}

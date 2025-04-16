@@ -50,7 +50,7 @@ const Home_V1 = () => {
           <source src="/video/videoplayback.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-        <div className="home-style1 absolute top-0 left-0 w-full h-full bg-black/50 z-0">
+        <div className="home-style1 absolute top-0 left-0 w-full h-full bg-black/70 z-0">
           <div className="container">
             <div className="row">
               <div className="col-xl-11 mx-auto">
