@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-const usePropertyFilter = (intialData) => {
+const useNewProjectFilter = (intialData) => {
   const [propData, setPropData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [currentSortingOption, setCurrentSortingOption] = useState("Newest");
@@ -576,4 +576,4 @@ const usePropertyFilter = (intialData) => {
   };
 };
 
-export default usePropertyFilter;
+export default useNewProjectFilter;

@@ -1,7 +1,8 @@
 "use client";
+import useAxiosFetch from "@/hooks/useAxiosFetch";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
 const sellers = [
@@ -60,7 +61,18 @@ const getStatusStyle = (status) => {
   }
 };
 
-const AllSellersDataTable = () => {
+const AllSellersDataTable = ({role}) => {
+  // const [sellers, setSellers] = useState([])
+
+  // const { data, error, isLoading, isError } = useAxiosFetch(
+  //   `/agents/role/${role}`
+  // );
+  
+  // useEffect(() => {
+  //   setSellers(data?.data?.data);
+  // }, [data]);
+
+
   function formatDate(dateString) {
     if (!dateString) return "Invalid Date"; // Handle empty or undefined input
 
@@ -86,8 +98,8 @@ const AllSellersDataTable = () => {
         </tr>
       </thead>
       <tbody className="t-body">
-        {sellers.map((agent) => (
-          <tr key={agent._id}>
+        {sellers?.map((seller) => (
+          <tr key={seller._id}>
             <th scope="row">
               <div className="listing-style1 dashboard-style d-xxl-flex align-items-center mb-0">
                 <div className="list-thumb">
@@ -95,49 +107,47 @@ const AllSellersDataTable = () => {
                     width={110}
                     height={94}
                     className="w-100"
-                    src={agent.imageSrc}
+                    src={seller.imageSrc}
                     alt="agent"
                   />
                 </div>
                 <div className="list-content py-0 p-0 mt-2 mt-xxl-0 ps-xxl-4">
-                    <Link href={`/single-v1/${agent._id}`}>{agent.fullname}</Link>
+                    {seller.fullname}
                 </div>
               </div>
             </th>
             <td className="vam">
-              <span className={getStatusStyle(agent?.status)}>
-              <p className="list-text mb-0">{agent.email}</p>
-              <p href="#">{agent.mobile}</p>
-              </span>
+              <p className="list-text mb-0">{seller.email}</p>
+              <p href="#">{seller.mobile}</p>
             </td>
-            <td className="vam">{agent.role}</td>
-            <td className="vam">{agent.createdAt}</td>
+            <td className="vam">{seller.role}</td>
+            <td className="vam">{formatDate(seller.createdAt)}</td>
             <td className="vam">
               <div className="d-flex">
                 <Link
-                  href={`/dashboard/seller/request-to-agent/${agent._id}`}
+                  href={`/dashboard/seller/request-to-agent/${seller._id}`}
                   className="icon"
                   style={{ border: "none" }}
-                  data-tooltip-id={`edit-${agent._id}`}
+                  data-tooltip-id={`edit-${seller._id}`}
                 >
                   <span className="fas fa-pen fa" />
                 </Link>
                 <p
                   className="icon"
                   style={{ border: "none" }}
-                  data-tooltip-id={`delete-${agent._id}`}
-                  onClick={()=>{handleAgentDeleteClick(agent._id)}}
+                  data-tooltip-id={`delete-${seller._id}`}
+                  onClick={()=>{handleAgentDeleteClick(seller._id)}}
                 >
                   <span className="flaticon-bin" />
                 </p>
 
                 <ReactTooltip
-                  id={`edit-${agent._id}`}
+                  id={`edit-${seller._id}`}
                   place="top"
                   content="Edit"
                 />
                 <ReactTooltip
-                  id={`delete-${agent._id}`}
+                  id={`delete-${seller._id}`}
                   place="top"
                   content="Delete"
                 />

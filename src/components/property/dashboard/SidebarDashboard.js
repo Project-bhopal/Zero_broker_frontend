@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import RoleSwitch from "@/components/common/role-switch-buttons/RoleSwitch";
 
 const SidebarDashboard = () => {
     const [role, setRole] = useState("")
@@ -17,9 +18,7 @@ const SidebarDashboard = () => {
       }
       // setRole("agent")
     },[])
-  
 
- 
 
   const buyersidebarItems = [
     {
@@ -68,7 +67,7 @@ const SidebarDashboard = () => {
         {
           href: "/dashboard/user/payments",
           icon: "flaticon-review",
-          text: "History  ",
+          text: "History",
         },
         
       ],
@@ -180,7 +179,17 @@ const SidebarDashboard = () => {
         {
           href: "/dashboard/agent/requests",
           icon: "flaticon-clock",
-          text: "Requests",
+          text: "Seller's Requests",
+        },
+        {
+          href: "/dashboard/agent/drivers-requests",
+          icon: "flaticon-clock",
+          text: "Driver's Requests",
+        },
+        {
+          href: "/dashboard/agent/create-driver",
+          icon: "flaticon-user",
+          text: "Create Driver",
         },
         {
           href: "my-reviews",
@@ -303,6 +312,10 @@ const SidebarDashboard = () => {
   return (
     <div className="dashboard__sidebar d-none d-lg-block">
       <div className="dashboard_sidebar_list">
+        {role === "seller"||role === "buyer"&&<div className="mb-5 space-y-3">
+        <label>Switch Account</label>
+        <RoleSwitch role={role}/>
+        </div>}
         {role === "seller"&&sellersidebarItems.map((section, sectionIndex) => (
           <div key={sectionIndex}>
             <p

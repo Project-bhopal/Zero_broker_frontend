@@ -63,12 +63,12 @@ const ListingSidebar = ({filterFunctions}) => {
       </div>
       {/* End .widget-wrapper */}
 
-      <div className="widget-wrapper advance-feature-modal">
+      {/* <div className="widget-wrapper advance-feature-modal">
         <h6 className="list-title">Location</h6>
         <div className="form-style2 input-group">
           <Location filterFunctions={filterFunctions} />
         </div>
-      </div>
+      </div> */}
       {/* End .widget-wrapper */}
 
       <div className="widget-wrapper">

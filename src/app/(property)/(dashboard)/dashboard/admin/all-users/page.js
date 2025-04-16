@@ -6,28 +6,17 @@ import Footer from "@/components/property/dashboard/Footer";
 import SidebarDashboard from "@/components/property/dashboard/SidebarDashboard";
 import AllAgentsDataTable from "@/components/property/dashboard/admin-dashboard-all-users/AllAgentsDataTable";
 import AllBuyersDataTable from "@/components/property/dashboard/admin-dashboard-all-users/AllBuyersDataTable";
+import AllDriversDataTable from "@/components/property/dashboard/admin-dashboard-all-users/AllDriversDataTable";
 import AllSellersDataTable from "@/components/property/dashboard/admin-dashboard-all-users/AllSellersDataTable";
 import useAxiosFetch from "@/hooks/useAxiosFetch";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-// export const metadata = {
-//   title: "Dashboard Requests || ZeroBroker - Real Estate NextJS Template",
-// };
-
 const DashboardRequests = () => {
-  const [showTable, setShowTable] = useState("Agents")
-      const [agents, setAgents] = useState([]);
-      const fetch = useAxiosFetch("/agents/all");
+  const [showTable, setShowTable] = useState("Agents");
+  const [role, setRole] = useState("agent")
       const router = useRouter()
-  
-      useEffect(  ()=>{
-        const {data, error, isLoading, isError} = fetch
-          if(data?.data){
-              console.log(data?.data)
-              setAgents(data?.data)
-          }
-      },[fetch])
+
   return (
     <>
       {/* Main Header Nav */}
@@ -80,26 +69,31 @@ const DashboardRequests = () => {
                   </div>
                 </div>
                 {/* End item1 */}
-              <div className="flex  justify-self-end gap-2 me-3 mb-5">
-                <button className={`ud-btn btn-${showTable === 'Agents' ? 'thm' : 'white'}`} onClick={()=>{setShowTable("Agents")}}>Agents</button>
+              <div className="grid grid-cols-4 justify-self-end gap-2 mb-5">
+                <button className={`ud-btn btn-${showTable === 'Agents' ? 'thm' : 'white'}`} onClick={()=>{setShowTable("Agents");setRole("agent")}}>Agents</button>
 
-                <button className={`ud-btn btn-${showTable === 'Sellers' ? 'thm' : 'white'}`} onClick={()=>{setShowTable("Sellers")}}>Sellers</button>
+                <button className={`ud-btn btn-${showTable === 'Sellers' ? 'thm' : 'white'}`} onClick={()=>{setShowTable("Sellers");setRole("seller")}}>Sellers</button>
 
-                <button className={`ud-btn btn-${showTable === 'Buyers' ? 'thm' : 'white'}`} onClick={()=>{setShowTable("Buyers")}}>Buyers</button>
+                <button className={`ud-btn btn-${showTable === 'Buyers' ? 'thm' : 'white'}`} onClick={()=>{setShowTable("Buyers");setRole("buyer")}}>Buyers</button>
+
+                <button className={`ud-btn btn-${showTable === 'Drivers' ? 'thm' : 'white'}`} onClick={()=>{setShowTable("Drivers");setRole('driver')}}>Drivers</button>
               </div>
               </div>
               <div className="row">
-                <div className="col-xl-12">
+                <div className="col-xl-12 min-h-[50vh]">
                   <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                     <div className="packages_table table-responsive">
                       {showTable === "Agents"&&(
-                        <AllAgentsDataTable agents={agents}/>
+                        <AllAgentsDataTable role={role}/>
                       )}  
                       {showTable === "Sellers"&&(
-                        <AllSellersDataTable/>
+                        <AllSellersDataTable role={role}/>
                       )}
                       {showTable === "Buyers"&&(
-                        <AllBuyersDataTable/>
+                        <AllBuyersDataTable role={role}/>
+                      )}
+                      {showTable === "Drivers"&&(
+                        <AllDriversDataTable role={role}/>
                       )}
 
                       

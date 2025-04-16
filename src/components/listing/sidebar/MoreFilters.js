@@ -1,26 +1,57 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { useRef } from "react";
 
 const MoreFilters = ({ filterFunctions, handleFilterChange }) => {
-  const defaultRange = [20, 70987]; // Default price range
-  const priceRange = filterFunctions?.priceRange || defaultRange; // Fallback for undefined
+  const defaultRange = [20, 70987]; // Default square feet range
+const squareFeetRange = filterFunctions?.squareFeetRange || defaultRange;
 
-  const minFeetRef = useRef(null);
-  const maxFeetRef = useRef(null);
-  const handleMinChange = (e) => {
-    const minValue = e.target.value;
-    const maxValue = maxFeetRef.current?.value || 0;
-    filterFunctions?.handlesquirefeet([minValue, maxValue]);
-  };
+const [minFeet, setMinFeet] = useState("");
+const [maxFeet, setMaxFeet] = useState("");
 
-  const handleMaxChange = (e) => {
-    const maxValue = e.target.value;
-    const minValue = minFeetRef.current?.value || 0;
-    filterFunctions?.handlesquirefeet([minValue, maxValue]);
-  };
+const minFeetRef = useRef(null);
+const maxFeetRef = useRef(null);
+
+// Input change handler
+const handleOnChange = (event) => {
+  const { name, value } = event.target;
+
+  if (name === "min_feet") {
+    setMinFeet(value);
+  } else if (name === "max_feet") {
+    setMaxFeet(value);
+  }
+};
+
+// Debounce min feet
+useEffect(() => {
+  const timeout = setTimeout(() => {
+    if (minFeet !== "") {
+      const minValue = minFeet;
+      const maxValue = maxFeetRef.current?.value || "";
+      filterFunctions?.handlesquirefeet?.([minValue, maxValue]);
+      handleFilterChange("min_feet", minValue);
+    }
+  }, 500);
+
+  return () => clearTimeout(timeout);
+}, [minFeet]);
+
+// Debounce max feet
+useEffect(() => {
+  const timeout = setTimeout(() => {
+    if (maxFeet !== "") {
+      const maxValue = maxFeet;
+      const minValue = minFeetRef.current?.value || "";
+      filterFunctions?.handlesquirefeet?.([minValue, maxValue]);
+      handleFilterChange("max_feet", maxValue);
+    }
+  }, 500);
+
+  return () => clearTimeout(timeout);
+}, [maxFeet]);
   return (
     <div className="">
       <div className="widget-wrapper">
@@ -31,14 +62,10 @@ const MoreFilters = ({ filterFunctions, handleFilterChange }) => {
               <input
                 type="number"
                 className="form-control filterInput"
+                 name="min_feet"
                 ref={minFeetRef}
-                // onChange={(e) =>
-                //   filterFunctions?.handlesquirefeet([
-                //     e.target.value,
-                //     document.getElementById("maxFeet3").value / 1,
-                //   ])
-                // }
-                onChange={handleMinChange}
+                value={minFeet}
+                onChange={handleOnChange}
                 placeholder="Min."
                 id="minFeet3"
               />
@@ -48,16 +75,12 @@ const MoreFilters = ({ filterFunctions, handleFilterChange }) => {
               <input
                 type="number"
                 className="form-control filterInput"
+                name="max_feet"
                 ref={maxFeetRef}
                 placeholder="Max"
+                value={maxFeet}
                 id="maxFeet3"
-                // onChange={(e) =>
-                //   filterFunctions?.handlesquirefeet([
-                //     document.getElementById("minFeet3").value / 1,
-                //     e.target.value,
-                //   ])
-                // }
-                onChange={handleMaxChange}
+                onChange={handleOnChange}
               />
             </div>
           </div>

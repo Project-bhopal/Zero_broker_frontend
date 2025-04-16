@@ -5,11 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useEffect } from "react";
 const FeaturedListings = ({ data, colstyle, setIsScheduleTourModal }) => {
-  useEffect(()=>{
-    if(data){
-      console.log(data)
-    }
-  },[data])
+
+  
   const router = useRouter()
   return (
     <>
@@ -36,7 +33,7 @@ const FeaturedListings = ({ data, colstyle, setIsScheduleTourModal }) => {
               </div>
 
               <div className="list-price">
-                {listing.price}  <span></span>
+                AED {listing.price}  <span></span>
               </div>
             </div>
             </Link>

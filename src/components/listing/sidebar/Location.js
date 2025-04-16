@@ -39,12 +39,6 @@ const Location = ({filterFunctions}) => {
       styles={customStyles}
       options={locationOptions}
       value={{value:filterFunctions.location,label:filterFunctions.location}}
-      
-     
-      
-      
-      
-      
       className="select-custom filterSelect"
       classNamePrefix="select"
       onChange={(e)=>filterFunctions?.handlelocation(e.value)}

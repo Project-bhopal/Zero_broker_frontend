@@ -2,7 +2,7 @@ export const metadata = {
     title: "New Projects || ZeroBroker",
   };
   
-  export default function BuyPropertiesLayout({ children }) {
+  export default function NewProjectsLayout({ children }) {
     return <>{children}</>;
   }
   
