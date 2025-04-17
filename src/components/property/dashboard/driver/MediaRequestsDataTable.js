@@ -38,23 +38,11 @@ function MediaRequestsDataTable({setShowTable}) {
     return `${day}/${month}/${year}`; // Returns DD/MM/YYYY
   }
 
-  async function handleAcceptClick(id) {
-    const response = await ApiPutRequest(`/requestproperty/accept/${id}`)
-    // console.log(response.data.status)
-    if(response.data.status == "success"){
-      setShowTable("Accepted")
-      window.location.reload();
-      
-    }
-  }
-
-
   return (
     <table className="table-style3 table at-savesearch">
       <thead className="t-head">
         <tr>
           <th scope="col">Property Name</th>
-          <th scope="col">Seller Name</th>
           <th scope="col">Assigned By</th>
           <th scope="col">Assigned Date</th>
           <th scope="col">Requested Date</th>
@@ -79,12 +67,7 @@ function MediaRequestsDataTable({setShowTable}) {
                 </div>
               </div>
             </th>
-            <td className="vam">
-              <div className="flex flex-col justify-center items-center py-5">
-                <a className="">{property.seller.fullname}</a>
-                <a className="">{property.seller.email}</a>
-              </div>
-              </td>
+            
               <td className="vam">
               <div className="flex flex-col justify-center items-center py-5">
                 <a className="">{property.seller.fullname}</a>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { use, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Cookies from "js-cookie";
+import RoleSwitch from "@/components/common/role-switch-buttons/RoleSwitch";
 
 const DboardMobileNavigation = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -255,12 +256,7 @@ const DboardMobileNavigation = () => {
       title: "MAIN",
       items: [
         {
-          href: "/dashboard/home",
-          icon: "flaticon-discovery",
-          text: "Dashboard",
-        },
-        {
-          href: "/my-profile",
+          href: "/dashboard/my-profile",
           icon: "flaticon-user",
           text: "My Profile",
         },
@@ -275,20 +271,20 @@ const DboardMobileNavigation = () => {
       title: "MANAGE LISTINGS",
       items: [
         {
-          href: "/dashboard/admin/agent-request",
+          href: "/dashboard/driver/add-media/1",
           icon: "flaticon-new-tab",
-          text: "Agent Requests",
-        },
+          text: "Add Media",
+        }, 
         {
-          href: "/dashboard/admin/create-agent",
-          icon: "flaticon-new-tab",
-          text: "Create Agent",
-        },
+          href: "/dashboard/driver/uploaded-media",
+          icon: "flaticon-clock",
+          text: "Uploaded Media",
+        }, 
         {
-          href: "/dashboard/admin/all-users",
-          icon: "flaticon-user",
-          text: "All Users",
-        },
+          href: "/dashboard/driver/assigned-properties",
+          icon: "flaticon-home",
+          text: "Assigned Properties",
+        }, 
       ],
     },
     {
@@ -301,7 +297,7 @@ const DboardMobileNavigation = () => {
         },
       ],
     },
-  ];
+];
 
   return (
     <div className="dashboard_navigationbar d-block d-lg-none">
@@ -313,6 +309,10 @@ const DboardMobileNavigation = () => {
           <i className="fa fa-bars pr10" /> Dashboard Navigation
         </button>
         <ul className={`dropdown-content ${isDropdownOpen ? "show" : ""}`}>
+          {role === "seller" || role === "buyer"?(<div className="mb-5 space-y-3  pl30">
+              <label>Switch Account</label>
+              <RoleSwitch role={role}/>
+              </div>): ""}
           {role === "seller"&&sellersidebarItems.map((section, sectionIndex) => (
             <div key={sectionIndex}>
               <p
@@ -386,6 +386,30 @@ const DboardMobileNavigation = () => {
             </div>
           ))}
           {role === "admin"&&adminsidebarItems.map((section, sectionIndex) => (
+            <div key={sectionIndex}>
+              <p
+                className={`fz15 fw400 ff-heading mt30 pl30 ${
+                  sectionIndex === 0 ? "mt-0" : "mt30"
+                }`}
+              >
+                {section.title}
+              </p>
+              {section.items.map((item, itemIndex) => (
+                <div key={itemIndex} className="sidebar_list_item">
+                  <Link
+                    href={item.href}
+                    className={`items-center   ${
+                      pathname == item.href ? "-is-active" : ""
+                    } `}
+                  >
+                    <i className={`${item.icon} mr15`} />
+                    {item.text}
+                  </Link>
+                </div>
+              ))}
+            </div>
+          ))}
+          {role === "driver"&&driversidebarItems.map((section, sectionIndex) => (
             <div key={sectionIndex}>
               <p
                 className={`fz15 fw400 ff-heading mt30 pl30 ${

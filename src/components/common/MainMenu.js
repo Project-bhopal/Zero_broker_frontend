@@ -69,18 +69,8 @@ const MainMenu = ({ navbar }) => {
       submenu: false,
     },
     {
-      name: "Commercial",
-      url: "/commercial/properties",
-      submenu: false,
-    },
-    {
       name: "New projects",
       url: pageRoutes.newProjects,
-      submenu: false,
-    },
-    {
-      name: "News",
-      url: "/",
       submenu: false,
     },
     // {

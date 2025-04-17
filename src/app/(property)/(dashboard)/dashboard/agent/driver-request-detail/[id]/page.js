@@ -1,4 +1,5 @@
 "use client";
+import StatusSnackbar from "@/components/Snackbar/Snackbar";
 import DashboardHeader from "@/components/common/DashboardHeader";
 import MobileMenu from "@/components/common/mobile-menu";
 import DboardMobileNavigation from "@/components/property/dashboard/DboardMobileNavigation";
@@ -14,7 +15,13 @@ import { useState } from "react";
 import { Gallery, Item } from "react-photoswipe-gallery";
 
 const DriverRequestDetail = () => {
-  const [showTable, setShowTable] = useState("Pending");
+  const [state, setState] = useState({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+  });
+  const [snackMessage, setSnackMessage] = useState("Drivers Request Approved");
+  const [status, setStatus] = useState(true);
   const [showReasonBox, setShowReasonBox] = useState(false);
   const [reason, setReason] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -37,10 +44,10 @@ const DriverRequestDetail = () => {
   const Images = properties[2]?.developer_notes?.images;
   const src = properties[2]?.developer_notes?.videos;
 
-  const approveMutation = useAxiosPost(``);
+  const approveMutation = useAxiosPost(`/agents/review`);
   const rejectMutation = useAxiosPost(``);
 
-  const handeRejectClick = () => {
+  const handleRejectClick = () => {
     setShowReasonBox(true);
   };
 
@@ -49,16 +56,43 @@ const DriverRequestDetail = () => {
   };
 
   const handleApprove = () => {
-    approveMutation.mutate("", {
-      onSuccess: (details) => {},
-      onError: (error) => {},
-    });
+    approveMutation.mutate(
+      { assignmentId: "", status: "approved", feedback: "" },
+      {
+        onSuccess: (details) => {
+          setStatus(true);
+          setState((prev) => ({ ...prev, open: true }));
+        },
+        onError: (error) => {
+          setState((prev) => ({ ...prev, open: true }));
+          setStatus(false);
+          setSnackMessage(
+            "Failed to Approve Drivers Request. Please try again"
+          );
+        },
+      }
+    );
   };
   const handleReject = () => {
-    rejectMutation.mutate("", {
-      onSuccess: (details) => {},
-      onError: (error) => {},
-    });
+    rejectMutation.mutate(
+      { assignmentId: "", status: "rejected", feedback: "" },
+      {
+        onSuccess: (details) => {
+          setStatus(true);
+          setState((prev) => ({ ...prev, open: true }));
+          setSnackMessage(
+            "Drivers Request Rejected"
+          );
+        },
+        onError: (error) => {
+          setState((prev) => ({ ...prev, open: true }));
+          setStatus(false);
+          setSnackMessage(
+            "Failed to Reject Drivers Request. Please try again"
+          );
+        },
+      }
+    );
   };
 
   return (
@@ -113,7 +147,6 @@ const DriverRequestDetail = () => {
                       <div className="flex flex-wrap gap-4">
                         <video
                           src={src} // Replace with video thumbnail or use a <video> tag with poster
-                          
                           alt="Video thumbnail"
                           className="w-32 h-48 object-cover rounded cursor-pointer hover:scale-105 transition"
                           onClick={() => openModal(src)} // Replace with your video URL
@@ -176,7 +209,7 @@ const DriverRequestDetail = () => {
                         </button>
                         <button
                           className="md:py-3 py-1 md:px-5 px-4 bg-red-400 text-white bdrs12 font-semibold"
-                          onClick={handeRejectClick}
+                          onClick={handleRejectClick}
                         >
                           Reject
                         </button>
@@ -200,6 +233,7 @@ const DriverRequestDetail = () => {
           </div>
           {/* End .dashboard__main */}
         </div>
+        <StatusSnackbar message={snackMessage} state={state} status={status} />
       </div>
       {/* dashboard_content_wrapper */}
     </>

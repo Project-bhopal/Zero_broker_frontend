@@ -74,6 +74,7 @@ function DriversRequestsAcceptedDataTable() {
               <div className="flex flex-col justify-center items-center py-5">
                 <a className="">{property.seller.fullname}</a>
                 <a className="">{property.seller.email}</a>
+                <a className="">{property.seller.mobile}</a>
               </div>
               </td>
               <td className="vam">{formatDate(property.createdAt)}</td>

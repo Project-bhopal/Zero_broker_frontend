@@ -11,6 +11,8 @@ import StatusSnackbar from "@/components/Snackbar/Snackbar";
 import { useRouter } from "next/navigation";
 
 const AddPropertyTabContent = ({params}) => {
+  const [driver, setDriver] = useState();
+  const [snackMessage, setSnackMessage] = useState("Property Created Successfully")
   const [data, setData] = useState({
     requested_id : params.id,
     developer_notes : {}
@@ -18,24 +20,36 @@ const AddPropertyTabContent = ({params}) => {
   const [error, setError] = useState('')
   const [tags, setTags] = useState("")
   const [tagsArray, setTagsArray] = useState([])
-  const [status, setStatus] = useState(null)
+  const [status, setStatus] = useState(true)
   const [state, setState] = useState({
       open: false,
       vertical: "top",
       horizontal: "center",
   });
   const router = useRouter()
-
+  const driverMutation = useAxiosPost(`/driver/assign`)
   const mutation = useAxiosPost("/property/create", {
     onSuccess: (details) => {
       console.log("Property created successfully:", details);
       setState((prev) =>({...prev, open: true}))
       setStatus(true)
-      router.push("/dashboard/agent/property-listed-by-me")
+      driverMutation.mutate({propertyId : details?.data?.property?._id, driverId : driver?.value}, {
+        onSuccess: (details) =>{
+          console.log("assigned to driver" , details.data)
+          router.push("/dashboard/agent/property-listed-by-me")
+          setState((prev) =>({...prev, open: true}))
+          setSnackMessage(`Property Assigned to Driver Successfully`)
+        },
+        onError : (error) =>{
+          console.log("failed to assign driver", error)
+          setState((prev) =>({...prev, open: true}))
+        }
+      })
     },
     onError: (error) => {
       console.error("Error creating Property:", error.response.data.message);
       setError(error.response.data.message)
+      setSnackMessage("Failed to Create Property")
       setStatus(false)
       setState((prev) =>({...prev, open: true}))
 
@@ -183,10 +197,12 @@ const AddPropertyTabContent = ({params}) => {
           aria-labelledby="nav-item2-tab"
         >
           <UploadMedia
-          data={data}
+          propData={data}
             setData={
               setData
             }
+            setDriver={setDriver}
+            driver={driver}
           />
         </div>
         
@@ -297,7 +313,7 @@ const AddPropertyTabContent = ({params}) => {
         </div>
         
       </div>
-      <StatusSnackbar message={"Property Created Successfully"} state={state} status={status}/>
+      <StatusSnackbar message={snackMessage} state={state} status={status}/>
     </>
   );
 };

@@ -4,9 +4,13 @@ import dynamic from "next/dynamic";
 import PhotoUpload from "./PhotoUpload";
 import VideoUpload from "./VideoUpload";
 import MapPin from "./MapPin";
+import { ApiPutRequest } from "@/axios/apiRequest";
+import StatusSnackbar from "@/components/Snackbar/Snackbar";
 
 const UploadMedia = () => {
   const [saved, setSaved] = useState(false);
+  const [snackMessage, setSnackMessage] = useState("Media and Location Uploaded Successfully")
+  const [status, setStatus] = useState(true)
   const [images, setImages] = useState([]);
   const [videos, setVideos] = useState([]);
   const [locations, setLocations] = useState({
@@ -16,8 +20,12 @@ const UploadMedia = () => {
   const [files, setFiles] = useState({
     images: [],
     videos: [],
-    virtual_tour_available: false,
   });
+    const [state, setState] = useState({
+        open: false,
+        vertical: "top",
+        horizontal: "center",
+    });
 
   useEffect(() => {
     setFiles((prev) => ({
@@ -27,15 +35,30 @@ const UploadMedia = () => {
     }));
   }, [images, videos]);
 
-  const handleFilesSubmit = (e) => {
+  
+  const handleFilesSubmit = async(e) => {
     e.preventDefault();
     if (!files) {
       console.error("Files object is missing.");
       return;
     }
+    if (!locations.latitude && !locations.longitude) {
+      console.error("Please fill Longitude and Latitude.");
+      return;
+    }
 
     setSaved(true);
-    console.log("files :", files);
+    // console.log("files :", {assignmentId : "",media : files, longitude : locations.longitude, latitude : locations.latitude});
+    const response  = await ApiPutRequest(`/driver/upload`, {assignmentId : "",media : files, longitude : locations.longitude, latitude : locations.latitude})
+    console.log(response)
+    if(response.status !== 200){
+      setState((prev) =>({...prev, open: true}))
+      setStatus(false)
+      setSnackMessage("Failed to upload Media and Location. Please try again")
+      return
+    }
+    setStatus(true)
+    setState((prev) =>({...prev, open: true}))
   };
 
   const handleChange = (e) =>{
@@ -66,7 +89,7 @@ const UploadMedia = () => {
         <div className="col-sm-12">
           <div className="mb20 mt30">
             <label className="heading-color ff-heading fw600 mb30">
-              Place the listing pin on the map
+              Select the Location on the map or fill Latitude and Longitude field
             </label>
             <MapPin setLocations={setLocations} />
           </div>
@@ -109,22 +132,16 @@ const UploadMedia = () => {
           <div className="flex justify-end">
             <button
               type="submit"
-              disabled={saved}
               className={`ud-btn ${
                 saved ? "btn-thm" : "btn-white2"
               } duration-200 flex`}
             >
-              {saved ? (
-                <>
-                  Files Saved<i className="fa fa-check-circle rotate-45"></i>
-                </>
-              ) : (
-                <> Save Files </>
-              )}
+              Submit
             </button>
           </div>
         )}
       </form>
+      <StatusSnackbar message={snackMessage} state={state} status={status}/>
     </div>
   );
 };

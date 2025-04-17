@@ -43,7 +43,6 @@ function MediaRequestAcceptedDataTable() {
         <thead className="t-head">
           <tr>
             <th scope="col">Property Name</th>
-            <th scope="col">Seller Name</th>
             <th scope="col">Assigned By</th>
             <th scope="col">Requested Date</th>
             <th scope="col">Accepted Date</th>
@@ -76,12 +75,7 @@ function MediaRequestAcceptedDataTable() {
                 <a className="">{property.seller.fullname}</a>
                 <a className="">{property.seller.email}</a>
               </div>
-              <td className="vam">
-              <div className="flex flex-col justify-center items-center py-5">
-                <a className="">{property.seller.fullname}</a>
-                <a className="">{property.seller.email}</a>
-              </div>
-              </td>
+              
               </td>
               <td className="vam">{formatDate(property.createdAt)}</td>
               <td className="vam">

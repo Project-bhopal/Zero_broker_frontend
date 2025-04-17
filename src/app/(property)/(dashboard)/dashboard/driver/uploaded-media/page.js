@@ -7,12 +7,9 @@ import SidebarDashboard from "@/components/property/dashboard/SidebarDashboard";
 import FilterHeader from "@/components/property/dashboard/dashboard-my-properties/FilterHeader";
 import PackageDataTable from "@/components/property/dashboard/dashboard-package/PackageDataTable";
 import MediaRequestAcceptedDataTable from "@/components/property/dashboard/driver/MediaRequestAcceptedDataTable";
+import MediaRequestRejectedDataTable from "@/components/property/dashboard/driver/MediaRequestRejectedDataTable";
 import MediaRequestsDataTable from "@/components/property/dashboard/driver/MediaRequestsDataTable";
 import { useState } from "react";
-
-// export const metadata = {
-//   title: "Dashboard Requests || ZeroBroker - Real Estate NextJS Template",
-// };
 
 const UploadedMediaRequests = () => {
   const [showTable, setShowTable] = useState("Pending")
@@ -46,8 +43,7 @@ const UploadedMediaRequests = () => {
               <div className="row align-items-center pb40">
                 <div className="col-xxl-3">
                   <div className="dashboard_title_area">
-                    <h2>Seller's Requests</h2>
-                    <p className="text">We are glad to see you again!</p>
+                    <h2>Your Requests</h2>
                   </div>
                 </div>
               </div>
@@ -66,6 +62,9 @@ const UploadedMediaRequests = () => {
                       )}  
                       {showTable === "Accepted"&&(
                         <MediaRequestAcceptedDataTable/>
+                      )}
+                      {showTable === "Rejected"&&(
+                        <MediaRequestRejectedDataTable/>
                       )}
 
                       

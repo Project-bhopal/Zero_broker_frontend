@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
-function AssignedPropertiesDataTable({assignments, setShowTable}) {
-    const [requestData, setRequestData] = useState([]);
+function AssignmentAcceptedDataTable({assignments}) {
+    const [acceptedData, setAcceptedData] = useState([]);
     const router = useRouter();
   
   
@@ -15,13 +15,10 @@ function AssignedPropertiesDataTable({assignments, setShowTable}) {
   
     useEffect(() => {
         if (data) {
-          setRequestData(data.data);
+          setAcceptedData(data?.data);
         }
-      }, [data]);
+      }, [data !== undefined]);
     
-      useEffect(() => {
-        console.log(requestData);
-      }, [requestData]);
     
     function formatDate(dateString) {
       if (!dateString) return "Invalid Date"; // Handle empty or undefined input
@@ -36,19 +33,7 @@ function AssignedPropertiesDataTable({assignments, setShowTable}) {
       return `${day}/${month}/${year}`; // Returns DD/MM/YYYY
     }
   
-    
-  const handleAcceptclick = async (value)=>{
-    const response = await ApiPutRequest(`/driver/respond`, {assignmentId : "", response : value})
-    if(response.status == 200){
-      setShowTable("Accepted")
-    }
-  }
-  const handleRejectclick = async (value)=>{
-    const response = await ApiPutRequest(`/driver/respond`, {assignmentId : "", response : value})
-    if(response.data){
-      router.refresh()
-    }
-  }
+  
   
     return (
       <table className="table-style3 table at-savesearch">
@@ -56,14 +41,14 @@ function AssignedPropertiesDataTable({assignments, setShowTable}) {
           <tr>
             <th scope="col">Property Name</th>
             <th scope="col">Assigned By</th>
-            <th scope="col">Assigned Date</th>
+            <th scope="col">Accepted Date</th>
             <th scope="col">Action</th>
             {/* <th scope="col">Created</th>
             <th scope="col">Action</th> */}
           </tr>
         </thead>
         <tbody className="t-body">
-          {requestData?.map((property, index) => (
+          {acceptedData?.map((property, index) => (
             <tr key={index}>
               <th scope="row">
                 <div className="listing-style1 dashboard-style d-xxl-flex align-items-center mb-0">
@@ -93,7 +78,8 @@ function AssignedPropertiesDataTable({assignments, setShowTable}) {
               </td>
               <td className="vam">
                 <span>
-                  <button
+                  <Link
+                  href={`/dashboard/driver/add-Media/1`}
                   className="py-2 px-4 hover:bg-[#0f8363] border-1 border-[#0f8363] text-[#0f8363] hover:text-white font-semibold rounded-xl"
                   style={{
                     backgroundColor: '#0f8363',
@@ -101,22 +87,9 @@ function AssignedPropertiesDataTable({assignments, setShowTable}) {
                     fontSize: "14px",
                     color: 'white'
                   }}
-                  onClick={()=>{handleAcceptclick("accept")}}
                 >
-                  Accept
-                </button>
-                  <button
-                  className="py-2 px-4 hover:bg-[#0f8363] border-1 border-[#0f8363] text-[#0f8363] hover:text-white font-semibold rounded-xl"
-                  style={{
-                    backgroundColor: '#0f8363',
-                    borderRadius: "10px",
-                    fontSize: "14px",
-                    color: 'white'
-                  }}
-                  onClick={()=>{handleRejectclick("decline")}}
-                >
-                  Decline
-                </button>
+                  Upload
+                </Link>
                 </span>
               </td>
               {/* <td className="vam">
@@ -142,4 +115,4 @@ function AssignedPropertiesDataTable({assignments, setShowTable}) {
     );
   }
 
-export default AssignedPropertiesDataTable
+export default AssignmentAcceptedDataTable
