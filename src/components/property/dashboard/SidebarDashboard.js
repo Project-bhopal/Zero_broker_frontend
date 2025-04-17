@@ -19,6 +19,8 @@ const SidebarDashboard = () => {
       // setRole("agent")
     },[])
 
+    
+
 
   const buyersidebarItems = [
     {
@@ -312,10 +314,10 @@ const SidebarDashboard = () => {
   return (
     <div className="dashboard__sidebar d-none d-lg-block">
       <div className="dashboard_sidebar_list">
-        {role === "seller"||role === "buyer"&&<div className="mb-5 space-y-3">
+        {role === "seller" || role === "buyer"?(<div className="mb-5 space-y-3">
         <label>Switch Account</label>
         <RoleSwitch role={role}/>
-        </div>}
+        </div>): ""}
         {role === "seller"&&sellersidebarItems.map((section, sectionIndex) => (
           <div key={sectionIndex}>
             <p

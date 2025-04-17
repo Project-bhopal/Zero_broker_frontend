@@ -1,8 +1,9 @@
-import { useState } from "react";
+"use client"
+import { forwardRef, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import styles from "../../../public/css/AnimatedModal.module.css"
 
-const AnimatedModal = ({ show, handleClose }) => {
+const AnimatedModal = forwardRef(({ show, handleClose }, ref) => {
   const [selectedRole, setSelectedRole] = useState(null);
   const [selectedInterestedIn, setSelectedInterestedIn] = useState(null);
 
@@ -22,7 +23,7 @@ const AnimatedModal = ({ show, handleClose }) => {
   }
 
   return (
-    <Modal show={show} onHide={handleClose} centered>
+    <Modal ref={ref} show={show} onHide={handleClose} centered>
       <Modal.Body className={styles.modalBody}>
         <h4 className="text-center mb-4">Continue as {selectedRole}</h4>
 
@@ -57,6 +58,6 @@ const AnimatedModal = ({ show, handleClose }) => {
       </Modal.Body>
     </Modal>
   );
-};
+});
 
 export default AnimatedModal;

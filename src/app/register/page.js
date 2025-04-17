@@ -1,11 +1,9 @@
+"use client"
 import SignUp from "@/components/common/login-signup-modal/SignUp";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-export const metadata = {
-  title: "Register  || ZeroBroker - Real Estate NextJS Template",
-};
 
 const Register = () => {
 

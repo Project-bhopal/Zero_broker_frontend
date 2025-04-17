@@ -3,21 +3,26 @@ import { usePost } from "@/hooks/usePost";
 import { Box, Snackbar } from "@mui/material";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import GoogleAuth from "../google-oauth/GoogleOauth";
 import Cookies from "js-cookie";
 import WelcomeModal from "../WelcomeModal";
 import AnimatedModal from "../AnimatedModal";
-import { Modal } from "bootstrap";
+// import { Modal } from "bootstrap";
 import { useUserStore } from "@/store/store";
+import dynamic from "next/dynamic";
+
+const Modal = dynamic(() => import("bootstrap"), { ssr: false });
 
 const SignUp = () => {
+  const modalRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [state, setState] = useState({
     open: false,
     vertical: "top",
     horizontal: "center",
   });
+  
   const [show, setShow] = useState(false);
   const [data, setData] = useState({
     fullname: "",
@@ -45,22 +50,23 @@ const SignUp = () => {
       const role = localStorage.getItem("role");
       localStorage.clear()
 
-      const modalElement = document.getElementById("loginSignupModal");
-      if (modalElement) {
-        const modalInstance =  Modal.getInstance(modalElement);
+      if (modalRef.current) {
+        const modalInstance = Modal.getInstance(modalRef.current);
         if (modalInstance) {
           modalInstance.hide();
-          
         }
       }
-        // Manually remove the backdrop if it remains
-        const modalBackdrops = document.querySelectorAll(".modal-backdrop");
-        modalBackdrops.forEach((backdrop) => backdrop.remove());
-      document.getElementById("loginSignupModal")?.addEventListener("hidden.bs.modal", () => {
-        document.body.classList.remove("modal-open");
-        document.body.style.overflow = "";
-        document.body.style.paddingRight = "";
-      });
+    //  Manually remove the backdrop if it remains
+      const modalBackdrops = document.querySelectorAll(".modal-backdrop");
+      modalBackdrops.forEach((backdrop) => backdrop.remove());
+
+      if (modalRef.current) {
+        modalRef.current.addEventListener("hidden.bs.modal", () => {
+          document.body.classList.remove("modal-open");
+          document.body.style.overflow = "";
+          document.body.style.paddingRight = "";
+        });
+      }
 
       if (!token && !firstVisit && !role) {
         setTimeout(() => {
@@ -71,6 +77,9 @@ const SignUp = () => {
       }
     }
   }, []);
+
+
+  
 
   const validateInput = (name, value) => {
     let error = "";
@@ -296,7 +305,7 @@ const SignUp = () => {
         />
       </Box>
       {/* <WelcomeModal showModal={showModal} setShowModal={setShowModal} /> */}
-      <AnimatedModal show={showModal} handleClose={() => setShowModal(false)} />
+      <AnimatedModal show={showModal} handleClose={() => setShowModal(false)} ref={modalRef}/>
     </>
   );
 };

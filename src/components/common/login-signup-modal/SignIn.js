@@ -2,13 +2,17 @@
 import { usePost } from "@/hooks/usePost";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import GoogleAuth from "../google-oauth/GoogleOauth";
 import Loader from "../Loader";
-import { Modal } from "bootstrap";
+// import { Modal } from "bootstrap";
 import { useUserStore } from "@/store/store";
+import dynamic from "next/dynamic";
+const Modal = dynamic(() => import("bootstrap"), { ssr: false });
 
 const SignIn = () => {
+  const modalRef = useRef(null);
+  const modalInstanceRef = useRef(null);
   const [show, setShow] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isEmailVerified, setIsEmailVerified] = useState(true);
@@ -21,6 +25,18 @@ const SignIn = () => {
   });
   const router = useRouter();
   const { setUser } = useUserStore();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      import("bootstrap").then(({ Modal }) => {
+        const modalElement = document.getElementById("loginSignupModal");
+        if (modalElement) {
+          modalRef.current = modalElement;
+          modalInstanceRef.current = Modal.getOrCreateInstance(modalElement);
+        }
+      });
+    }
+  }, []);
 
   const mutation = usePost("/auth/login");
   const inputHandler = (e) => {
@@ -46,61 +62,111 @@ const SignIn = () => {
     }
   };
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   setIsLoading(true);
+  //   mutation.mutate(data, {
+  //     onSuccess: (details) => {
+  //       localStorage.removeItem("id")
+  //       console.log(details);
+  //       setUser(details.data);
+  //       const modalElement = document.getElementById("loginSignupModal");
+  //       if (modalElement) {
+  //         const modalInstance = Modal.getInstance(modalElement);
+  //         if (modalInstance) {
+  //           modalInstance.hide();
+  //         }
+  //       }
+
+  //       // Manually remove the backdrop if it remains
+  //       const modalBackdrops = document.querySelectorAll(".modal-backdrop");
+  //       modalBackdrops.forEach((backdrop) => backdrop.remove());
+  //       document.getElementById("loginSignupModal")
+  //         ?.addEventListener("hidden.bs.modal", () => {
+  //           document.body.classList.remove("modal-open");
+  //           document.body.style.overflow = "";
+  //           document.body.style.paddingRight = "";
+  //           window.location.reload();
+  //         });
+
+  //       if (!details.data.isVerified) {
+  //         sessionStorage.setItem("e", data.email);
+
+  //         setIsLoading(false);
+  //         setIsEmailVerified(false);
+  //         setError("Your Email is not Verified first verify your email");
+  //         sessionStorage.setItem("ot", "varification");
+  //       } else if (details.data.isVerified) {
+  //         localStorage.setItem("name" , details.data.full_name)
+  //         localStorage.setItem("id" , details.data.user_id)
+
+  //         router.push("/");
+  //         localStorage.setItem("loginSuccessfull", "true");
+  //         setIsLoading(false);
+  //       }
+  //       setIsLoading(false);
+  //     },
+  //     onError: (error) => {
+  //       console.error("Error creating user", error);
+  //       setIsLoading(false);
+  //       setError(
+  //         error.response.data.error.message || error.response.data.error.message
+  //       );
+  //     },
+  //   });
+  // };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
+
     mutation.mutate(data, {
       onSuccess: (details) => {
-        localStorage.removeItem("id")
-        console.log(details);
-        
+        localStorage.removeItem("id");
         setUser(details.data);
-        const modalElement = document.getElementById("loginSignupModal");
-        if (modalElement) {
-          const modalInstance = Modal.getInstance(modalElement);
-          if (modalInstance) {
-            modalInstance.hide();
-          }
+
+        // ✅ Safe Modal handling
+        if (modalInstanceRef.current) {
+          modalInstanceRef.current.hide();
         }
 
-        // Manually remove the backdrop if it remains
+        // Cleanup backdrop manually
         const modalBackdrops = document.querySelectorAll(".modal-backdrop");
         modalBackdrops.forEach((backdrop) => backdrop.remove());
-        document
-          .getElementById("loginSignupModal")
-          ?.addEventListener("hidden.bs.modal", () => {
-            document.body.classList.remove("modal-open");
-            document.body.style.overflow = "";
-            document.body.style.paddingRight = "";
-            window.location.reload();
-          });
+
+        modalRef.current?.addEventListener("hidden.bs.modal", () => {
+          document.body.classList.remove("modal-open");
+          document.body.style.overflow = "";
+          document.body.style.paddingRight = "";
+          window.location.reload();
+        });
 
         if (!details.data.isVerified) {
           sessionStorage.setItem("e", data.email);
+          sessionStorage.setItem("ot", "varification");
 
           setIsLoading(false);
           setIsEmailVerified(false);
-          setError("Your Email is not Verified first verify your email");
-          sessionStorage.setItem("ot", "varification");
-        } else if (details.data.isVerified) {
-          localStorage.setItem("name" , details.data.full_name)
-          localStorage.setItem("id" , details.data.user_id)
+          setError("Your Email is not Verified. Please verify your email.");
+        } else {
+          localStorage.setItem("name", details.data.full_name);
+          localStorage.setItem("id", details.data.user_id);
+          localStorage.setItem("loginSuccessfull", "true");
 
           router.push("/");
-          localStorage.setItem("loginSuccessfull", "true");
           setIsLoading(false);
         }
-        setIsLoading(false);
       },
       onError: (error) => {
-        console.error("Error creating user", error);
         setIsLoading(false);
+        console.error("Login error:", error);
         setError(
-          error.response.data.error.message || error.response.data.error.message
+          error.response?.data?.error?.message || "Something went wrong."
         );
       },
     });
   };
+
 
   return (
     <form className="form-style1" onSubmit={handleSubmit}>
