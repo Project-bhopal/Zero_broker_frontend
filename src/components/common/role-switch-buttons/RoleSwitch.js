@@ -1,4 +1,5 @@
 'use client';
+import { ApiPutRequest } from '@/axios/apiRequest';
 import useAxiosPost from '@/hooks/useAxiosPost';
 import { useState } from 'react';
 
@@ -7,18 +8,13 @@ export default function RoleSwitch({role}) {
 
   const roles = ['seller', 'buyer'];
 
-    const mutation = useAxiosPost(``);
-
+  
   const handleRoleChange = async (role) => {
     setSelectedRole(role);
-    mutation.mutate(role, {
-        onSuccess: (details)=> {
-            console.log(details)
-        },
-        onError : (error)=> {
-            console.log(error)
-        }
-    })
+    const response  = await ApiPutRequest(`/auth/change-role`);
+    if(response.status == 200){
+      window.location.reload();
+    }
   };
 
   return (
