@@ -21,7 +21,7 @@ function StatusSnackbar({message, state, status}) {
           }
           sx={{
             "& .MuiSnackbarContent-root": {
-              backgroundColor: `${status ?  "#fb2c36" : "#068662"}`,
+              backgroundColor: `${status ?  "#0f8363" : "#FB2C36"}`,
               color: "white",
               fontWeight: "bold",
             },

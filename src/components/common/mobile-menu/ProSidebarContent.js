@@ -22,26 +22,26 @@ const ProSidebarContent = () => {
       url: pageRoutes.rent.propertyForRent,
       submenu: false,
     },
-    {
-      name: "Commercial",
-      url: "/",
-      submenu: false,
-    },
+    // {
+    //   name: "Commercial",
+    //   url: "/",
+    //   submenu: false,
+    // },
     {
       name: "New projects",
       url: pageRoutes.propertys,
       submenu: false,
     },
-    {
-      name: "Find agent",
-      url: "/",
-      submenu: false,
-    },
-    {
-      name: "News",
-      url: "/",
-      submenu: false,
-    },
+    // {
+    //   name: "Find agent",
+    //   url: "/",
+    //   submenu: false,
+    // },
+    // {
+    //   name: "News",
+    //   url: "/",
+    //   submenu: false,
+    // },
   ];
 
   return (

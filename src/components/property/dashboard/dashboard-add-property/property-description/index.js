@@ -92,7 +92,7 @@ const PropertyDescription = ({ setData,  }) => {
           <div className="col-sm-6 col-xl-4">
             <div className="mb30">
               <label className="heading-color ff-heading fw600 mb10">
-                Price in {"$"}
+                Price in {description?.currency?.value}
               </label>
               <input
                 type="number"

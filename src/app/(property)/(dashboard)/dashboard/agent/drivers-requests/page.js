@@ -6,8 +6,6 @@ import Footer from "@/components/property/dashboard/Footer";
 import SidebarDashboard from "@/components/property/dashboard/SidebarDashboard";
 import DriversRequestsDataTable from "@/components/property/dashboard/agent/DriversRequestsDataTable";
 import DriversRequestsAcceptedDataTable from "@/components/property/dashboard/agent/DriversRquestsAcceptedDataTable";
-import RequestsDataTable from "@/components/property/dashboard/dashboard-property-requests/RequestsDataTable";
-import RequestedAcceptedByMeDataTable from "@/components/property/dashboard/dashboard-request-accepted-by-me/RequestedAcceptedByMeDataTable";
 import { useState } from "react";
 
 const DashboardRequests = () => {

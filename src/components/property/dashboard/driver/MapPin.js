@@ -28,7 +28,6 @@ const MapPin = ({setLocations}) => {
         longitude: e.latLng.lng(),
     })
   };
-  console.log(marker)
   if (!isLoaded) return <div>Loading...</div>;
 
   return (

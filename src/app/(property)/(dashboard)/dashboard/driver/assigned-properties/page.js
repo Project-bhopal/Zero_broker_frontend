@@ -5,14 +5,17 @@ import DboardMobileNavigation from "@/components/property/dashboard/DboardMobile
 import Footer from "@/components/property/dashboard/Footer";
 import SidebarDashboard from "@/components/property/dashboard/SidebarDashboard";
 import AssignedPropertiesDataTable from "@/components/property/dashboard/driver/AssignedPropertiesDataTable";
+import AssignmentAcceptedDataTable from "@/components/property/dashboard/driver/AssignmentAcceptedDataTable";
+import useAxiosFetch from "@/hooks/useAxiosFetch";
 import { useState } from "react";
 
-// export const metadata = {
-//   title: "Dashboard Requests || ZeroBroker - Real Estate NextJS Template",
-// };
 
 const AssignedProperties = () => {
   const [showTable, setShowTable] = useState("Pending")
+
+  const {data, error , isLoading, isError} = useAxiosFetch(`/driver/`)
+  console.log(data?.data)
+
   return (
     <>
       {/* Main Header Nav */}
@@ -43,17 +46,26 @@ const AssignedProperties = () => {
               <div className="row align-items-center pb40">
                 <div className="col-xxl-3">
                   <div className="dashboard_title_area">
-                    <h2>Seller's Requests</h2>
-                    <p className="text">We are glad to see you again!</p>
+                    <h2>Assigned Properties</h2>
                   </div>
                 </div>
               </div>
               {/* End .row */}
+              <div className="flex  justify-self-end gap-2 me-3 mb-5">
+                <button className={`ud-btn btn-${showTable === 'Pending' ? 'thm' : 'white'}`} onClick={()=>{setShowTable("Pending")}}>Assigned</button>
+                <button className={`ud-btn btn-${showTable === 'Accepted' ? 'thm' : 'white'}`} onClick={()=>{setShowTable("Accepted")}}>Accepted</button>
+              </div>
               <div className="row">
-                <div className="col-xl-12">
+                <div className="col-xl-12 min-h-[50vh]">
                   <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                     <div className="packages_table table-responsive"> 
-                        <AssignedPropertiesDataTable/>
+                        
+                        {showTable === "Pending"&&(
+                        <AssignedPropertiesDataTable assignments={data?.data} setShowTable={setShowTable}/>
+                      )}  
+                      {showTable === "Accepted"&&(
+                        <AssignmentAcceptedDataTable/>
+                      )}
                     </div>
                   </div>
                 </div>

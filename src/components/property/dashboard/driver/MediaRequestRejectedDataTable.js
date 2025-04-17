@@ -1,19 +1,17 @@
 "use client";
-import { ApiPostRequest, ApiPutRequest } from "@/axios/apiRequest";
+import { ApiFetchRequest, ApiPutRequest } from "@/axios/apiRequest";
 import useAxiosFetch from "@/hooks/useAxiosFetch";
-import useAxiosPost from "@/hooks/useAxiosPost";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-const api_url = process.env.NEXT_PUBLIC_API_BASE_URL;
+import React, { useEffect, useState } from "react";
 
-function DriversRequestsDataTable({setShowTable}) {
+function MediaRequestRejectedDataTable() {
   const [requestData, setRequestData] = useState([]);
   const router = useRouter();
 
- 
-    const { data, isLoading, isError, error } = useAxiosFetch("/requestproperty/accepted-by-me");
- 
+  const { data, isLoading, isError, error } = useAxiosFetch(
+    "/requestproperty/accepted-by-me"
+  );
 
   useEffect(() => {
     if (data) {
@@ -24,7 +22,7 @@ function DriversRequestsDataTable({setShowTable}) {
   useEffect(() => {
     console.log(requestData);
   }, [requestData]);
-  
+
   function formatDate(dateString) {
     if (!dateString) return "Invalid Date"; // Handle empty or undefined input
 
@@ -38,25 +36,18 @@ function DriversRequestsDataTable({setShowTable}) {
     return `${day}/${month}/${year}`; // Returns DD/MM/YYYY
   }
 
-  async function handleAcceptClick(id) {
-    const response = await ApiPutRequest(`/requestproperty/accept/${id}`)
-    // console.log(response.data.status)
-    if(response.data.status == "success"){
-      setShowTable("Accepted")
-      window.location.reload();
-      
-    }
-  }
-
-
   return (
     <table className="table-style3 table at-savesearch">
       <thead className="t-head">
         <tr>
           <th scope="col">Property Name</th>
-          <th scope="col">Requested By</th>
-          <th scope="col">Requested</th>
-          <th scope="col">Action</th>
+          <th scope="col">Assigned By</th>
+          <th scope="col">Requested Date</th>
+          <th scope="col">Rejected Date</th>
+          <th scope="col">Reason</th>
+
+          {/* <th scope="col">Created</th>
+            <th scope="col">Action</th> */}
         </tr>
       </thead>
       <tbody className="t-body">
@@ -78,29 +69,19 @@ function DriversRequestsDataTable({setShowTable}) {
                 </div>
               </div>
             </th>
-            <td className="vam">
-            <div className="flex flex-col justify-center items-center py-5">
-              <a className="">{property.seller.fullname}</a>
-              <a className="">{property.seller.email}</a>
-              <a className="">{property.seller.mobile}</a>
-            </div>
-            </td>
+
             <td className="vam">{formatDate(property.createdAt)}</td>
             <td className="vam">
-              <div className="flex gap-2">
-                <button
-                  className="py-1 px-3  hover:bg-[#0f8363] border-1 border-[#0f8363] text-[#0f8363] hover:text-white font-semibold rounded-xl"
-                  style={{
-                    borderRadius: "10px",
-                    fontSize: "14px",
-                  }}
-                  onClick={()=>{
-                    router.push(`/dashboard/agent/driver-request-detail/${"1"}`)
-                  }}
-                >
-                  View
-                </button>
-            
+              <span>{formatDate(property.rejectedData)}</span>
+            </td>
+            <td className="vam">
+              <div className="flex gap-2 items-center">
+                <div className="relative group cursor-pointer">
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                  <div className="absolute left-6 top-1/2 -translate-y-1/2 w-max px-2 py-1 text-sm bg-gray-700 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    This is your helpful message!
+                  </div>
+                </div>
               </div>
             </td>
           </tr>
@@ -110,4 +91,4 @@ function DriversRequestsDataTable({setShowTable}) {
   );
 }
 
-export default DriversRequestsDataTable;
+export default MediaRequestRejectedDataTable;

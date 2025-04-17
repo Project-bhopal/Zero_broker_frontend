@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import UploadPhotoGallery from "./UploadPhotoGallery";
 import VideoOptionFiled from "./VideoOptionFiled";
 import dynamic from "next/dynamic";
+import useAxiosFetch from "@/hooks/useAxiosFetch";
 const Select = dynamic(() => import("react-select"), { ssr: false });
 
-const UploadMedia = ({ setData, data }) => {
+const UploadMedia = ({ setData, propData, setDriver, driver }) => {
   const [saved, setSaved] = useState(false);
-  const [driver, setDriver] = useState("")
+  const [driversOptions, setDriversOptions] = useState([])
   const [images, setImages] = useState([]);
   const [videos, setVideos] = useState([]);
   const [files, setFiles] = useState({
@@ -21,25 +22,19 @@ const UploadMedia = ({ setData, data }) => {
     { value: "false", label: "No" },
   ];
 
-  const driversOptions = [
-    {
-      value: 1,
-      label: "Aman",
-    },
-    {
-      value: 2,
-      label: "Abhishek",
-    },
-    {
-      value: 3,
-      label: "Satyam",
-    },
-    {
-      value: 4,
-      label: "Hariom",
-    },
-  ];
+  const {data, error, isLoading, isError} = useAxiosFetch(`/agents/role/driver`)
+  
 
+  useEffect(()=>{
+    if(data){
+      console.log(data?.data?.data)
+      setDriversOptions(data?.data?.data?.map((driver, index) => ({
+        value: driver._id,
+        label: driver.fullname,
+      })))
+    }
+  },[data !== undefined]);
+  
   const handleDriverSelect = (selectedOption)=>{
     setDriver(selectedOption)
   }
@@ -72,9 +67,9 @@ const UploadMedia = ({ setData, data }) => {
     setSaved(false);
   };
 
-  useEffect(() => {
-    console.log("data :".data);
-  }, [data]);
+  // useEffect(() => {
+  //   console.log("propData :".propData);
+  // }, [propData]);
 
   const handleFilesSubmit = (e) => {
     e.preventDefault();
@@ -101,9 +96,7 @@ const UploadMedia = ({ setData, data }) => {
   };
 
   return (
-    <div className="ps-widget bgc-white bdrs12 p30 bg-[#ebfff9] overflow-hidden position-relative">
-      <h4 className="title fz17 mb30">Upload photos of your property</h4>
-      <form className="form-style1" onSubmit={handleFilesSubmit}>
+    <div className="ps-widget bgc-white bdrs12 p30 bg-[#ebfff9] min-h-[70vh] overflow-hidden position-relative">
         <div className="col-4 my-3">
           <label className="heading-color ff-heading fw600 mb10">
             Assign to Driver
@@ -122,12 +115,14 @@ const UploadMedia = ({ setData, data }) => {
             />
           </div>
         </div>
+        {!driver&&<><h4 className="title fz17 mb30">OR</h4>
+        <h4 className="title fz17 mb30">Upload photos of your property</h4>
+        <form className="form-style1" onSubmit={handleFilesSubmit}>
         <div className="row">
           <div className="col-lg-12">
             <UploadPhotoGallery setImages={setImages} />
           </div>
         </div>
-        {/* End col-12 */}
 
         <div className="col-sm-6 col-xl-4">
           <div className="mb20">
@@ -149,7 +144,6 @@ const UploadMedia = ({ setData, data }) => {
             </div>
           </div>
         </div>
-        {/* End .row */}
 
         <div className="row">
           <h4 className="title fz17 mb30">
@@ -180,7 +174,7 @@ const UploadMedia = ({ setData, data }) => {
             </button>
           </div>
         )}
-      </form>
+      </form></>}
     </div>
   );
 };
