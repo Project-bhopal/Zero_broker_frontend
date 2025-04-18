@@ -4,10 +4,11 @@ import dynamic from "next/dynamic";
 import PhotoUpload from "./PhotoUpload";
 import VideoUpload from "./VideoUpload";
 import MapPin from "./MapPin";
-import { ApiPutRequest } from "@/axios/apiRequest";
+import { ApiPostRequest, ApiPutRequest } from "@/axios/apiRequest";
 import StatusSnackbar from "@/components/Snackbar/Snackbar";
+import { useRouter } from "next/navigation";
 
-const UploadMedia = () => {
+const   UploadMedia = ({params}) => {
   const [saved, setSaved] = useState(false);
   const [snackMessage, setSnackMessage] = useState("Media and Location Uploaded Successfully")
   const [status, setStatus] = useState(true)
@@ -26,6 +27,7 @@ const UploadMedia = () => {
         vertical: "top",
         horizontal: "center",
     });
+    const router = useRouter()
 
   useEffect(() => {
     setFiles((prev) => ({
@@ -49,12 +51,13 @@ const UploadMedia = () => {
 
     setSaved(true);
     // console.log("files :", {assignmentId : "",media : files, longitude : locations.longitude, latitude : locations.latitude});
-    const response  = await ApiPutRequest(`/driver/upload`, {assignmentId : "",media : files, longitude : locations.longitude, latitude : locations.latitude})
+    const response  = await ApiPostRequest(`/driver/assignments/media`, {assignmentId : params.id, media : files, longitude : locations.longitude, latitude : locations.latitude})
     console.log(response)
     if(response.status !== 200){
       setState((prev) =>({...prev, open: true}))
       setStatus(false)
       setSnackMessage("Failed to upload Media and Location. Please try again")
+      router.push(`/dashboard/driver/uploaded-media`)
       return
     }
     setStatus(true)

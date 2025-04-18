@@ -3,8 +3,7 @@ import { usePropertyStore } from "@/store/store";
 import React from "react";
 
 
-const OverView = () => {
-  const {property}= usePropertyStore();
+const OverView = ({property}) => {
 
   const overviewData = [
     {

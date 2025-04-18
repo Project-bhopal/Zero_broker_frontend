@@ -1,8 +1,8 @@
 import { usePropertyStore } from "@/store/store";
 import React from "react";
 
-const PropertyDetails = () => {
-  const {property} = usePropertyStore();
+const PropertyDetails = ({property}) => {
+  
   const columns = [
     [
       // {

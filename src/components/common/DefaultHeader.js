@@ -412,7 +412,8 @@ const DefaultHeader = () => {
                                   <Image
                                     width={44}
                                     height={44}
-                                    src="/images/resource/user.png"
+                                    src="/images/profile/image.png"
+                                    className="cover w-[44px] h-[44px] object-top"
                                     alt="user.png"
                                   />
                                 </a>
@@ -510,7 +511,7 @@ const DefaultHeader = () => {
                                         ))}
                                       </div>
                                     ))}
-                                    {role === "admin"&&drivermenuItems.map((section, sectionIndex) => (
+                                    {role === "driver"&&drivermenuItems.map((section, sectionIndex) => (
                                       <div key={sectionIndex}>
                                         <p
                                           className={`fz15 fw400 ff-heading ${

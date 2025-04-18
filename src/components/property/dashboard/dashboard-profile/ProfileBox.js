@@ -27,8 +27,8 @@ const ProfileBox = ({ data, onChange}) => {
         <Image
           width={240}
           height={220}
-          className="w-100 cover h-100"
-          src={uploadedImage || "/images/listings/profile-1.jpg"}
+          className="w-100 cover object-top h-100"
+          src={data || uploadedImage || "/images/listings/profile-1.jpg"}
           alt="profile avatar"
         />
 

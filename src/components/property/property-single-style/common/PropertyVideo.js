@@ -3,9 +3,18 @@ import { usePropertyStore } from "@/store/store";
 import React, { useState } from "react";
 // import ModalVideo from "react-modal-video";
 
-const PropertyVideo = ({src}) => {
-  const [isOpen, setOpen] = useState(false);
-  const {property} = usePropertyStore();
+const PropertyVideo = ({property}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [videoUrl, setVideoUrl] = useState("");
+  const openModal = (url) => {
+    setVideoUrl(url);
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+    setVideoUrl("");
+  };
   return (
     <>
       {/* <ModalVideo
@@ -27,11 +36,31 @@ const PropertyVideo = ({src}) => {
         </div>
       </div> */}
           <video
-            src={src}
+            src={property?.developer_notes?.videos[0]}
             autoPlay
             muted
             className="h-52"
+            onClick={() => openModal(property?.developer_notes?.videos[0])}
           />
+          {/* Modal */}
+          {isOpen && (
+                        <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
+                          <div className="bg-white rounded-lg shadow-lg p-4 max-w-2xl w-full relative">
+                            <button
+                              onClick={closeModal}
+                              className="absolute top-2 right-2 text-gray-700 text-lg font-bold"
+                            >
+                              ✕
+                            </button>
+                            <video
+                              src={videoUrl}
+                              controls
+                              autoPlay
+                              className="w-full rounded-md h-96"
+                            />
+                          </div>
+                        </div>
+                      )}
     </>
   );
 };

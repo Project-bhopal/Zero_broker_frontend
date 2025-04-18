@@ -1,8 +1,7 @@
 import { usePropertyStore } from "@/store/store";
 import React from "react";
 
-const PropertyAddress = () => {
-  const {property} = usePropertyStore();
+const PropertyAddress = ({property}) => {
 
 
   return (

@@ -5,23 +5,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
-function AssignedPropertiesDataTable({assignments, setShowTable}) {
+function AssignedPropertiesDataTable({assignments,}) {
     const [requestData, setRequestData] = useState([]);
     const router = useRouter();
   
   
-    const { data, isLoading, isError, error } = useAxiosFetch("/requestproperty/accepted-by-me");
+    // const { data, isLoading, isError, error } = useAxiosFetch("/requestproperty/accepted-by-me");
           
-  
-    useEffect(() => {
-        if (data) {
-          setRequestData(data.data);
-        }
-      }, [data]);
-    
-      useEffect(() => {
-        console.log(requestData);
-      }, [requestData]);
+
     
     function formatDate(dateString) {
       if (!dateString) return "Invalid Date"; // Handle empty or undefined input
@@ -37,18 +28,6 @@ function AssignedPropertiesDataTable({assignments, setShowTable}) {
     }
   
     
-  const handleAcceptclick = async (value)=>{
-    const response = await ApiPutRequest(`/driver/respond`, {assignmentId : "", response : value})
-    if(response.status == 200){
-      setShowTable("Accepted")
-    }
-  }
-  const handleRejectclick = async (value)=>{
-    const response = await ApiPutRequest(`/driver/respond`, {assignmentId : "", response : value})
-    if(response.data){
-      router.refresh()
-    }
-  }
   
     return (
       <table className="table-style3 table at-savesearch">
@@ -63,20 +42,20 @@ function AssignedPropertiesDataTable({assignments, setShowTable}) {
           </tr>
         </thead>
         <tbody className="t-body">
-          {requestData?.map((property, index) => (
+          {assignments?.map((assignment, index) => (
             <tr key={index}>
               <th scope="row">
                 <div className="listing-style1 dashboard-style d-xxl-flex align-items-center mb-0">
                   <div className="list-content py-0 p-0 mt-2 mt-xxl-0 ps-xxl-4">
                     <div className="h6 list-title">
-                      <Link href={`/single-v1/${property._id}`}>
-                        {property.propertyName}
+                      <Link href={`/single-v1/${assignment.property._id}`}>
+                        {assignment.property.title}
                       </Link>
                     </div>
-                    <p className="list-text mb-0">{property.address}</p>
-                    <p className="list-text mb-0">{property.location}</p>
+                    <p className="list-text mb-0">{assignment.property.address}</p>
+                    {/* <p className="list-text mb-0">{property.location}</p> */}
                     <div className="list-price">
-                      <a href="#">{property.area} sqft</a>
+                      <a href="#">{assignment.property.price} sqft</a>
                     </div>
                   </div>
                 </div>
@@ -84,16 +63,17 @@ function AssignedPropertiesDataTable({assignments, setShowTable}) {
               
               <td className="vam">
               <div className="flex flex-col justify-center items-center py-5">
-                <a className="">{property.seller.fullname}</a>
-                <a className="">{property.seller.email}</a>
+                <a className="">{assignment.property.seller.fullname}</a>
+                <a className="">{assignment.property.seller.email}</a>
               </div>
               </td>
               <td className="vam">
-                <span>{formatDate(property.acceptedAt )}</span>
+                <span>{formatDate(assignment.assignedAt )}</span>
               </td>
               <td className="vam">
                 <span>
-                  <button
+                <Link
+                  href={`/dashboard/driver/add-media/${assignment._id}`}
                   className="py-2 px-4 hover:bg-[#0f8363] border-1 border-[#0f8363] text-[#0f8363] hover:text-white font-semibold rounded-xl"
                   style={{
                     backgroundColor: '#0f8363',
@@ -101,40 +81,11 @@ function AssignedPropertiesDataTable({assignments, setShowTable}) {
                     fontSize: "14px",
                     color: 'white'
                   }}
-                  onClick={()=>{handleAcceptclick("accept")}}
                 >
-                  Accept
-                </button>
-                  <button
-                  className="py-2 px-4 hover:bg-[#0f8363] border-1 border-[#0f8363] text-[#0f8363] hover:text-white font-semibold rounded-xl"
-                  style={{
-                    backgroundColor: '#0f8363',
-                    borderRadius: "10px",
-                    fontSize: "14px",
-                    color: 'white'
-                  }}
-                  onClick={()=>{handleRejectclick("decline")}}
-                >
-                  Decline
-                </button>
+                  Upload
+                </Link>
                 </span>
               </td>
-              {/* <td className="vam">
-                <div className="flex gap-2">
-                  <button
-                    className="py-1 px-2 bg-[#0f8363] text-white rounded-xl"
-                    style={{
-                      borderRadius: "10px",
-                      fontSize: "14px",
-                    }}
-                    onClick={() => {
-                      handleAcceptClick(property._id);
-                    }}
-                  >
-                    Accept
-                  </button>
-                </div>
-              </td> */}
             </tr>
           ))}
         </tbody>

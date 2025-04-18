@@ -33,7 +33,7 @@ const Home_V1 = () => {
 
       {/* Home Banner Style V1 */}
       <section
-        className="home-banner-style1 p0 overflow-hidden rounded-b-4xl "
+        className="home-banner-style1 p0 overflow-hidden sm:min-h-[80vh] min-h-[60vh] rounded-b-4xl "
         // style={{
         //   backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url('/images/background/homePageBanner.jpg')`,
         //   backgroundSize: "cover",
@@ -45,7 +45,7 @@ const Home_V1 = () => {
           loop
           muted
           playsInline
-          className="relative w-full h-full object-cover z-[-1]"
+          className="relative w-full min-h-[100vh] cover z-[-1]"
         >
           <source src="/video/videoplayback.mp4" type="video/mp4" />
           Your browser does not support the video tag.
@@ -53,14 +53,14 @@ const Home_V1 = () => {
         <div className="home-style1 absolute top-0 left-0 w-full h-full bg-black/70 z-0">
           <div className="container">
             <div className="row">
-              <div className="col-xl-11 mx-auto">
+              <div className="col-xl-11 col-md-12 mx-auto">
                 <Hero />
               </div>
             </div>
           </div>
           {/* End .container */}
 
-          <a href="#explore-property">
+          {/* <a href="#explore-property">
             <div className="mouse_scroll animate-up-4">
               <Image
                 width={20}
@@ -69,7 +69,7 @@ const Home_V1 = () => {
                 alt="scroll image"
               />
             </div>
-          </a>
+          </a> */}
         </div>
       </section>
       {/* End Home Banner Style V1 */}
@@ -144,9 +144,6 @@ const Home_V1 = () => {
             >
               <div className="main-title text-center">
                 <h2 className="title">See How ZeroBroker Can Help</h2>
-                <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
-                </p>
               </div>
             </div>
           </div>
@@ -160,14 +157,14 @@ const Home_V1 = () => {
       {/* End Explore Apartment */}
 
       {/* Featured Listings */}
-      <section className="bgc-f7 rounded-4xl mx-5">
+      <section className="bgc-f7 rounded-4xl md:mx-5">
         <div className="container">
           <div className="row align-items-center" data-aos="fade-up">
             <div className="col-lg-9">
               <div className="main-title2">
                 <h2 className="title">Discover Our Featured Listings</h2>
                 <p className="paragraph">
-                  Aliquam lacinia diam quis lacus euismod
+                  See Featured Listings
                 </p>
               </div>
             </div>

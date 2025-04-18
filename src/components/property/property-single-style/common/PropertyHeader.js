@@ -3,8 +3,7 @@
 import { usePropertyStore } from "@/store/store";
 import React from "react";
 
-const PropertyHeader = () => {
-  const {property} = usePropertyStore();
+const PropertyHeader = ({property}) => {
   
   return (
     <>

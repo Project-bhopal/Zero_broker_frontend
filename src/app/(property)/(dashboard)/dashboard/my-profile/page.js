@@ -31,7 +31,7 @@ const DashboardMyProfile = () => {
       setFormData((prev) => ({
         ...prev,
         socialMediaLinks: { ...data.data.socialMediaLinks }, // Ensure a valid object
-        userProfile: data.data.profilePhoto || null, // Handle potential null values
+        userProfile: data.data.profilePhoto, // Handle potential null values
         personalInfo: {
           ...data.data.user,
           whatsappNumber: data.data.whatsappNumber, // Fix merging issue

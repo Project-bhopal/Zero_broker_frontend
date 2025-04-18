@@ -1092,7 +1092,6 @@ li {
     color: var(--headings-color);
     font-family: var(--title-font-family);
     font-weight: 600;
-    font-size: 18px;
     left: 20px;
     padding: 3px 12px;
     position: absolute;
@@ -3177,7 +3176,7 @@ li {
 }
 @media (max-width: 991.98px) {
     .home-banner-style1 .home-style1 {
-        height: 500px;
+        height: 700px;
     }
 }
 
@@ -3194,7 +3193,7 @@ li {
 }
 @media (max-width: 767.98px) {
     .inner-banner-style1 .hero-title {
-        font-size: 36px;
+        font-size: 30px;
     }
 }
 .inner-banner-style1 .hero-text {

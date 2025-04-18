@@ -392,7 +392,8 @@ const DashboardHeader = () => {
                           <Image
                             width={44}
                             height={44}
-                            src="/images/resource/user.png"
+                            src="/images/profile/image.png"
+                            className="cover w-[44px] h-[44px] object-top"
                             alt="user.png"
                           />
                         </a>

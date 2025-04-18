@@ -4,17 +4,13 @@ import MobileMenu from "@/components/common/mobile-menu";
 import DboardMobileNavigation from "@/components/property/dashboard/DboardMobileNavigation";
 import Footer from "@/components/property/dashboard/Footer";
 import SidebarDashboard from "@/components/property/dashboard/SidebarDashboard";
-import AssignedPropertiesDataTable from "@/components/property/dashboard/driver/AssignedPropertiesDataTable";
-import AssignmentAcceptedDataTable from "@/components/property/dashboard/driver/AssignmentAcceptedDataTable";
-import useAxiosFetch from "@/hooks/useAxiosFetch";
+import AssignedDriversDataTable from "@/components/property/dashboard/agent/AssignedDriversDataTable";
+import DriversRequestsDataTable from "@/components/property/dashboard/agent/DriversRequestsDataTable";
+import DriversRequestsAcceptedDataTable from "@/components/property/dashboard/agent/DriversRquestsAcceptedDataTable";
 import { useState } from "react";
 
-
-const AssignedProperties = () => {
-
-  const {data, error , isLoading, isError} = useAxiosFetch(`/driver/driver/assignments`)
-  console.log(data?.data)
-
+const AssignedDrivers = () => {
+  const [showTable, setShowTable] = useState("Pending")
   return (
     <>
       {/* Main Header Nav */}
@@ -33,7 +29,7 @@ const AssignedProperties = () => {
 
           <div className="dashboard__main pl0-md">
             <div className="dashboard__content bgc-f7">
-              <div className="row pb40">
+              <div className="row">
                 <div className="col-lg-12">
                   <DboardMobileNavigation />
                 </div>
@@ -45,19 +41,22 @@ const AssignedProperties = () => {
               <div className="row align-items-center pb40">
                 <div className="col-xxl-3">
                   <div className="dashboard_title_area">
-                    <h2>Assigned Properties</h2>
+                    <h2>Assigend Drivers</h2>
+                    <p className="text">We are glad to see you again!</p>
                   </div>
                 </div>
               </div>
               {/* End .row */}
-              
+              {/* <div className="flex  justify-self-end gap-2 me-3 mb-5">
+                <button className={`ud-btn btn-${showTable === 'Pending' ? 'thm' : 'white'}`} onClick={()=>{setShowTable("Pending")}}>Pending</button>
+                <button className={`ud-btn btn-${showTable === 'Accepted' ? 'thm' : 'white'}`} onClick={()=>{setShowTable("Accepted")}}>Accepted</button>
+              </div> */}
               <div className="row">
-                <div className="col-xl-12 min-h-[50vh]">
+                <div className="col-xl-12">
                   <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                    <div className="packages_table table-responsive"> 
-                        
-                        
-                        <AssignedPropertiesDataTable assignments={data?.data} />
+                    <div className="packages_table table-responsive">
+                      
+                        <AssignedDriversDataTable setShowTable={setShowTable}/>
                       
                     </div>
                   </div>
@@ -77,4 +76,4 @@ const AssignedProperties = () => {
   );
 };
 
-export default AssignedProperties;
+export default AssignedDrivers;

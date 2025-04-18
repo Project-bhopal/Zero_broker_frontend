@@ -1,8 +1,8 @@
 import { usePropertyStore } from "@/store/store";
 import React from "react";
 
-const ProperytyDescriptions = () => {
-  const {property}= usePropertyStore();
+const ProperytyDescriptions = ({property}) => {
+  
   return (
     <>
       <p className="text mb10">
