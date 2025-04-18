@@ -1,8 +1,7 @@
 import { usePropertyStore } from "@/store/store";
 import React from "react";
 
-const PropertyFeaturesAminites = () => {
-  const {property} = usePropertyStore();
+const PropertyFeaturesAminites = ({property}) => {
 
   const transformAmenities = (amenities, itemsPerRow = 4) => {
     return amenities?.reduce((rows, amenity, index) => {

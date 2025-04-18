@@ -2,17 +2,18 @@ import React from "react";
 
 const Social = () => {
   const socialIcons = [
-    "fab fa-facebook-f",
-    "fab fa-twitter",
-    "fab fa-instagram",
-    "fab fa-linkedin-in",
+    { icon: "fab fa-facebook-f", link: "www.facebook.com" },
+    {icon : "fab fa-twitter", link: "www.twitter.com"},
+    {icon : "fab fa-instagram" , link : "www.intagram.com"},
+    {icon : "fab fa-linkedin-in", link : "www.linkedin.com"},
+    ,
   ];
 
   return (
     <div className="social-style1">
       {socialIcons.map((iconClass, index) => (
-        <a key={index} href="#">
-          <i className={iconClass + " list-inline-item"} />
+        <a key={index} href={iconClass.link}>
+          <i className={iconClass.icon + " list-inline-item"} />
         </a>
       ))}
     </div>

@@ -10,7 +10,7 @@ function AssignmentAcceptedDataTable({assignments}) {
     const router = useRouter();
   
   
-    const { data, isLoading, isError, error } = useAxiosFetch("/requestproperty/accepted-by-me");
+    // const { data, isLoading, isError, error } = useAxiosFetch("/requestproperty/accepted-by-me");
           
   
     useEffect(() => {

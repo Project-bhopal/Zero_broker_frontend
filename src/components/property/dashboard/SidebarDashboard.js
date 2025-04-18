@@ -189,6 +189,11 @@ const SidebarDashboard = () => {
           text: "Driver's Requests",
         },
         {
+          href: "/dashboard/agent/assigned-drivers",
+          icon: "flaticon-clock",
+          text: "Assigned Drivers",
+        },
+        {
           href: "/dashboard/agent/create-driver",
           icon: "flaticon-user",
           text: "Create Driver",

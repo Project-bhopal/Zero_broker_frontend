@@ -37,6 +37,10 @@ const UploadMedia = ({ setData, propData, setDriver, driver }) => {
   
   const handleDriverSelect = (selectedOption)=>{
     setDriver(selectedOption)
+  };
+
+  const handleRemoveDriver = ()=>{
+    setDriver("")
   }
 
   const customStyles = {
@@ -101,7 +105,7 @@ const UploadMedia = ({ setData, propData, setDriver, driver }) => {
           <label className="heading-color ff-heading fw600 mb10">
             Assign to Driver
           </label>
-          <div>
+          <div className="flex items-center gap-2">
             <Select
               key={Date.now()}
               defaultValue={""}
@@ -113,6 +117,7 @@ const UploadMedia = ({ setData, propData, setDriver, driver }) => {
               className="select-custom pl-0"
               classNamePrefix="select"
             />
+            <i class="fa fa-times" aria-hidden="true" className="" onClick={handleRemoveDriver}></i>
           </div>
         </div>
         {!driver&&<><h4 className="title fz17 mb30">OR</h4>

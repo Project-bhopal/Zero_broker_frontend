@@ -59,35 +59,35 @@ function PropertyDetail({params}) {
           {/* End .row */}
 
           <div className="row">
-            <PropertyHeader  />
+            <PropertyHeader property={property} />
           </div>
           {/* End .row */}
           <div className="row wrap pt-10">
             <div className="col-lg-8">
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Overview</h4>
+                <h4 className="title fz19 mb30">Overview</h4>
                 <div className="row">
-                  <OverView />
+                  <OverView property={property}/>
                 </div>
               </div>
               {/* End .ps-widget */}
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30">Property Description</h4>
-                <ProperytyDescriptions />
+                <h4 className="title fz19 mb30">Property Description</h4>
+                <ProperytyDescriptions property={property}/>
                 {/* End property description */}
 
-                <h4 className="title fz17 mb30 mt50">Property Details</h4>
+                <h4 className="title fz19 mb30 mt50">Property Details</h4>
                 <div className="row">
-                  <PropertyDetails />
+                  <PropertyDetails property={property}/>
                 </div>
               </div>
               {/* End .ps-widget */}
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
-                <h4 className="title fz17 mb30 mt30">Address</h4>
+                <h4 className="title fz19 mb30 mt30">Address</h4>
                 <div className="row">
-                  <PropertyAddress />
+                  <PropertyAddress property={property}/>
                 </div>
               </div>
               {/* End .ps-widget */}
@@ -95,7 +95,7 @@ function PropertyDetail({params}) {
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Features &amp; Amenities</h4>
                 <div className="row">
-                  <PropertyFeaturesAminites />
+                  <PropertyFeaturesAminites property={property}/>
                 </div>
               </div>
               {/* End .ps-widget */}
@@ -123,23 +123,23 @@ function PropertyDetail({params}) {
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 ">
                 <h4 className="title fz17 mb30">Video</h4>
                 <div className="row">
-                  <PropertyVideo />
+                  {property?.developer_notes?.video_available ? (<PropertyVideo property={property}/>) : (<h6>No Video Available</h6>)}
                 </div>
               </div>
               {/* End .ps-widget */}
 
-              <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
+              {property?.developer_notes?.virtual_tour_available&&<div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">360° Virtual Tour</h4>
                 <div className="row">
-                  <VirtualTour360 />
+                  <VirtualTour360 property={property}/>
                 </div>
-              </div>
+              </div>}
               {/* End .ps-widget */}
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">What&apos;s Nearby?</h4>
                 <div className="row">
-                  <PropertyNearby />
+                  <PropertyNearby property={property}/>
                 </div>
               </div>
               {/* End .ps-widget */}
@@ -182,14 +182,14 @@ function PropertyDetail({params}) {
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Get More Information</h4>
-                <InfoWithForm />
+                <InfoWithForm property={property}/>
               </div>
               {/* End .ps-widget */}
 
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <div className="row">
                   {/* <AllComments /> */}
-                  <AllReviews />
+                  <AllReviews property={property}/>
                 </div>
               </div>
               {/* End .ps-widget */}
@@ -197,26 +197,26 @@ function PropertyDetail({params}) {
               <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
                 <h4 className="title fz17 mb30">Leave A Review</h4>
                 <div className="row">
-                  <ReviewBoxForm />
+                  <ReviewBoxForm property={property}/>
                 </div>
               </div>
               {/* End .ps-widget */}
             </div>
             {/* End .col-8 */}
 
-            <div className="col-lg-4">
+            <div className="col-lg-4" >
               <div className="column">
                 <div className="default-box-shadow1 bdrs12 bdr1 p30 mb30-md bgc-white position-relative">
                   <h4 className="form-title mb5">Schedule a tour</h4>
                   <p className="text">Choose your preferred day</p>
-                  <ScheduleTour />
+                  <ScheduleTour property={property}/>
                 </div>
                 {/* End .Schedule a tour */}
 
-                <div className="agen-personal-info position-relative bgc-white default-box-shadow1 bdrs12 p30 mt30">
+                <div className="agen-personal-info bgc-white default-box-shadow1 bdrs12 p30 mt30 md:sticky top-10" >
                   <div className="widget-wrapper mb-0">
                     <h6 className="title fz17 mb30">Get More Information</h6>
-                    <ContactWithAgent />
+                    <ContactWithAgent property={property}/>
                   </div>
                 </div>
               </div>

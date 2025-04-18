@@ -6,7 +6,7 @@ const MenuWidget = () => {
       title: "Popular Search",
       links: [
         { label: "Apartment for Rent", href: "#" },
-        { label: "Apartment Low to Hide", href: "#" },
+        { label: "Apartment Low to HIgh", href: "#" },
         { label: "Offices for Buy", href: "#" },
         { label: "Offices for Rent", href: "#" },
       ],
@@ -26,10 +26,10 @@ const MenuWidget = () => {
     {
       title: "Discover",
       links: [
-        { label: "Miami", href: "#" },
-        { label: "Los Angeles", href: "#" },
-        { label: "Chicago", href: "#" },
-        { label: "New York", href: "#" },
+        { label: "Dubai", href: "#" },
+        { label: "Abu Dhabi", href: "#" },
+        { label: "Sharjah", href: "#" },
+        { label: "Ajman", href: "#" },
       ],
     },
   ];

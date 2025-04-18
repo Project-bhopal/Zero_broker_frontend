@@ -39,10 +39,10 @@ const PropertiesByCities = () => {
           <SwiperSlide key={city.id}>
             <div className="item">
               <div className="feature-style1">
-                <div className="feature-img max-h-[400px]">
+                <div className="feature-img max-h-[400px] md:h-[400px] h-[200px]">
                   <Image
                     width={400}
-                    height={300}
+                    height={200}
                     className="w-100 h-100 object-cover"
                     src={city.image}
                     alt="cities"

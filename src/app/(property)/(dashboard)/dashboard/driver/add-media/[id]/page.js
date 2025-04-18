@@ -8,7 +8,7 @@ import UploadMedia from "@/components/property/dashboard/driver/UploadMedia";
 
 
 
-const DashboardAddMedia = () => {
+const DashboardAddMedia = ({params}) => {
   
   return (
     <>
@@ -49,7 +49,7 @@ const DashboardAddMedia = () => {
                 <div className="col-xl-12">
                   <div className="ps-widget bgc-white bdrs12 default-box-shadow2 pt30 mb30 overflow-hidden position-relative">
                     <div className="navtab-style1">
-                      <UploadMedia/>
+                      <UploadMedia params={params}/>
                     </div>
                   </div>
                 </div>

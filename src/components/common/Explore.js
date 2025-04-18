@@ -9,7 +9,7 @@ const Explore = () => {
       id: 1,
       icon: "/images/zero-broker/icon/property-buy.svg",
       title: "Buy a property",
-      text: "Nullam sollicitudin blandit eros eu pretium. Nullam maximus ultricies auctor.",
+      text: "Discover luxury apartments, waterfront villas, and investment-ready properties across Dubai’s prime locations.",
       linkText: "Find a home",
       url: "/buy/properties",
     },
@@ -17,7 +17,7 @@ const Explore = () => {
       id: 2,
       icon: "/images/zero-broker/icon/property-sell.svg",
       title: "Sell a property",
-      text: "Nullam sollicitudin blandit eros eu pretium. Nullam maximus ultricies auctor.",
+      text: "List your Dubai property with us for maximum visibility and connect with serious buyers instantly.",
       linkText: "Place an ad",
       url: "/contact",
     },
@@ -25,7 +25,7 @@ const Explore = () => {
       id: 3,
       icon: "/images/zero-broker/icon/property-rent.svg",
       title: "Rent a property",
-      text: "Nullam sollicitudin blandit eros eu pretium. Nullam maximus ultricies auctor.",
+      text: "Explore a wide range of rental options from downtown apartments to beachfront residences, all over Dubai.",
       linkText: "Find a rental",
       url: "/rent/properties",
     },
@@ -41,12 +41,12 @@ const Explore = () => {
           data-aos-delay={(item.id + 1) * 100} // Increase delay for each item
         >
           <div className="iconbox-style2 text-center">
-            <div className="icon">
-              <Image width={150} height={150} src={item.icon} alt="icon" />
+            <div className="icon md:w-[150px] w-[100px] md:h-[150px] h-[100px]">
+              <Image width={150} height={150} src={item.icon} alt="icon" className="w-full h-full"/>
             </div>
             <div className="iconbox-content">
-              <h4 className="title">{item.title}</h4>
-              <p className="text">{item.text}</p>
+              <h4 className=" md:text-base text-sm">{item.title}</h4>
+              <p className="text md:text-base text-sm">{item.text}</p>
               <Link href={item.url} className="ud-btn btn-thm3">
                 {item.linkText}
                 <i className="fal fa-arrow-right-long" />

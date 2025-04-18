@@ -229,7 +229,7 @@ const HeroContent = () => {
           {tabs.map((tab) => (
             <li className="nav-item p-1" key={tab.id}>
               <button
-                className={` font-medium  py-2 px-4 ${
+                className={` font-medium  md:py-2 py-1 md:px-4 px-3 ${
                   activeTab === tab.id
                     ? " bg-[#0f8363] text-white"
                     : "text-gray-500"
@@ -259,7 +259,7 @@ const HeroContent = () => {
                           <i className="icon flaticon-maps" />
                           <input
                             ref={inputRef}
-                            className="form-control bgc-71  bg-transparent"
+                            className="py-3 bgc-71  bg-transparent"
                             type="text"
                             name="search"
                             autoComplete="off"
@@ -302,12 +302,12 @@ const HeroContent = () => {
                   <div className="col-md-4 col-lg-3">
                     <div className="d-flex align-items-center justify-content-start justify-content-md-center mt-3 mt-md-0">
                       <button
-                        className="w-full bg-[#0f8363] bdrs12 text-white rounded-2xl py-[13px] px-0 flex items-center justify-center gap-2"
+                        className="md:w-full w-[40%] bg-[#0f8363] bdrs12 text-white rounded-2xl md:py-[13px] py-[5px] px-0 flex items-center justify-center gap-2"
                         onClick={handleSearch}
                         type="button"
                       >
                         <span className="flaticon-search font-semibold mb-[-5px]" />
-                        <span className="font-semibold text-lg">Search</span>
+                        <span className="font-semibold md:text-lg text-sm">Search</span>
                       </button>
                     </div>
                   </div>
@@ -315,30 +315,12 @@ const HeroContent = () => {
               </div>
             </div>
           ))}
-          <div className="flex sm:flex-row flex-col  justify-start">
-            <div className="col-sm-2 col-xl-3">
-              <div className="">
-                <div className="location-area">
-                  <Select
-                    key={Date.now()}
-                    styles={customStyles}
-                    className="home-select-custom h-10"
-                    classNamePrefix="select"
-                    required
-                    defaultValue={propertyTypeOptions[0]}
-                    value={propertyTypeOption}
-                    name="structureType"
-                    onChange={handlePropertyTypeChange}
-                    options={propertyTypeOptions}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="col-sm-6 col-xl-3">
+          <div className="grid md:grid-cols-2 grid-cols-1 justify-start ">
+          <div className="">
               <li className="list-inline-item position-relative ">
                 <button
                   type="button"
-                  className="open-btn mb15 dropdown-toggle border-1 py-[7px]  px-5 rounded-xl border-[#0f8363]"
+                  className="open-btn mb15 dropdown-toggle border-1 py-[7px] lg:min-w-52 min-w-38 px-5 rounded-xl border-[#0f8363]"
                   style={{ borderRadius: "5px" }}
                   data-bs-toggle="dropdown"
                   data-bs-auto-close="outside"
@@ -406,6 +388,25 @@ const HeroContent = () => {
                 </div>
               </li>
             </div>
+            <div className="">
+              <div className="">
+                <div className=" selection">
+                  <Select
+                    key={Date.now()}
+                    styles={customStyles}
+                    className="home-select-custom h-10 lg:min-w-52 min-w-38"
+                    classNamePrefix="select"
+                    required
+                    defaultValue={propertyTypeOptions[0]}
+                    value={propertyTypeOption}
+                    name="structureType"
+                    onChange={handlePropertyTypeChange}
+                    options={propertyTypeOptions}
+                  />
+                </div>
+              </div>
+            </div>
+            
           </div>
         </div>
         <div>

@@ -178,7 +178,22 @@ const DboardMobileNavigation = () => {
         {
           href: "/dashboard/agent/requests",
           icon: "flaticon-clock",
-          text: "Requests",
+          text: "Seller's Requests",
+        },
+        {
+          href: "/dashboard/agent/drivers-requests",
+          icon: "flaticon-clock",
+          text: "Driver's Requests",
+        },
+        {
+          href: "/dashboard/agent/assigned-drivers",
+          icon: "flaticon-clock",
+          text: "Assigned Drivers",
+        },
+        {
+          href: "/dashboard/agent/create-driver",
+          icon: "flaticon-user",
+          text: "Create Driver",
         },
         {
           href: "my-reviews",
