@@ -46,11 +46,6 @@ const AssignedDrivers = () => {
                   </div>
                 </div>
               </div>
-              {/* End .row */}
-              {/* <div className="flex  justify-self-end gap-2 me-3 mb-5">
-                <button className={`ud-btn btn-${showTable === 'Pending' ? 'thm' : 'white'}`} onClick={()=>{setShowTable("Pending")}}>Pending</button>
-                <button className={`ud-btn btn-${showTable === 'Accepted' ? 'thm' : 'white'}`} onClick={()=>{setShowTable("Accepted")}}>Accepted</button>
-              </div> */}
               <div className="row">
                 <div className="col-xl-12">
                   <div className="ps-widget bgc-white bdrs12 default-box-shadow2 p30 mb30 overflow-hidden position-relative">
