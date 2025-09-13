@@ -71,9 +71,6 @@ const UploadMedia = ({ setData, propData, setDriver, driver }) => {
     setSaved(false);
   };
 
-  // useEffect(() => {
-  //   console.log("propData :".propData);
-  // }, [propData]);
 
   const handleFilesSubmit = (e) => {
     e.preventDefault();
@@ -84,12 +81,11 @@ const UploadMedia = ({ setData, propData, setDriver, driver }) => {
     }
 
     const selectOption = files?.virtual_tour_available?.value || false;
-    // setData((prev)=>({...prev, developer_notes : { ...files, virtual_tour_available : selectOption}}))
 
     setData((prev) => ({
       ...prev,
       developer_notes: {
-        ...(prev.developer_notes || {}), // Ensure the previous data persists
+        ...(prev.developer_notes || {}), 
         ...files,
         virtual_tour_available: selectOption,
       },

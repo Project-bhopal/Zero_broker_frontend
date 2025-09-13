@@ -69,27 +69,27 @@ function RequestsDataTable({setShowTable}) {
                 <div className="list-content py-0 p-0 mt-2 mt-xxl-0 ps-xxl-4">
                   <div className="h6 list-title">
                     <Link href={`/single-v1/${property._id}`}>
-                      {property.propertyName}
+                      {property?.propertyName}
                     </Link>
                   </div>
-                  <p className="list-text mb-0">{property.address}</p>
-                  <p className="list-text mb-0">{property.location}</p>
+                  <p className="list-text mb-0">{property?.address}</p>
+                  {/* <p className="list-text mb-0">{property?.location}</p> */}
                   <div className="list-price">
-                    <a href="#">{property.area} sqft</a>
+                    <a href="#">{property?.area} sqft</a>
                   </div>
                 </div>
               </div>
             </th>
             <div className="flex flex-col justify-center items-center py-5">
-              <a className="">{property.seller.fullname}</a>
-              <a className="">{property.seller.email}</a>
-              <a className="">{property.seller.mobile}</a>
+              <a className="">{property?.seller?.fullname}</a>
+              <a className="">{property?.seller?.email}</a>
+              <a className="">{property?.seller?.mobile}</a>
             </div>
-            <td className="vam">{property.propertyType}</td>
+            <td className="vam">{property?.propertyType}</td>
             <td className="vam">
-              <span>{property.purpose}</span>
+              <span>{property?.purpose}</span>
             </td>
-            <td className="vam">{formatDate(property.createdAt)}</td>
+            <td className="vam">{formatDate(property?.createdAt)}</td>
             <td className="vam">
               <div className="flex gap-2">
                 <button
