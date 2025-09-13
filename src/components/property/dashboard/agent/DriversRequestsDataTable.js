@@ -12,7 +12,7 @@ function DriversRequestsDataTable({setShowTable}) {
   const router = useRouter();
 
  
-    const { data, isLoading, isError, error } = useAxiosFetch("/requestproperty/accepted-by-me");
+    const { data, isLoading, isError, error } = useAxiosFetch("/driver/assignments/submissions");
  
 
   useEffect(() => {
@@ -66,23 +66,23 @@ function DriversRequestsDataTable({setShowTable}) {
               <div className="listing-style1 dashboard-style d-xxl-flex align-items-center mb-0">
                 <div className="list-content py-0 p-0 mt-2 mt-xxl-0 ps-xxl-4">
                   <div className="h6 list-title">
-                    <Link href={`/single-v1/${property._id}`}>
-                      {property.propertyName}
+                    <Link href={`/single-v1/${property.property._id}`}>
+                      {property.property.title}
                     </Link>
                   </div>
-                  <p className="list-text mb-0">{property.address}</p>
-                  <p className="list-text mb-0">{property.location}</p>
+                  <p className="list-text mb-0">{property.property.address}</p>
+                  {/* <p className="list-text mb-0">{property..location}</p> */}
                   <div className="list-price">
-                    <a href="#">{property.area} sqft</a>
+                    <a href="#">{property.property.price} sqft</a>
                   </div>
                 </div>
               </div>
             </th>
             <td className="vam">
             <div className="flex flex-col justify-center items-center py-5">
-              <a className="">{property.seller.fullname}</a>
-              <a className="">{property.seller.email}</a>
-              <a className="">{property.seller.mobile}</a>
+              <a className="">{property?.seller?.fullname}</a>
+              <a className="">{property?.seller?.email}</a>
+              <a className="">{property?.seller?.mobile}</a>
             </div>
             </td>
             <td className="vam">{formatDate(property.createdAt)}</td>

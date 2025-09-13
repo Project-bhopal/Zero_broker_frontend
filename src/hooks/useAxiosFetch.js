@@ -7,8 +7,8 @@ function useAxiosFetch(url) {
   return useQuery({
     queryKey: ["fetchData", url], // Avoid unnecessary cache resets
     queryFn: fetchData,
-    staleTime: 1000 * 60 * 5, // Cache data for 5 minutes
-    refetchOnWindowFocus: false, // Prevent refetching when switching tabs
+    // staleTime: 1000 * 60 * 5, // Cache data for 5 minutes
+    // refetchOnWindowFocus: false, // Prevent refetching when switching tabs
   });
 }
 
