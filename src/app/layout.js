@@ -96,8 +96,13 @@ export default function RootLayout({ children }) {
   const {setProperties} = usePropertyStore()
   useEffect( ()=>{
     const fetchProperty = async()=>{
-      const resposne = await axios.get(`${api_url}/property/approved`)
-      setProperties(resposne.data.data);
+      
+      try {
+        const resposne = await axios.get(`${api_url}/property/approved`)
+        setProperties(resposne.data.data);
+      } catch (error) {
+        console.log(error)
+      }
     }
     fetchProperty();
   },[])

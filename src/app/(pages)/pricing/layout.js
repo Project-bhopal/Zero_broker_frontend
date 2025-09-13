@@ -1,5 +1,5 @@
 export const metadata = {
-    title: "Pricing  || ZeroBroker - Real Estate NextJS Template",
+    title: "Pricing  || ZeroBroker",
   };
   
   

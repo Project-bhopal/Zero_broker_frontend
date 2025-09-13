@@ -22,7 +22,7 @@ const SignUp = () => {
     vertical: "top",
     horizontal: "center",
   });
-  
+
   const [show, setShow] = useState(false);
   const [data, setData] = useState({
     fullname: "",
@@ -40,32 +40,82 @@ const SignUp = () => {
   const pathname = usePathname();
   const mutation = usePost("/auth/signup");
   const mutation1 = usePost("/auth/generate-otp");
-  const {setUser} = useUserStore();
+  const { setUser } = useUserStore();
+
+  // useEffect(() => {
+
+  //   if (pathname === "/register") {
+  //     const token = Cookies.get("accessToken");
+  //     const firstVisit = localStorage.getItem("firstVisit");
+  //     const role = localStorage.getItem("role");
+  //     localStorage.clear()
+
+  //     if (modalRef.current) {
+  //       const modalInstance = Modal.getInstance(modalRef.current);
+  //       if (modalInstance) {
+  //         modalInstance.hide();
+  //       }
+  //     }
+  //   //  Manually remove the backdrop if it remains
+  //     const modalBackdrops = document.querySelectorAll(".modal-backdrop");
+  //     modalBackdrops.forEach((backdrop) => backdrop.remove());
+
+  //     if (modalRef.current) {
+  //       modalRef.current.addEventListener("hidden.bs.modal", () => {
+  //         document.body.classList.remove("modal-open");
+  //         document.body.style.overflow = "";
+  //         document.body.style.paddingRight = "";
+  //       });
+  //     }
+
+  //     if (!token && !firstVisit && !role) {
+  //       setTimeout(() => {
+  //         setShowModal(true);
+  //       }, 2000);
+  //     } else {
+  //       setShowModal(false);
+  //     }
+  //   }
+  // }, []);
 
   useEffect(() => {
-  
     if (pathname === "/register") {
       const token = Cookies.get("accessToken");
       const firstVisit = localStorage.getItem("firstVisit");
       const role = localStorage.getItem("role");
-      localStorage.clear()
+      localStorage.clear();
 
-      if (modalRef.current) {
-        const modalInstance = Modal.getInstance(modalRef.current);
-        if (modalInstance) {
-          modalInstance.hide();
+      // Get the actual DOM element
+      const modalElement =
+        modalRef.current?.modalRef?.current ||
+        modalRef.current?.getElement?.() ||
+        modalRef.current;
+
+      if (modalElement && typeof window !== "undefined" && window.bootstrap) {
+        // Initialize or get modal instance
+        let modalInstance = window.bootstrap.Modal.getInstance(modalElement);
+        if (!modalInstance) {
+          modalInstance = new window.bootstrap.Modal(modalElement);
         }
-      }
-    //  Manually remove the backdrop if it remains
-      const modalBackdrops = document.querySelectorAll(".modal-backdrop");
-      modalBackdrops.forEach((backdrop) => backdrop.remove());
+        modalInstance.hide();
 
-      if (modalRef.current) {
-        modalRef.current.addEventListener("hidden.bs.modal", () => {
+        // Clean backdrop
+        const modalBackdrops = document.querySelectorAll(".modal-backdrop");
+        modalBackdrops.forEach((backdrop) => backdrop.remove());
+
+        // Event handler
+        const handleHidden = () => {
           document.body.classList.remove("modal-open");
           document.body.style.overflow = "";
           document.body.style.paddingRight = "";
-        });
+        };
+
+        modalElement.addEventListener("hidden.bs.modal", handleHidden);
+
+        // Cleanup
+        return () => {
+          modalElement.removeEventListener("hidden.bs.modal", handleHidden);
+        };
       }
 
       if (!token && !firstVisit && !role) {
@@ -76,10 +126,7 @@ const SignUp = () => {
         setShowModal(false);
       }
     }
-  }, []);
-
-
-  
+  }, [pathname]); // Add pathname to dependencies
 
   const validateInput = (name, value) => {
     let error = "";
@@ -122,12 +169,12 @@ const SignUp = () => {
     const interest = localStorage.getItem("interestedIn");
 
     mutation.mutate(
-      { ...data, role, interest},
+      { ...data, role, interest },
       {
         onSuccess: (details) => {
           sessionStorage.removeItem("user", "ot");
           setState({ ...state, open: true });
-          setUser(details.data)
+          setUser(details.data);
           // sessionStorage.setItem("user", JSON.stringify(details.data));
           sessionStorage.setItem("ot", "varification");
           mutation1.mutate(
@@ -136,7 +183,6 @@ const SignUp = () => {
               onSuccess: (details) => {
                 if (details) {
                   router.push("/verification/verify-otp");
-                          
                 }
               },
               onError: (error) => {
@@ -154,7 +200,6 @@ const SignUp = () => {
         },
       }
     );
-    console.log(data);
   };
 
   const handleClose = () => {
@@ -305,7 +350,11 @@ const SignUp = () => {
         />
       </Box>
       {/* <WelcomeModal showModal={showModal} setShowModal={setShowModal} /> */}
-      <AnimatedModal show={showModal} handleClose={() => setShowModal(false)} ref={modalRef}/>
+      <AnimatedModal
+        show={showModal}
+        handleClose={() => setShowModal(false)}
+        ref={modalRef}
+      />
     </>
   );
 };
